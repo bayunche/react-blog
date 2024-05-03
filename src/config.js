@@ -15,7 +15,7 @@ export const HEADER_BLOG_NAME = '八云澈的小站' // header title 显示的�
 
 // === sidebar
 export const SIDEBAR = {
-  avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
+  avatar: require('@/assets/images/avatar.jpg'), // 侧边栏头像
   title: '八云澈的小站', // 标题
   subTitle: 'Carpe diem', // 子标题
   // 个人主页
