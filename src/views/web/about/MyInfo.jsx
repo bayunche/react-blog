@@ -52,7 +52,7 @@ const MyInfo = () => {
 
       <ul className='about-list'>
         <li>姓名：王鉴菁</li>
-        <li>本科： 哈尔滨理工大学（HUBST）</li>
+        <li>本科： 哈尔滨理工大学（HUBST）信管</li>
         <li>
           联系方式：
           <QqOutline /> 1035010167
