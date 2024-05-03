@@ -17,7 +17,7 @@ export class Typer extends React.Component {
     return (
       <div className='typer'>
         <Typist className='typer-header' avgTypingDelay={100} startDelay={2000} onTypingDone={this.onHeaderTyped}>
-          <a href={docs}>欢迎来到pyy的菜园子</a>
+          <a href={docs}>欢迎来到八云澈的小站</a>
         </Typist>
         <div className='typer-content'>
           {this.state.renderMsg ? (
@@ -30,10 +30,10 @@ export class Typer extends React.Component {
               <br />
               * 希望你也一样，做
               <Typist.Delay ms={500} />
-              资本家的主人
+              人生的主人
               <Typist.Backspace count={6} delay={1000} />
               <Typist.Delay ms={750} />
-              自己的主人
+              资本的主人
               <Typist.Delay ms={1250} />
               <br />
               <span>

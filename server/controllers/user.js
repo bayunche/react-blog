@@ -22,39 +22,39 @@ async function getGithubInfo(username) {
 }
 
 async function getDateBetween(start, end) {
-  var result = [];
-  //使用传入参数的时间
+  var result = []
+  // 使用传入参数的时间
   var startTime = new Date(start)
   var endTime = new Date(end)
   while (endTime - startTime >= 0) {
-    let year = startTime.getFullYear();
-    let month = startTime.getMonth();
-    month = month < 9 ? '0' + (month + 1) : month + 1;
-    let day = startTime.getDate().toString().length == 1 ? "0" + startTime.getDate() : startTime.getDate();
+    let year = startTime.getFullYear()
+    let month = startTime.getMonth()
+    month = month < 9 ? '0' + (month + 1) : month + 1
+    let day = startTime.getDate().toString().length == 1 ? '0' + startTime.getDate() : startTime.getDate()
     //加入数组
-    result.push(year + "-" + month + "-" + day);
+    result.push(year + '-' + month + '-' + day)
     //更新日期
-    startTime.setDate(startTime.getDate() + 1);
+    startTime.setDate(startTime.getDate() + 1)
   }
-  return result;
+  return result
 }
 
 async function getCommitCount(time) {
   //https://github.com/faultaddr?tab=overview&from=2021-09-01&to=2021-09-31
   //https://github.com/users/faultaddr/contributions?to=2021-12-31
-  const response = await axios.get(`https://github.com/users/faultaddr/contributions?to=2021-12-31`);
-  var parser = new DomParser();
+  const response = await axios.get(`https://github.com/users/faultaddr/contributions?to=2021-12-31`)
+  var parser = new DomParser()
   var doc = parser.parseFromString(response.data)
   var crArray = doc.getElementsByClassName('ContributionCalendar-day')
   var result = []
   crArray.forEach(element => {
     var count = element.getAttribute('data-count')
-    if (count !== undefined && count != null && count !== "0") {
+    if (count !== undefined && count != null && count !== '0') {
       result.push({ date: element.getAttribute('data-date'), count: parseInt(count) })
     }
-  });
+  })
   finalResult = {
-    data: result
+    data: result,
   }
   return finalResult
 }
@@ -336,7 +336,6 @@ class UserController {
     }
   }
 
-
   /**
    * 获取github contribution 信息
    * @param {String} userName - github name
@@ -362,8 +361,6 @@ class UserController {
       ctx.status = 200
     }
   }
-
-
 }
 
 module.exports = UserController
