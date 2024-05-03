@@ -23,17 +23,26 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
-      `id` int(11) NOT NULL AUTO_INCREMENT,
-      `title` varchar(255) NOT NULL,
-      `content` text CHARACTER SET utf8mb4,
-      `viewCount` int(11) DEFAULT '0',
-      `createdAt` datetime DEFAULT NULL,
-      `updatedAt` datetime DEFAULT NULL,
-      `type` boolean DEFAULT true,
-      `top` boolean DEFAULT false,
-      `uuid` varchar(32) DEFAULT REPLACE(UUID(),'-',''),
-      PRIMARY KEY (`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 92 DEFAULT CHARSET = utf8;
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `title` varchar(255) NOT NULL,
+    `content` text CHARACTER SET utf8mb4,
+    `viewCount` int(11) DEFAULT '0',
+    `createdAt` datetime DEFAULT NULL,
+    `updatedAt` datetime DEFAULT NULL,
+    `type` boolean DEFAULT true,
+    `top` boolean DEFAULT false,
+    `uuid` varchar(32),
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8;
+
+DELIMITER $$
+CREATE TRIGGER before_insert_article
+BEFORE INSERT ON article
+FOR EACH ROW
+BEGIN
+    SET NEW.uuid = REPLACE(UUID(),'-','');
+END$$
+DELIMITER ;
 -- ----------------------------
 -- Table structure for category
 -- ----------------------------

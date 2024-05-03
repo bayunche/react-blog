@@ -6,38 +6,38 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 import {GithubFill} from 'utils/antdIcon'
 // API_BASE_URL
-export const SERVER_URL = 'http://panyunyi.cn'
+export const SERVER_URL = 'http://www.hasunmiku.top'
 // export const SERVER_URL = 'http://127.0.0.1'
 export const API_BASE_URL = SERVER_URL + ':6060'
 // export const API_BASE_URL = 'http://127.0.0.1:6060'
 // project config
-export const HEADER_BLOG_NAME = '菜园子' // header title 显示的名字
+export const HEADER_BLOG_NAME = '八云澈的小站' // header title 显示的名字
 
 // === sidebar
 export const SIDEBAR = {
   avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
-  title: '种菜的小朋友', // 标题
+  title: '八云澈的小站', // 标题
   subTitle: 'Carpe diem', // 子标题
   // 个人主页
   homepages: {
     github: {
-      link: 'https://github.com/faultaddr',
-      icon: <GithubFill className='homepage-icon' />
-    },
-    juejin: {
-      link: 'https://juejin.im/user/96412755827687',
-      icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
-    }
+      link: 'https://github.com/bayunche',
+      icon: <GithubFill className='homepage-icon' /> 
+  },
+    // juejin: {
+    //   link: 'https://juejin.im/user/96412755827687',
+    //   icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
+    // }
   },
   friendslink: {
-    lizi: {
-      link: 'http://blog.liziyang.space/',
-      img: 'http://blog.liziyang.space/images/pikachu.jpg',
-    },
-    wizchen: {
-      link: 'http://blog.wizchen.com',
-      img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
-    }
+    // lizi: {
+    //   link: 'http://blog.liziyang.space/',
+    //   img: 'http://blog.liziyang.space/images/pikachu.jpg',
+    // },
+    // wizchen: {
+    //   link: 'http://blog.wizchen.com',
+    //   img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
+    // }
   }
 }
 
@@ -49,7 +49,7 @@ export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
  */
 export const GITHUB = {
   enable: true, // github 第三方授权开关
-  client_id: '87a4f88b943adaafd44a', // Setting > Developer setting > OAuth applications => client_id
+  client_id: 'Ov23liUWC0ufLK84Cl0D', // Setting > Developer setting > OAuth applications => client_id
   url: 'https://github.com/login/oauth/authorize' // 跳转的登录的地址
 }
 
@@ -66,7 +66,7 @@ export const ANNOUNCEMENT = {
   content: (
     <>
       个人笔记网站，请访问
-      <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href>
+      {/* <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href> */}
     </>
   )
 }

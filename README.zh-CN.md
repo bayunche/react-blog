@@ -122,34 +122,34 @@ import MyInfo from '@/views/web/about/MyInfo'
 export const API_BASE_URL = 'http://120.79.229.207:6060'
 // export const API_BASE_URL = 'http://127.0.0.1:6060'
 // project config
-export const HEADER_BLOG_NAME = '菜园子' // header title 显示的名字
+export const HEADER_BLOG_NAME = '八云澈的小站' // header title 显示的名字
 
 // === sidebar
 export const SIDEBAR = {
     avatar: require('@/assets/images/avatar.jpeg'), // 侧边栏头像
-    title: '种菜的小朋友', // 标题
+    title: '八云澈的小站', // 标题
     subTitle: 'Carpe diem', // 子标题
     // 个人主页
     homepages: {
     github: {
-        link: 'https://github.com/faultaddr',
+        link: 'https://github.com/bayunche',
         icon: <GithubFill className='homepage-icon' /> 
     },
-    juejin: {
-        link: 'https://juejin.im/user/96412755827687',
-        icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
-    }
+    // juejin: {
+    //     link: 'https://juejin.im/user/96412755827687',
+    //     icon: <SvgIcon type='iconjuejin' className='homepage-icon' />
+    // }
     },
     //侧边栏友情链接
     friendslink: {
-    lizi: {
-        link: 'http://blog.liziyang.co/',
-        img: 'http://blog.liziyang.co/images/pikachu.jpg',
-    },
-    wizchen: {
-        link: 'http://blog.wizchen.com',
-        img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
-    }
+    // lizi: {
+    //     link: 'http://blog.liziyang.co/',
+    //     img: 'http://blog.liziyang.co/images/pikachu.jpg',
+    // },
+    // wizchen: {
+    //     link: 'http://blog.wizchen.com',
+    //     img: 'https://cdn.jsdelivr.net/gh/wizcheu/content1@main/img/header.gif'
+    // }
     }
 }
 
