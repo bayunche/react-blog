@@ -5,7 +5,7 @@ const config = {
   GITHUB: {
     client_id: '87a4f88b943adaafd44a',
     client_secret: '5339d20f5b1488aeeb8d853a004cb749153790af',
-    access_token_url: 'https://github.com/login/oauth/access_token',
+    access_token_url: 'https://github.com/login/oauth/authorize',
     fetch_user_url: 'https://api.github.com/user', // 用于 oauth2
     fetch_user: 'https://api.github.com/user' // fetch user url https://api.github.com/users/gershonv
   },

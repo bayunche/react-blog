@@ -40,8 +40,8 @@ async function getDateBetween(start, end) {
 }
 
 async function getCommitCount(time) {
-  //https://github.com/faultaddr?tab=overview&from=2021-09-01&to=2021-09-31
-  //https://github.com/users/faultaddr/contributions?to=2021-12-31
+  // https://github.com/faultaddr?tab=overview&from=2021-09-01&to=2021-09-31
+  // https://github.com/users/faultaddr/contributions?to=2021-12-31
   const response = await axios.get(`https://github.com/users/faultaddr/contributions?to=2021-12-31`)
   var parser = new DomParser()
   var doc = parser.parseFromString(response.data)
@@ -205,6 +205,8 @@ class UserController {
 
   // 注册
   static async register(ctx) {
+    console.log('register')
+    console.log(ctx.request.body)
     const validator = ctx.validate(ctx.request.body, {
       username: Joi.string().required(),
       password: Joi.string().required(),
