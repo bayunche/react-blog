@@ -10837,6 +10837,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-live2d@^1.0.31:
+  version "1.0.31"
+  resolved "https://registry.yarnpkg.com/react-live2d/-/react-live2d-1.0.31.tgz#b9412c5842503d8dd8e9b7913c6b64680c430cb1"
+  integrity sha512-T2/blHa4Ad4pQh8o9sAnK39KAc9kgNvtOM+eqcvkDHC7xsTBpEyuU5qH6wdcgLAzLrpoPgfZWTisgIssTzNxiw==
+  dependencies:
+    whatwg-fetch "^3.0.0"
+
 react-redux@^7.1.1:
   version "7.2.6"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.6.tgz#49633a24fe552b5f9caf58feb8a138936ddfe9aa"

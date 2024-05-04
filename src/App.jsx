@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
 // config
 import routes from '@/routes'
 
@@ -11,10 +10,16 @@ import PublicComponent from '@/components/Public'
 const App = props => {
   const role = useSelector(state => state.user.role) // 相当于 connect(state => state.user.role)(App)
 
+  document.addEventListener('visibilitychange', function () {
+    const normal_title = '八云澈的blog'
+    if (document.visibilityState === 'hidden') {
+      document.title = '(。_。) 别走好吗... (。_。)'
+    } else document.title = normal_title
+  })
+
   // 解构 route
   function renderRoutes(routes, contextPath) {
     const children = []
-
     const renderRoute = (item, routeContextPath) => {
       let newContextPath = item.path ? `${routeContextPath}/${item.path}` : routeContextPath
       newContextPath = newContextPath.replace(/\/+/g, '/')
@@ -22,7 +27,7 @@ const App = props => {
         item = {
           ...item,
           component: () => <Redirect to='/' />,
-          children: []
+          children: [],
         }
       }
       if (!item.component) return
@@ -52,7 +57,8 @@ const App = props => {
     <BrowserRouter>
       {children}
       <PublicComponent />
-    </BrowserRouter>)
+    </BrowserRouter>
+  )
 }
 
 export default App

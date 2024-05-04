@@ -1,6 +1,7 @@
 import React from 'react'
 import '@/styles/app.less'
 import { Layout, Row, Col, BackTop } from 'antd'
+import ReactLive2d from 'react-live2d'
 
 import Header from './header'
 import SideBar from './sidebar'
@@ -9,6 +10,16 @@ import ReactCanvasNest from 'react-canvas-nest'
 // 响应式
 const siderLayout = { xxl: 4, xl: 5, lg: 5, sm: 0, xs: 0 }
 const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
+
+const Beian = () => {
+  return (
+    <div className='beian'>
+      <a href='http://www.beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
+        暂无备案
+      </a>
+    </div>
+  )
+}
 
 const WebLayout = props => {
   return (
@@ -24,6 +35,13 @@ const WebLayout = props => {
         </Col>
       </Row>
       <BackTop target={() => document.querySelector('.app-main')} />
+      <ReactLive2d
+        width={300}
+        height={500}
+        ModelList={['miku']}
+        TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
+      />
+      <Beian></Beian>
     </Layout>
   )
 }
