@@ -20,19 +20,32 @@ import useBus from '@/hooks/useBus'
 
 const { TextArea } = Input
 
-const Editor = ({ username, onChange, userNameChange, emailChange, onSubmit, submitting, name, mail, value, articleId }) => (
+const Editor = ({
+  username,
+  onChange,
+  userNameChange,
+  emailChange,
+  onSubmit,
+  submitting,
+  name,
+  mail,
+  value,
+  articleId,
+  err,
+}) => (
   <div>
     {username === '' ? (
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'left' }}>
         <Form.Item>
-          <TextArea rows={1} placeholder='用户名' onChange={userNameChange} value={name} />
+          <Input placeholder='用户名' onChange={userNameChange} value={name} />
         </Form.Item>
         <Form.Item>
-          <TextArea rows={1} placeholder='qq邮箱' onChange={emailChange} value={mail} />
+          <Input status={err} rows={1} placeholder='qq邮箱' onChange={emailChange} value={mail} />
         </Form.Item>
       </div>
-    ) : (<div />)
-    }
+    ) : (
+      <div />
+    )}
     <Form.Item>
       <TextArea rows={4} placeholder='说点什么...' onChange={onChange} value={value} />
     </Form.Item>
@@ -59,7 +72,7 @@ function Discuss(props) {
   const [email, setEmail] = useState('')
   const [loginUser, setLoginUser] = useState(username)
   const [submitting, withLoading] = useAjaxLoading()
-
+  const [emailErr, setEmailErr] = useState(false)
   const renderDropdownMenu = () => {
     return username ? (
       <Menu onClick={handleMenuClick}>
@@ -97,10 +110,10 @@ function Discuss(props) {
   function checkEmailAvailable(emailString) {
     const regExp = new RegExp(/[1-9][0-9]{4,}@qq\.com/)
     if (!regExp.test(emailString)) {
-      message.error('邮箱不合法')
+      // message.error('邮箱不合法')
       return false
     } else {
-      message.success('邮箱满足条件')
+      // message.success('邮箱满足条件')
       return true
     }
   }
@@ -110,12 +123,12 @@ function Discuss(props) {
 
     if (!userInfo.username) {
       if (userInfo == null || userInfo.username === '') {
-        const values = { 'username': userName, 'password': 'root', 'email': email }
-        const loginValues = { 'account': userName, 'password': 'root' }
+        const values = { username: userName, password: 'root', email: email }
+        const loginValues = { account: userName, password: 'root' }
         const registerAction = register
         const loginAction = login
         if (!checkEmailAvailable(email)) {
-          return
+          return message.error('邮箱不合法')
         }
         axios.get(`/user/find/${userName}`).then(res => {
           if (res.id === undefined) {
@@ -149,12 +162,12 @@ function Discuss(props) {
         })
       }
     } else {
-      withLoading(
-        axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfo.userId })
-      ).then(res => {
-        setValue('')
-        props.setCommentList(res.rows)
-      })
+      withLoading(axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfo.userId })).then(
+        res => {
+          setValue('')
+          props.setCommentList(res.rows)
+        }
+      )
     }
   }
 
@@ -175,16 +188,16 @@ function Discuss(props) {
 
       <Comment
         avatar={
-          username ? ((userInfo.email !== undefined) && (userInfo.email !== null) ? (
-            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像' />
-          ) : (
-            <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />)
-          ) : (
-            userName ? (
-              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像' />
+          username ? (
+            userInfo.email !== undefined && userInfo.email !== null ? (
+              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像' />
             ) : (
               <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
             )
+          ) : userName ? (
+            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像' />
+          ) : (
+            <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
           )
         }
         content={
@@ -194,15 +207,15 @@ function Discuss(props) {
             userNameChange={e => setUserName(e.target.value)}
             emailChange={e => {
               setEmail(e.target.value)
-              checkEmailAvailable(e.target.value)
-            }
-            }
+              checkEmailAvailable(e.target.value) ? setEmailErr(false) : setEmailErr(true)
+            }}
             onSubmit={handleSubmit}
             submitting={submitting}
             name={userName}
             mail={email}
             value={value}
             articleId={articleId}
+            err={emailErr}
           />
         }
       />
@@ -213,7 +226,7 @@ function Discuss(props) {
 }
 
 Discuss.propTypes = {
-  commentList: PropTypes.array.isRequired
+  commentList: PropTypes.array.isRequired,
 }
 
 export default Discuss
