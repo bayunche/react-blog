@@ -14,7 +14,7 @@ const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
 const Beian = () => {
   return (
     <div className='beian'>
-      <a href='http://www.beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
+      <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
         暂无备案
       </a>
     </div>
