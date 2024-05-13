@@ -20,11 +20,11 @@ const List = props => {
         </li>
       ))}
       <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        暂无备案
+        粤ICP备2024248632号
       </a>
       <p></p>
       <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        暂无备案
+        粤ICP备2024248632号
       </a>
       <p></p>
     </ul>
@@ -59,11 +59,11 @@ const QuickLink = props => {
         getContainer={() => document.querySelector('.app-home')}>
         <List list={list} showTitle={false} />
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        暂无备案
+        粤ICP备2024248632号
         </a>
         <p></p>
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        暂无备案
+        粤ICP备2024248632号
         </a>
         <p></p>
       </Drawer>

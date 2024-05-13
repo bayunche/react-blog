@@ -15,7 +15,7 @@ const Beian = () => {
   return (
     <div className='beian'>
       <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        暂无备案
+        粤ICP备2024248632号
       </a>
     </div>
   )
