@@ -38,7 +38,7 @@ const WebLayout = props => {
       <ReactLive2d
         width={400}
         height={600}
-        style={{ float: 'right', zIndex: 100, position: 'fixed' }}
+        style={{ zIndex: 100, position: 'fixed' }}
         bottom={'10px'}
         right={'10px'}
         ModelList={['miku', 'Haru', 'Rice']}
