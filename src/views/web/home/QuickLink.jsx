@@ -11,22 +11,22 @@ const title = '快速导航'
 
 const List = props => {
   const { list, showTitle = true } = props
+  console.log(list)
+  let showList = []
+  if (list.length === 0) {
+    showList = list
+  }
+  if (list.length > 3) {
+    showList = list.slice(0, 3)
+  }
   return (
     <ul className='preview'>
       {showTitle && <Divider>{title}</Divider>}
-      {list.map(item => (
+      {showList.map(item => (
         <li key={item.id}>
           <Link to={`/article/${item.id}`}>{item.title}</Link>
         </li>
       ))}
-      <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        粤ICP备2024248632号
-      </a>
-      <p></p>
-      <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        粤ICP备2024248632号
-      </a>
-      <p></p>
     </ul>
   )
 }
@@ -59,11 +59,11 @@ const QuickLink = props => {
         getContainer={() => document.querySelector('.app-home')}>
         <List list={list} showTitle={false} />
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        粤ICP备2024248632号
+          粤ICP备2024248632号
         </a>
         <p></p>
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        粤ICP备2024248632号
+          粤ICP备2024248632号
         </a>
         <p></p>
       </Drawer>
