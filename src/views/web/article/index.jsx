@@ -16,7 +16,6 @@ import Discuss from '@/components/Discuss'
 import { MenuOutlined } from '@ant-design/icons'
 function Article(props) {
   const [loading, withLoading] = useAjaxLoading()
-
   const [article, setArticle] = useState({
     title: '',
     content: '',
@@ -24,13 +23,14 @@ function Article(props) {
     categories: [],
     comments: [],
     createdAt: '',
-    viewCount: 0
+    viewCount: 0,
   })
   const [drawerVisible, setDrawerVisible] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
       const hash = decodeURI(props.location.hash)
+      console.log(props)
       const ele = document.querySelector(`a[href="${hash}"]`)
       ele && hash && ele.click() // 挂载时路由跳转到指定位置
     }, 800)
@@ -51,7 +51,8 @@ function Article(props) {
         .then(res => {
           res.content = translateMarkdown2html(res.content)
           setArticle(res)
-        }).catch(e => {
+        })
+        .catch(e => {
           props.history.push('/404')
         })
     }
@@ -104,12 +105,11 @@ function Article(props) {
               </div>
             </Drawer>
           </>
-        )
-          : (
-            <nav className='article-navigation'>
-              <Navigation content={content} />
-            </nav>
-          )}
+        ) : (
+          <nav className='article-navigation'>
+            <Navigation content={content} />
+          </nav>
+        )}
 
         <Discuss articleId={articleId} commentList={comments} setCommentList={setCommentList} />
       </article>

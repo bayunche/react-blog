@@ -34,11 +34,14 @@ const WebLayout = props => {
           <AppMain {...props} />
         </Col>
       </Row>
-      <BackTop target={() => document.querySelector('.app-main')} />
+      <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
       <ReactLive2d
-        width={300}
-        height={500}
-        ModelList={['miku']}
+        width={400}
+        height={600}
+        style={{ float: 'right', zIndex: 100, position: 'fixed' }}
+        bottom={'10px'}
+        right={'10px'}
+        ModelList={['miku', 'Haru', 'Rice']}
         TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
       />
       <Beian></Beian>

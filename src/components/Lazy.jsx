@@ -1,33 +1,50 @@
-import React, { Component } from 'react'
-
-import { Spin } from 'antd'
+import React, { useState, useEffect } from 'react'
+import { Spin, Alert } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
-/**
- * 使用 webpack 的 import 方法实现动态加载组件！dynamic import
- * @param {Function} importComponent - example const xx = asyncComponent(() => import('./xxx'))
- */
-export const asyncComponent = importComponent =>
-  class AsyncComponent extends Component {
-    constructor(props) {
-      super(props)
-      this.state = { component: null }
+const asyncComponent = importComponent => {
+  return function AsyncComponent(props) {
+    const [component, setComponent] = useState(null)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+      let isMounted = true
+
+      const loadComponent = async () => {
+        try {
+          const { default: loadedComponent } = await importComponent()
+          if (isMounted) {
+            setComponent(() => loadedComponent)
+          }
+        } catch (err) {
+          if (isMounted) {
+            setError(err)
+          }
+        }
+      }
+
+      loadComponent()
+
+      return () => {
+        isMounted = false
+      }
+    }, [importComponent])
+
+    if (error) {
+      return <Alert message='Error' description={`Error loading component: ${error.message}`} type='error' showIcon />
     }
 
-    async componentDidMount() {
-      const { default: component } = await importComponent()
-      this.setState({ component })
+    if (!component) {
+      return <Spin indicator={antIcon} className='async-com-loading' />
     }
-
-    render() {
-      const RenderComponet = this.state.component
-      return RenderComponet ? (
-        <RenderComponet {...this.props} />
-      ) : (
-        <Spin indicator={antIcon} className='async-com-loading' />
-      )
-    }
+    return component ? (
+      React.createElement(component, props)
+    ) : (
+      <Spin indicator={antIcon} className='async-com-loading' />
+    )
   }
+}
 
 export default asyncComponent
