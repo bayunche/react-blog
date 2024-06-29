@@ -2640,7 +2640,7 @@ anymatch@~3.1.2:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-aplayer@^1.10.0:
+aplayer@^1.10.0, aplayer@^1.10.1:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/aplayer/-/aplayer-1.10.1.tgz#318289206107452cc39e8f552fa6cc6cb459a90c"
   integrity sha512-HAfyxgCUTLAqtYlxzzK9Fyqg6y+kZ9CqT1WfeWE8FSzwspT6oBqWOZHANPHF3RGTtC33IsyEgrfthPDzU5r9kQ==
@@ -8347,6 +8347,11 @@ methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
   integrity sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4=
+
+meting@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/meting/-/meting-2.0.1.tgz#40113248ac78b43579cedcdfdab1fce875e0a80e"
+  integrity sha512-qcn85I7btbtfDLZvcZdMa+HrpCXm2E3sRB3BRBVYWJvZG49uQFhIGK6I53c/EEcyumMdU0ekRfTlD4/FG1/48A==
 
 microevent.ts@~0.1.1:
   version "0.1.1"

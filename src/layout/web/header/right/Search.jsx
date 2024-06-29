@@ -40,6 +40,7 @@ function SearchButton(props) {
         placeholder='搜索文章'
         style={{ width: 200 }}
       />
+
     </div>
   )
 }

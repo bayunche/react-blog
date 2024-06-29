@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { SIDEBAR } from '@/config'
 import axios from '@/utils/axios'
 import { useSelector } from 'react-redux'
+import Player from 'components/musicPlayer/Player'
 
 // components
 import { Link } from 'react-router-dom'
@@ -23,8 +24,8 @@ function SideBar(props) {
       order: 'viewCount DESC',
       page: 1,
       pageSize: 6,
-      type: true
-    }
+      type: true,
+    },
   })
 
   return (
@@ -64,7 +65,7 @@ function SideBar(props) {
       <ul className='tag-list'>
         {Object.entries(SIDEBAR.friendslink).map(([linkName, item]) => (
           <li key={linkName}>
-            <img src={item.img} style={{height: '20px', width: '20px', marginRight: '10px'}} alt={'lizi'}/>
+            <img src={item.img} style={{ height: '20px', width: '20px', marginRight: '10px' }} alt={'lizi'} />
             <Href href={item.link}>{linkName}</Href>
           </li>
         ))}

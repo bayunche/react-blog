@@ -7,6 +7,7 @@ function HeaderRight(props) {
   return (
     <div className='header-right'>
       <Search />
+
       <UserInfo />
       <Navbar />
     </div>

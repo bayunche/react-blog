@@ -7,6 +7,7 @@ import Header from './header'
 import SideBar from './sidebar'
 import AppMain from './AppMain'
 import ReactCanvasNest from 'react-canvas-nest'
+import Player from 'components/musicPlayer/Player'
 // 响应式
 const siderLayout = { xxl: 4, xl: 5, lg: 5, sm: 0, xs: 0 }
 const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
@@ -34,16 +35,25 @@ const WebLayout = props => {
           <AppMain {...props} />
         </Col>
       </Row>
+
       <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
+      {/* {!window.innerWidth < 900 && (
+        <ReactLive2d
+          width={300}
+          height={500}
+          ModelList={['miku', 'Hiyori', 'Rice']}
+          TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
+        />
+      )} */}
       <ReactLive2d
-        width={400}
-        height={600}
-        style={{ zIndex: 100, position: 'fixed' }}
-        bottom={'10px'}
-        right={'10px'}
-        ModelList={['miku', 'Haru', 'Rice']}
+        width={300}
+        height={500}
+        bottom = { '10px'}
+        right = { '10px'}
+        ModelList={['miku', 'Hiyori']}
         TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
       />
+      <Player />
       <Beian></Beian>
     </Layout>
   )

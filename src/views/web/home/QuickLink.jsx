@@ -61,11 +61,6 @@ const QuickLink = props => {
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
           粤ICP备2024248632号
         </a>
-        <p></p>
-        <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-          粤ICP备2024248632号
-        </a>
-        <p></p>
       </Drawer>
     </>
   )
