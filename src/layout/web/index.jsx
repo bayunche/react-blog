@@ -37,22 +37,22 @@ const WebLayout = props => {
       </Row>
 
       <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
-      {/* {!window.innerWidth < 900 && (
+      {!window.innerWidth < 900 && (
         <ReactLive2d
           width={300}
           height={500}
           ModelList={['miku', 'Hiyori', 'Rice']}
           TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
         />
-      )} */}
-      <ReactLive2d
+      )}
+      {/* <ReactLive2d
         width={300}
         height={500}
         bottom = { '10px'}
         right = { '10px'}
         ModelList={['miku', 'Hiyori']}
         TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
-      />
+      /> */}
       <Player />
       <Beian></Beian>
     </Layout>
