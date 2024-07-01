@@ -1,3 +1,5 @@
 # robots.txt generated at https://www.sojson.com/robots/
 User-agent: *
 Disallow:
+
+Sitemap:http://www.hasunmiku.top/home/sitemap.xml
