@@ -45,7 +45,7 @@ const WebLayout = props => {
           TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
         />
       )}
-  
+
       <Player />
       <Beian></Beian>
     </Layout>
