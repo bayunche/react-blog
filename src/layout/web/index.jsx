@@ -45,14 +45,7 @@ const WebLayout = props => {
           TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
         />
       )}
-      {/* <ReactLive2d
-        width={300}
-        height={500}
-        bottom = { '10px'}
-        right = { '10px'}
-        ModelList={['miku', 'Hiyori']}
-        TouchBody={['啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊你要干嘛', '哼', '坏人']}
-      /> */}
+  
       <Player />
       <Beian></Beian>
     </Layout>
