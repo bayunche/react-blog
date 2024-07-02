@@ -263,8 +263,8 @@ module.exports = function(webpackEnv) {
         name: true,
         maxAsyncRequests: 50,
         maxInitialRequests: 50,
-        maxSize: 100000,
-        minSize: 20000,
+        maxSize: 2000000,
+        minSize: 200000,
         cacheGroups: {
           commons: {
             chunks: "initial",
