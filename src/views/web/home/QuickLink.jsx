@@ -11,7 +11,7 @@ const title = '快速导航'
 
 const List = props => {
   const { list, showTitle = true } = props
-  console.log(list)
+  // console.log(list)
   let showList = []
   if (list.length === 0) {
     showList = list

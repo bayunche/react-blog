@@ -30,7 +30,7 @@ function Article(props) {
   useEffect(() => {
     setTimeout(() => {
       const hash = decodeURI(props.location.hash)
-      console.log(props)
+
       const ele = document.querySelector(`a[href="${hash}"]`)
       ele && hash && ele.click() // 挂载时路由跳转到指定位置
     }, 800)
