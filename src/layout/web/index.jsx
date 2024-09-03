@@ -31,7 +31,7 @@ const Live2d = () => {
     }
   }, [url])
   // 引入live2d模型
-  return canRender && <ReactLive2d ModelList={['Haru', 'Hiyori', 'miku']} width={300} height={500} />
+  return canRender && <ReactLive2d ModelList={['Hiyori', 'miku']} width={300} height={500} />
 }
 
 const Beian = () => {
