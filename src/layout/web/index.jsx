@@ -34,7 +34,7 @@ const Live2d = () => {
   return (
     canRender && (
       <>
-        <ReactLive2d ModelList={['Hiyori', 'miku']} width={300} height={500} />
+        <ReactLive2d ModelList={['Hiyori', 'miku']} width={400} height={500} />
       </>
     )
   )
