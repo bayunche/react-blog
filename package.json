@@ -52,6 +52,7 @@
     "moment": "^2.29.1",
     "node-sass": "^6.0.1",
     "normalize.css": "^8.0.1",
+    "oh-my-live2d": "^0.19.3",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
     "postcss-flexbugs-fixes": "4.1.0",
