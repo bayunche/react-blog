@@ -30,11 +30,20 @@ const Live2d = () => {
         models: [
           {
             path: 'https://model.oml2d.com/shizuku_48/index.json',
-
-            scale: 0.2,
+            position: [0, 100],
+            scale: 0.1,
             stageStyle: {
-              height: 450,
-              width: 450,
+              height: 300,
+              width: 200,
+            },
+          },
+          {
+            path: 'https://model.oml2d.com/HK416-1-normal/model.json',
+            position: [0, 60],
+            scale: 0.08,
+            stageStyle: {
+              height: 400,
+              width: 300,
             },
           },
         ],
