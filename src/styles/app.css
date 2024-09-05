@@ -1,6 +1,3 @@
-.app-container {
-  background-image: url(../assets/images/background.jpg);
-}
 .app-container .beian {
   position: absolute;
   display: flex;
@@ -17,7 +14,7 @@
 }
 .app-container .app-header {
   padding: 0;
-  background: rgba(255, 255, 255, 0.99);
+  background: rgba(255, 255, 255, 0.9);
   -webkit-box-shadow: 0 2px 8px #f0f1f2;
   box-shadow: 0 2px 8px #f0f1f2;
   position: relative;
