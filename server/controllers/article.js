@@ -352,6 +352,7 @@ class ArticleController {
 
     if (validator) {
       const { fileNameList } = ctx.request.body
+      console.log(fileNameList)
       const list = await Promise.all(
         fileNameList.map(async fileName => {
           const filePath = `${uploadPath}/${fileName}`
