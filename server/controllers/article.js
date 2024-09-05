@@ -16,7 +16,7 @@ const fs = require('fs')
 const { uploadPath, outputPath, findOrCreateFilePath, decodeFile, generateFile } = require('../utils/file')
 const archiver = require('archiver') // 打包 zip
 const send = require('koa-send') // 文件下载
-const { v4: uuidv4 , stringify} = require('uuid');
+const { v4: uuidv4, stringify } = require('uuid')
 
 class ArticleController {
   // 初始化数据 关于页面（用于评论关联）
@@ -107,10 +107,10 @@ class ArticleController {
           reply.user.github = JSON.parse(reply.user.github)
         })
       })
-      console.log(data.uuid);
-      if(data.type){
+      console.log(data.uuid)
+      if (data.type) {
         ctx.body = data
-      }else{
+      } else {
         ctx.body = null
       }
     }
@@ -159,7 +159,7 @@ class ArticleController {
           reply.user.github = JSON.parse(reply.user.github)
         })
       })
-        ctx.body = data
+      ctx.body = data
     }
   }
   // 获取文章列表
@@ -349,7 +349,9 @@ class ArticleController {
     const validator = ctx.validate(ctx.request.body, {
       fileNameList: Joi.array().required(),
     })
-   console.log(ctx.request.body)
+    console.log(ctx.request.body)
+
+    return ctx.body = { existList: [], noExistList: [] }
     if (validator) {
       const { fileNameList } = ctx.request.body
       console.log(fileNameList)
@@ -388,7 +390,7 @@ class ArticleController {
         console.log('上传成功')
       })
     }
-    Array.isArray(file) ? file.forEach(it => upload(it)) : upload(file)
+    Array.sArray(file) ? file.forEach(it => upload(it)) : upload(filie)
     ctx.status = 204
   }
 
