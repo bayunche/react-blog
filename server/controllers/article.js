@@ -378,7 +378,6 @@ class ArticleController {
     const file = ctx.request.files.file // 获取上传文件
 
     await findOrCreateFilePath(uploadPath) // 创建文件目录
-    console.log(file)
     const upload = file => {
       const reader = fs.createReadStream(file.path) // 创建可读流
       const fileName = file.name
