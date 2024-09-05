@@ -351,7 +351,6 @@ class ArticleController {
     })
     console.log(ctx.request.body)
 
-    return (ctx.body = { validator,fileNameList: ctx.request.body.fileNameList })
     if (validator) {
       const { fileNameList } = ctx.request.body
       console.log(fileNameList)
@@ -360,15 +359,20 @@ class ArticleController {
           const filePath = `${uploadPath}/${fileName}`
           const file = decodeFile(filePath)
           const title = file.title || fileName.replace(/\.md/, '')
-          const article = await ArticleModel.findOne({ where: { title }, attributes: ['id'] })
-          const result = { fileName, title }
-          if (article) {
-            result.exist = true
-            result.articleId = article.id
+          try {
+            const article = await ArticleModel.findOne({ where: { title }, attributes: ['id'] })
+            const result = { fileName, title }
+            if (article) {
+              result.exist = true
+              result.articleId = article.id
+            }
+            return result
+          } catch (error) {
+            console.log(error)
           }
-          return result
         })
       )
+
       ctx.body = list
     }
   }
