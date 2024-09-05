@@ -72,7 +72,7 @@ function UploadModal(props) {
         axios.post('/article/checkExist', { fileNameList }).then(list => {
           setParsedList(list)
         })
-      }, 500)
+      }, 1000)
     }
     setFileList(fileList)
   }

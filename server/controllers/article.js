@@ -390,7 +390,7 @@ class ArticleController {
         console.log('上传成功')
       })
     }
-    Array.sArray(file) ? file.forEach(it => upload(it)) : upload(filie)
+    Array.isArray(file) ? file.forEach(it => upload(it)) : upload(filie)
     ctx.status = 204
   }
 
