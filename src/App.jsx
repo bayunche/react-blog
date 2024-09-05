@@ -17,6 +17,12 @@ const App = props => {
     } else document.title = normal_title
   })
 
+  //设置鼠标指针
+  document.body.style.cursor =
+    'url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.1/Resources/default.cur),auto'
+  document.a.style.cursor =
+    'url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.1/Resources/pointer.cur),auto'
+
   // 解构 route
   // 渲染路由
   function renderRoutes(routes, contextPath) {

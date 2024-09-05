@@ -15,7 +15,6 @@ const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
 
 const Live2d = () => {
   const [canRender, setCanRender] = React.useState(false)
-
   const reg = /home/
   const url = useLocation().pathname
   React.useEffect(() => {

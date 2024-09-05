@@ -91,7 +91,7 @@ function UploadModal(props) {
       setFalse()
       notification.success({
         message: 'upload article success',
-        description: `insert ${response.insertList.length} article and update ${response.updateList.length} article`
+        description: `插入文章数： ${response.insertList.length} 更新文章数： ${response.updateList.length}`
       })
     }).catch(error => {
       console.log('error: ', error)

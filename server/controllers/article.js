@@ -451,7 +451,7 @@ class ArticleController {
         })
       )
 
-      ctx.body = { message: 'success', insertList: insertResultList, updateList: updateResultList }
+      ctx.body = { message: '导入文章成功', insertList: insertResultList, updateList: updateResultList }
     }
   }
 
