@@ -58,7 +58,7 @@ const MyInfo = () => {
           <QqOutline /> 1035010167
           <Divider type='vertical' />
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
-          <a href='bayunche@gmail.com'>bayunche@gmail.com</a>
+          <a href='mailto:bayunche@gmail.com'>bayunche@gmail.com</a>
         </li>
         <li>工作地：深圳</li>
         {/* <li>

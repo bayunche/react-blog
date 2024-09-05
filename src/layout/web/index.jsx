@@ -30,17 +30,26 @@ const Live2d = () => {
         models: [
           {
             path: 'https://model.oml2d.com/shizuku_48/index.json',
-            position: [0, 100],
+            position: [100, 100],
             scale: 0.1,
             stageStyle: {
               height: 300,
-              width: 200,
+              width: 300,
             },
           },
           {
             path: 'https://model.oml2d.com/HK416-1-normal/model.json',
-            position: [0, 60],
-            scale: 0.08,
+            position: [10, 110],
+            scale: 0.06,
+            stageStyle: {
+              height: 400,
+              width: 300,
+            },
+          },
+          {
+            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.1/Resources/miku/miku.model.json',
+            position: [10, 110],
+            scale: 0.2,
             stageStyle: {
               height: 400,
               width: 300,
