@@ -349,7 +349,7 @@ class ArticleController {
     const validator = ctx.validate(ctx.request.body, {
       fileNameList: Joi.array().required(),
     })
-
+   console.log(ctx.request.body)
     if (validator) {
       const { fileNameList } = ctx.request.body
       console.log(fileNameList)
