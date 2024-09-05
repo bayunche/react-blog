@@ -351,7 +351,7 @@ class ArticleController {
     })
     console.log(ctx.request.body)
 
-    return (ctx.body = { existList: [], noExistList: [] })
+    return (ctx.body = { validator,fileNameList: ctx.request.body.fileNameList })
     if (validator) {
       const { fileNameList } = ctx.request.body
       console.log(fileNameList)
