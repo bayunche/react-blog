@@ -59,7 +59,7 @@
   color: #ced4d9;
   position: relative;
   top: 0.5px;
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
 }
 .app-container .app-header .header-right #search-box .search-input {
   font-size: 14px;
@@ -144,7 +144,7 @@
 }
 .app-container .app-sidebar .home-pages li {
   padding: 0 8px;
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
 }
 .app-container .app-sidebar .home-pages li a {
   vertical-align: top;
@@ -169,7 +169,7 @@
   font-size: 14px;
   line-height: 32px;
   color: #8590a6;
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
 }
 .app-container .app-sidebar .article-list li:hover {
   background: rgba(255, 255, 255, 0.95);

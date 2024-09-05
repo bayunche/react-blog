@@ -22,7 +22,7 @@
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1.2;
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
 }
 .app-home .app-home-list-item .title:hover {
   color: #48b2ff;
@@ -32,7 +32,7 @@
   padding-left: 20px;
 }
 .app-home .app-home-list-item .content {
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
   max-height: 260px;
   overflow: hidden;
 }
@@ -44,33 +44,11 @@
 .app-home .app-home-list-item .list-item-others a {
   color: inherit;
 }
-.app-home .app-home-list-item .list-item-others .div2:before { /*做一个书签效果*/
-  position: absolute; /*必须*/
-  top: 50px;
-  left: 20px;
-  z-index: 1;
-  height: 0;
-  padding-right: 10px;
-  font-weight: bold;
-  line-height: 0;
-  color: #000;
-  border: 15px solid #ee7600;
-  border-right-color: transparent; /*右边框透明，变成空缺的角*/
-  content: '书签';
-  box-shadow: 0 5px 5px -5px #000;
-}
-.app-home .app-home-list-item .list-item-others .div2:after { /*书签的夹角*/
-  content: '';
-  position: absolute;
-  top: 80px;
-  left: 20px;
-  border: 4px solid #89540c;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
 .app-home .preview {
   position: fixed;
   width: 260px;
+  height: 400px;
+  overflow: hidden;
   top: 90px;
   right: 20px;
   list-style-type: circle;
@@ -80,7 +58,7 @@
   font-size: 22px;
 }
 .app-home .preview li {
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
   display: block;
   -webkit-transition: all 0.3s ease;
   transition: all 0.3s ease;
@@ -97,6 +75,37 @@
   background: #f0f2f5;
 }
 .app-home .preview li:hover a {
+  color: #40a9ff;
+}
+.app-home .github {
+  position: fixed;
+  width: 260px;
+  top: 490px;
+  right: 40px;
+  list-style-type: circle;
+}
+.app-home .github .title {
+  color: #394d69;
+  font-size: 22px;
+}
+.app-home .github li {
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
+  display: block;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: -1px;
+}
+.app-home .github li a {
+  color: #8590a6;
+  display: block;
+}
+.app-home .github li:hover {
+  background: #f0f2f5;
+}
+.app-home .github li:hover a {
   color: #40a9ff;
 }
 .app-home .app-pagination {
@@ -124,7 +133,7 @@
   height: 41px;
   top: 20vh;
   right: 0;
-  cursor: pointer;
+  cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   border-radius: 4px 0 0 4px;
   text-align: center;
@@ -148,4 +157,38 @@
     margin-right: 0;
   }
 }
-
+.button-content-right {
+  width: 80px;
+  height: 30px;
+  background-color: #B2DE34;
+  font-size: small;
+  line-height: 30px;
+  text-align: center;
+  position: relative;
+  top: 15px;
+  left: -15px;
+  z-index: 3;
+}
+.button-content-right:before {
+  content: '';
+  width: 10px;
+  height: 0%;
+  border: 15px solid;
+  border-color: transparent #58661C transparent transparent;
+  border-top: 0;
+  left: -15px;
+  position: absolute;
+  top: 30px;
+  z-index: 1;
+}
+.button-content-right:after {
+  content: '';
+  width: 20px;
+  height: 0%;
+  border: 15px solid;
+  border-color: transparent transparent transparent #B2DE34;
+  position: absolute;
+  right: -30px;
+  top: 0px;
+  z-index: 2;
+}

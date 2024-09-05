@@ -328,7 +328,8 @@ div {
     margin-bottom: 15%;
     text-align: center;
     font-size: 3em;
-    cursor: pointer;
+    cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
+
     color: $bl-color;
   }
   &-message {
