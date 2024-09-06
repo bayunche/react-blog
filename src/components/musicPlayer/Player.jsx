@@ -1,4 +1,5 @@
 import { Col } from 'antd'
+import './player.min.css'
 import React, { useRef, useEffect } from 'react'
 const siderLayout = { xxl: 4, xl: 5, lg: 5, sm: 0, xs: 0 }
 
