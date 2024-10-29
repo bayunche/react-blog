@@ -32,7 +32,7 @@ export class Typer extends React.Component {
               * 希望你也一样，做
               <Typist.Delay ms={500} />
               资本的主人
-              <Typist.Backspace count={6} delay={1000} />
+              <Typist.Backspace count={5} delay={1000} />
               <Typist.Delay ms={750} />
               人生的主人
               <Typist.Delay ms={1250} />
