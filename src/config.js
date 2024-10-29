@@ -68,7 +68,7 @@ export const ANNOUNCEMENT = {
     <>
       个人笔记网站
       练手项目请访问
-      <Href href='https://github.com/bayunche'>bayunche ‘ github</Href>
+      <Href href='https://github.com/bayunche'>bayunche's github</Href>
     </>
   ),
 }

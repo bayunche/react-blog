@@ -70,8 +70,19 @@ export const translateMarkdown2html = plainText => {
     text = this.old_paragraph(text)
     return text
   }
-  // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
+  //对代码块中的pre标签前添加语言显示块和复制节点
+  marked_render.code = function (code, lang, escaped) {
+    if (lang) {
+      lang = lang.toLowerCase()
+    }
+    const codeHtml = `<pre><code class="hljs ${lang}">${escaped ? code : xss(code)}</code></pre>`
+    return codeHtml
+  }
 
+  
+
+  // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
+  
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: marked_render,
     pedantic: false,
