@@ -66,8 +66,9 @@ export const ANNOUNCEMENT = {
   enable: false, // 是否开启
   content: (
     <>
-      个人笔记网站，请访问
-      {/* <Href href='https://www.yuque.com/zhongcaidexiaopengyou/kb'> panyunyi's note</Href> */}
+      个人笔记网站
+      练手项目请访问
+      <Href href='https://github.com/bayunche'>bayunche ‘ github</Href>
     </>
   ),
 }
