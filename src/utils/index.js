@@ -70,7 +70,7 @@ export const translateMarkdown2html = plainText => {
     text = this.old_paragraph(text)
     return text
   }
-  //对代码块中的pre标签前添加语言显示块和复制节点
+  // 对代码块中的pre标签前添加语言显示块和复制节点
   marked_render.code = function (code, lang, escaped) {
     if (lang) {
       lang = lang.toLowerCase()
