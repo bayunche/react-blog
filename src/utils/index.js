@@ -78,11 +78,7 @@ export const translateMarkdown2html = plainText => {
     const codeHtml = `<pre><code class="hljs ${lang}">${escaped ? code : xss(code)}</code></pre>`
     return codeHtml
   }
-
-  
-
   // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
-  
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: marked_render,
     pedantic: false,
