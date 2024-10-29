@@ -97,7 +97,6 @@ const WebLayout = props => {
       <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
       <Live2d></Live2d>
       <Player />
-      
     </Layout>
   )
 }
