@@ -90,13 +90,14 @@ const WebLayout = props => {
         </Col>
         <Col {...contentLayout}>
           <AppMain {...props} />
+          <Beian></Beian>
         </Col>
       </Row>
 
       <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
       <Live2d></Live2d>
       <Player />
-      <Beian></Beian>
+      
     </Layout>
   )
 }
