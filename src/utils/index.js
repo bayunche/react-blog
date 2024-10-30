@@ -71,14 +71,15 @@ export const translateMarkdown2html = plainText => {
     return text
   }
   // 对代码块中的pre标签前添加语言显示块和复制节点
-  marked_render.code = function (code, lang, escaped) {
-    if (lang) {
-      lang = lang.toLowerCase()
-    }
-    const codeHtml = `<pre><div class="enhance"><div class="lang">${lang}</div><div class="copyCode"><i class="el-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M128 320v576h576V320H128zm-32-64h640a32 32 0 0 1 32 32v640a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V288a32 32 0 0 1 32-32zM960 96v704a32 32 0 0 1-32 32h-96v-64h64V128H384v64h-64V96a32 32 0 0 1 32-32h576a32 32 0 0 1 32 32zM256 672h320v64H256v-64zm0-192h320v64H256v-64z"></path></svg>
-</i></div><code class="hljs language-${lang}">${escaped ? code : xss(code)}</code></div></pre>`
-    return codeHtml
-  }
+  // marked_render.code = function (code, lang, escaped) {
+  //   if (lang) {
+  //     lang = lang.toLowerCase()
+  //   }
+  //   const codeHtml = `<pre><div class="enhance"><div class="lang">${lang}</div><code class="language-${lang}">${
+  //     escaped ? code : xss(code)
+  //   }</code></div></pre>`
+  //   return codeHtml
+  // }
   // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
   return marked(isGuardXss ? xss(plainText) : plainText, {
     renderer: marked_render,
@@ -89,7 +90,6 @@ export const translateMarkdown2html = plainText => {
     sanitize: false,
     smartLists: true,
     smartypants: false,
-    langPrefix: 'hljs language-',
     xhtml: false,
     highlight: function (code) {
       /*eslint no-undef: "off"*/
