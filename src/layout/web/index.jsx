@@ -68,9 +68,6 @@ const Live2d = () => {
 
   return canRender && <></>
 }
-
-
-
 const WebLayout = props => {
   return (
     <Layout className='app-container'>
@@ -82,10 +79,8 @@ const WebLayout = props => {
         </Col>
         <Col {...contentLayout}>
           <AppMain {...props} />
-          
         </Col>
       </Row>
-
       <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
       <Live2d></Live2d>
       <Player />
