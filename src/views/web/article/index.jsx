@@ -35,7 +35,6 @@ function Article(props) {
       ele && hash && ele.click() // 挂载时路由跳转到指定位置
     }, 800)
   }, [])
-
   useEffect(() => {
     if (props.match.params.id !== undefined) {
       withLoading(axios.get(`/article/${props.match.params.id}`))

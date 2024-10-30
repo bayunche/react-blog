@@ -76,9 +76,9 @@ export const translateMarkdown2html = plainText => {
     if (lang) {
       lang = lang.toLowerCase()
     }
-    const codeHtml = `<pre><div class="tools"><div class="lang">${lang}</div></div><code class="language-${lang}">${
+    const codeHtml = `<pre><code class="language-${lang}">${
       escaped ? code : xss(code)
-    }</code></pre>`
+    }</code><div class="lang">${lang}</div></pre>`
     return codeHtml
   }
   // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
