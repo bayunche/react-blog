@@ -35,11 +35,21 @@ function Article(props) {
       ele && hash && ele.click() // 挂载时路由跳转到指定位置
     }, 800)
   }, [])
+  // 给pre标签添加<div class="lang">`对应语言类型`</div>
+  function addLanguageDiv(html) {
+    // 使用正则表达式匹配整个pre标签内容
+    return html.replace(
+      /(<pre>)<code class="language-([^"]+)">([\s\S]*?)<\/code><\/pre>/g,
+      (match, preTag, lang, content) => {
+        return `<pre><div class="lang">${lang}</div><code class="language-${lang}">${content}</code></pre>`
+      }
+    )
+  }
   useEffect(() => {
     if (props.match.params.id !== undefined) {
       withLoading(axios.get(`/article/${props.match.params.id}`))
         .then(res => {
-          res.content = translateMarkdown2html(res.content)
+          res.content = addLanguageDiv(translateMarkdown2html(res.content))
           setArticle(res)
         })
         .catch(e => {
@@ -49,8 +59,9 @@ function Article(props) {
       withLoading(axios.get(`/article/share/${props.match.params.uuid}`))
         .then(res => {
           res.content = translateMarkdown2html(res.content)
-          // 将转换后的html使用正则获取pre标签往pre标签后添加语言类型
-          const preList = res.content.match(/<pre>/g)
+          // 将转换后的html使用正则匹配pre标签往pre标签中添加<div class="lang">`对应语言类型`</div>(对应语言类型在code标签的classname中)
+          res.content = res.content.replace(/<pre>/g, '<div> class="lang">lang</div>')
+
           setArticle(res)
         })
         .catch(e => {
