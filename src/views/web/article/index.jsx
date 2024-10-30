@@ -49,6 +49,8 @@ function Article(props) {
       withLoading(axios.get(`/article/share/${props.match.params.uuid}`))
         .then(res => {
           res.content = translateMarkdown2html(res.content)
+          // 将转换后的html使用正则获取pre标签往pre标签后添加语言类型
+          const preList = res.content.match(/<pre>/g)
           setArticle(res)
         })
         .catch(e => {

@@ -69,15 +69,7 @@ const Live2d = () => {
   return canRender && <></>
 }
 
-const Beian = () => {
-  return (
-    <div className='beian'>
-      <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-        粤ICP备2024248632号
-      </a>
-    </div>
-  )
-}
+
 
 const WebLayout = props => {
   return (
@@ -90,7 +82,7 @@ const WebLayout = props => {
         </Col>
         <Col {...contentLayout}>
           <AppMain {...props} />
-          <Beian></Beian>
+          
         </Col>
       </Row>
 
