@@ -150,8 +150,8 @@ pre {
 pre .lang {
   font: bold;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 2px;
+  right: 2px;
   color: #5d5d5d;
   padding: 2px 5px;
 }
