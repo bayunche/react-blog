@@ -16,6 +16,18 @@ RUN apt-get update && apt-get install -y nginx
 # 安装PM2
 RUN npm install -g pm2
 
+# 设置端口
+EXPOSE 4356
+
+EXPOSE 80
+
+EXPOSE 443
+
+# 设置容器名称
+LABEL name="blog"
+
+# 设置nginx
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # 安装依赖
 RUN yarn install
@@ -32,14 +44,6 @@ RUN cd ./server && pm2 start app.js --name "blog_server"
 # 启动前端 
 RUN nohup yarn serve -s build -l 4356 &  
 
-# 设置端口
-EXPOSE 4356
-
-# 设置容器名称
-LABEL name="blog"
-
-# 设置nginx
-COPY ./nginx.conf /etc/nginx/nginx.conf
 
 # 启动nginx
 
