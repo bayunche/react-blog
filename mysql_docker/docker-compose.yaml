@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_blog
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: blog
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: 12345678
+    ports:
+      - "3306:3306"
+    volumes:
+      - /app/blogdata:/var/lib/mysql  # 将数据存储在宿主机的 /app/blogdata
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # 初始化 SQL 脚本
