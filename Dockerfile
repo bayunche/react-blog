@@ -11,7 +11,7 @@ COPY package.json yarn.lock ./
 COPY ./cert ./cert
 
 # 安装 nginx 和 MySQL
-RUN apt-get update && apt-get install -y nginx mysql-server
+RUN apt-get update && apt-get install -y nginx 
 
 # 设置端口
 EXPOSE 80
