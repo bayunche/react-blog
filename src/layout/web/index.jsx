@@ -28,7 +28,7 @@ const Live2d = () => {
         dockedPosition: 'right',
         models: [
           {
-            path: 'https://github.proxy.class3.fun/https://raw.githubusercontent.com/bayunche/react-blog/main/Resources/Terisa/model.json',
+            path: 'https://www.hasunemiku.top/Terisa/model.json',
             position: [100, 100],
             scale: 0.1,
             stageStyle: {
@@ -37,7 +37,7 @@ const Live2d = () => {
             },
           },
           {
-            path: 'https://model.oml2d.com/HK416-1-normal/model.json',
+            path: 'https://www.hasunemiku.top/bilibili-22/index.json',
             position: [10, 110],
             scale: 0.06,
             stageStyle: {
@@ -46,7 +46,7 @@ const Live2d = () => {
             },
           },
           {
-            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.1/Resources/miku/miku.model.json',
+            path: 'https://www.hasunemiku.top/kobayaxi/model.json',
             position: [10, 110],
             scale: 0.2,
             stageStyle: {
