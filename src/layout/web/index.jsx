@@ -28,7 +28,7 @@ const Live2d = () => {
         dockedPosition: 'right',
         models: [
           {
-            path: 'https://model.oml2d.com/shizuku_48/index.json',
+            path: '../../../Resources/Terisa/model.json',
             position: [100, 100],
             scale: 0.1,
             stageStyle: {

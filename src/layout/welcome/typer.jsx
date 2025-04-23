@@ -14,7 +14,7 @@ export class Typer extends React.Component {
 
   render() {
     const docs = '//github.com/bayunche/react-blog'
-    const homepage = '//www.hasunmiku.top/home'
+    const homepage = '//www.hasunemiku.top/home'
     return (
       <div className='typer'>
         <Typist className='typer-header' avgTypingDelay={100} startDelay={2000} onTypingDone={this.onHeaderTyped}>

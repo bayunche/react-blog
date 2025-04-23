@@ -2,4 +2,4 @@
 User-agent: *
 Disallow:
 
-Sitemap:http://www.hasunmiku.top/home/sitemap.xml
+Sitemap:http://www.hasunemiku.top/home/sitemap.xml
