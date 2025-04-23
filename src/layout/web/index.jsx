@@ -28,7 +28,7 @@ const Live2d = () => {
         dockedPosition: 'right',
         models: [
           {
-            path: '../../../Resources/Terisa/model.json',
+            path: 'https://github.proxy.class3.fun/https://raw.githubusercontent.com/bayunche/react-blog/main/Resources/Terisa/model.json',
             position: [100, 100],
             scale: 0.1,
             stageStyle: {
