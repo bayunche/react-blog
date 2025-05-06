@@ -14,6 +14,8 @@ yarn install
 
 yarn add serve 
 
+yarn add compression-webpack-plugin
+
 yarn build 
 
 # 启动前端
