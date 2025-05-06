@@ -59,7 +59,7 @@ const QuickLink = props => {
         getContainer={() => document.querySelector('.app-home')}>
         <List list={list} showTitle={false} />
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-          粤ICP备2024248632号
+          粤ICP备2025410754号
         </a>
       </Drawer>
     </>
