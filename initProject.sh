@@ -14,9 +14,12 @@ yarn install
 
 yarn add serve 
 
-yarn add compression-webpack-plugin
 
-yarn build 
+timeout 600 yarn build || {
+    echo "构建15分钟自动结束，继续执行后续命令"
+    # 这里可以添加清理或重试逻辑
+}
+
 
 # 启动前端
 nohup yarn serve -s build -l 4356 &  
