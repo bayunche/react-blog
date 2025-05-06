@@ -1,80 +1,80 @@
 {
 	"version":"Test 0.0.1",
-	"model":"Terisa/model.moc",
+	"model":"/model.moc",
 	"textures":[
-		"Terisa/delisha.2048/texture_00.png",
-		"Terisa/delisha.2048/texture_01.png"
+		"/delisha.2048/texture_00.png",
+		"/delisha.2048/texture_01.png"
 	],
 	"motions":{
 		"shake":[
-			{"file":"Terisa/motions/001.mtn","sound":"Terisa/sound/theresa_live2d_001.wav","text":155060,"sound_delay":-1}
+			{"file":"/motions/001.mtn","sound":"/sound/theresa_live2d_001.wav","text":155060,"sound_delay":-1}
 		],
 		"flick_head":[
-			{"file":"Terisa/motions/002.mtn","sound":"Terisa/sound/theresa_live2d_002.wav","text":155061,"sound_delay":-1}
+			{"file":"/motions/002.mtn","sound":"/sound/theresa_live2d_002.wav","text":155061,"sound_delay":-1}
 		],
 		"tap_face":[
-			{"file":"Terisa/motions/003.mtn","sound":"Terisa/sound/theresa_live2d_003.wav","text":155062,"sound_delay":-1}
+			{"file":"/motions/003.mtn","sound":"/sound/theresa_live2d_003.wav","text":155062,"sound_delay":-1}
 		],
 		"tap_breast":[
-			{"file":"Terisa/motions/005.mtn","sound":"Terisa/sound/theresa_live2d_005.wav","text":155064,"sound_delay":-0.5}
+			{"file":"/motions/005.mtn","sound":"/sound/theresa_live2d_005.wav","text":155064,"sound_delay":-0.5}
 		],
 		"tap_belly":[
-			{"file":"Terisa/motions/004.mtn","sound":"Terisa/sound/theresa_live2d_004.wav","text":155063,"sound_delay":-1}
+			{"file":"/motions/004.mtn","sound":"/sound/theresa_live2d_004.wav","text":155063,"sound_delay":-1}
 		],
 		"tap_leg":[
-			{"file":"Terisa/motions/006.mtn","sound":"Terisa/sound/theresa_live2d_006.wav","text":155065,"sound_delay":-0.5}
+			{"file":"/motions/006.mtn","sound":"/sound/theresa_live2d_006.wav","text":155065,"sound_delay":-0.5}
 		],
 		"mail":[
-			{"file":"Terisa/motions/007.mtn","sound":"Terisa/sound/theresa_live2d_007.wav","text":155066,"sound_delay":-0.5}
+			{"file":"/motions/007.mtn","sound":"/sound/theresa_live2d_007.wav","text":155066,"sound_delay":-0.5}
 		],
 		"morning":[
-			{"file":"Terisa/motions/008.mtn","sound":"Terisa/sound/theresa_live2d_008.wav","text":155067,"sound_delay":-0.5},
-			{"file":"Terisa/motions/017.mtn","sound":"Terisa/sound/theresa_live2d_017.wav","text":155076,"sound_delay":-0.5}
+			{"file":"/motions/008.mtn","sound":"/sound/theresa_live2d_008.wav","text":155067,"sound_delay":-0.5},
+			{"file":"/motions/017.mtn","sound":"/sound/theresa_live2d_017.wav","text":155076,"sound_delay":-0.5}
 		],
 		"tap_body":[
-			{"file":"Terisa/motions/001.mtn","sound":"Terisa/sound/theresa_live2d_001.wav","text":155060,"sound_delay":-1},
-			{"file":"Terisa/motions/002.mtn","sound":"Terisa/sound/theresa_live2d_002.wav","text":155061,"sound_delay":-1},
-			{"file":"Terisa/motions/003.mtn","sound":"Terisa/sound/theresa_live2d_003.wav","text":155062,"sound_delay":-1},
-			{"file":"Terisa/motions/004.mtn","sound":"Terisa/sound/theresa_live2d_004.wav","text":155063,"sound_delay":-1},
-			{"file":"Terisa/motions/005.mtn","sound":"Terisa/sound/theresa_live2d_005.wav","text":155064,"sound_delay":-0.5},
-			{"file":"Terisa/motions/006.mtn","sound":"Terisa/sound/theresa_live2d_006.wav","text":155065,"sound_delay":-0.5},
-			{"file":"Terisa/motions/008.mtn","sound":"Terisa/sound/theresa_live2d_008.wav","text":155067,"sound_delay":-0.5},
-			{"file":"Terisa/motions/009.mtn","sound":"Terisa/sound/theresa_live2d_009.wav","text":155068,"sound_delay":-0.5},
-			{"file":"Terisa/motions/010.mtn","sound":"Terisa/sound/theresa_live2d_010.wav","text":155069,"sound_delay":-0.5},
-			{"file":"Terisa/motions/011.mtn","sound":"Terisa/sound/theresa_live2d_011.wav","text":155070,"sound_delay":-0.5},
-			{"file":"Terisa/motions/012.mtn","sound":"Terisa/sound/theresa_live2d_012.wav","text":155071,"sound_delay":-0.5},
-			{"file":"Terisa/motions/013.mtn","sound":"Terisa/sound/theresa_live2d_013.wav","text":155072,"sound_delay":-0.5},
-			{"file":"Terisa/motions/014.mtn","sound":"Terisa/sound/theresa_live2d_014.wav","text":155073,"sound_delay":-0.5},
-			{"file":"Terisa/motions/015.mtn","sound":"Terisa/sound/theresa_live2d_015.wav","text":155074,"sound_delay":0.5},
-			{"file":"Terisa/motions/016.mtn","sound":"Terisa/sound/theresa_live2d_016.wav","text":155075,"sound_delay":-0.5},
-			{"file":"Terisa/motions/017.mtn","sound":"Terisa/sound/theresa_live2d_017.wav","text":155075,"sound_delay":-0.5},
-			{"file":"Terisa/motions/019.mtn","sound":"Terisa/sound/theresa_live2d_019.wav","text":155078,"sound_delay":0}
+			{"file":"/motions/001.mtn","sound":"/sound/theresa_live2d_001.wav","text":155060,"sound_delay":-1},
+			{"file":"/motions/002.mtn","sound":"/sound/theresa_live2d_002.wav","text":155061,"sound_delay":-1},
+			{"file":"/motions/003.mtn","sound":"/sound/theresa_live2d_003.wav","text":155062,"sound_delay":-1},
+			{"file":"/motions/004.mtn","sound":"/sound/theresa_live2d_004.wav","text":155063,"sound_delay":-1},
+			{"file":"/motions/005.mtn","sound":"/sound/theresa_live2d_005.wav","text":155064,"sound_delay":-0.5},
+			{"file":"/motions/006.mtn","sound":"/sound/theresa_live2d_006.wav","text":155065,"sound_delay":-0.5},
+			{"file":"/motions/008.mtn","sound":"/sound/theresa_live2d_008.wav","text":155067,"sound_delay":-0.5},
+			{"file":"/motions/009.mtn","sound":"/sound/theresa_live2d_009.wav","text":155068,"sound_delay":-0.5},
+			{"file":"/motions/010.mtn","sound":"/sound/theresa_live2d_010.wav","text":155069,"sound_delay":-0.5},
+			{"file":"/motions/011.mtn","sound":"/sound/theresa_live2d_011.wav","text":155070,"sound_delay":-0.5},
+			{"file":"/motions/012.mtn","sound":"/sound/theresa_live2d_012.wav","text":155071,"sound_delay":-0.5},
+			{"file":"/motions/013.mtn","sound":"/sound/theresa_live2d_013.wav","text":155072,"sound_delay":-0.5},
+			{"file":"/motions/014.mtn","sound":"/sound/theresa_live2d_014.wav","text":155073,"sound_delay":-0.5},
+			{"file":"/motions/015.mtn","sound":"/sound/theresa_live2d_015.wav","text":155074,"sound_delay":0.5},
+			{"file":"/motions/016.mtn","sound":"/sound/theresa_live2d_016.wav","text":155075,"sound_delay":-0.5},
+			{"file":"/motions/017.mtn","sound":"/sound/theresa_live2d_017.wav","text":155075,"sound_delay":-0.5},
+			{"file":"/motions/019.mtn","sound":"/sound/theresa_live2d_019.wav","text":155078,"sound_delay":0}
 		],
 		"idle":[
-			{"file":"Terisa/motions/idel.mtn"}
+			{"file":"/motions/idel.mtn"}
 		],
 		"sleepy":[
-			{"file":"Terisa/motions/idel.mtn"}
+			{"file":"/motions/idel.mtn"}
 		],
 		"activity":[
-			{"file":"Terisa/motions/012.mtn","sound":"Terisa/sound/theresa_live2d_012.wav","text":155071,"sound_delay":-0.5},
-			{"file":"Terisa/motions/013.mtn","sound":"Terisa/sound/theresa_live2d_013.wav","text":155072,"sound_delay":-0.5},
-			{"file":"Terisa/motions/014.mtn","sound":"Terisa/sound/theresa_live2d_014.wav","text":155073,"sound_delay":-0.5}
+			{"file":"/motions/012.mtn","sound":"/sound/theresa_live2d_012.wav","text":155071,"sound_delay":-0.5},
+			{"file":"/motions/013.mtn","sound":"/sound/theresa_live2d_013.wav","text":155072,"sound_delay":-0.5},
+			{"file":"/motions/014.mtn","sound":"/sound/theresa_live2d_014.wav","text":155073,"sound_delay":-0.5}
 		],
 		"born":[
-			{"file":"Terisa/motions/015.mtn","sound":"Terisa/sound/theresa_live2d_015.wav","text":155074,"sound_delay":0.5}
+			{"file":"/motions/015.mtn","sound":"/sound/theresa_live2d_015.wav","text":155074,"sound_delay":0.5}
 		],
 		"friend":[
-			{"file":"Terisa/motions/016.mtn","sound":"Terisa/sound/theresa_live2d_016.wav","text":155075,"sound_delay":-0.5}
+			{"file":"/motions/016.mtn","sound":"/sound/theresa_live2d_016.wav","text":155075,"sound_delay":-0.5}
 		],
 		"afternoon":[
-			{"file":"Terisa/motions/018.mtn","sound":"Terisa/sound/theresa_live2d_018.wav","text":155077,"sound_delay":3}
+			{"file":"/motions/018.mtn","sound":"/sound/theresa_live2d_018.wav","text":155077,"sound_delay":3}
 		],
 		"evening":[
-			{"file":"Terisa/motions/019.mtn","sound":"Terisa/sound/theresa_live2d_019.wav","text":155078,"sound_delay":0}
+			{"file":"/motions/019.mtn","sound":"/sound/theresa_live2d_019.wav","text":155078,"sound_delay":0}
 		]
 	},
-	"physics":"Terisa/physics.json",
+	"physics":"/physics.json",
 	"layout":{
 		"center_x":0.0,
 		"center_y":-0.05,
