@@ -30,7 +30,7 @@ const Live2d = () => {
        
           {
             path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/bilibili-22/index.json',
-            position: [30, 110],
+            position: [30, 100],
             scale: 0.2,
             stageStyle: {
               height: 400,
