@@ -28,7 +28,7 @@ const Live2d = () => {
         dockedPosition: 'right',
         models: [
           {
-            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/Terisa/model.json',
+            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/miku/miku.model.json',
             position: [100, 100],
             scale: 0.1,
             stageStyle: {
@@ -39,7 +39,7 @@ const Live2d = () => {
           {
             path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/bilibili-22/index.json',
             position: [10, 110],
-            scale: 0.06,
+            scale: 0.2,
             stageStyle: {
               height: 400,
               width: 300,
@@ -47,6 +47,15 @@ const Live2d = () => {
           },
           {
             path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/kobayaxi/model.json',
+            position: [10, 110],
+            scale: 0.2,
+            stageStyle: {
+              height: 400,
+              width: 300,
+            },
+          },
+          {
+            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/aqua/1014100aqua.model3.json',
             position: [10, 110],
             scale: 0.2,
             stageStyle: {

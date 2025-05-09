@@ -2,8 +2,8 @@
 	"version":"Test 0.0.1",
 	"model":"model.moc",
 	"textures":[
-		"/delisha.2048/texture_00.png",
-		"/delisha.2048/texture_01.png"
+		"delisha.2048/texture_00.png",
+		"delisha.2048/texture_01.png"
 	],
 	"motions":{
 		"shake":[
