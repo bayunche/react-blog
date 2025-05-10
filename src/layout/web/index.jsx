@@ -27,7 +27,6 @@ const Live2d = () => {
       const oml2d = loadOml2d({
         dockedPosition: 'right',
         models: [
-       
           {
             path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/bilibili-22/index.json',
             position: [30, 100],
