@@ -29,7 +29,7 @@ cd ./server
 
 yarn install && pm2 start app.js --name "blog_server" --watch
 
-
+chmod +x /usr/local/bin/backup_db.sh
 
 
 # 导入数据库
@@ -38,3 +38,5 @@ mysql -h "${DATABASE_HOST:-mysql}" -u testuser -p12345678 test < ./db/test.sql &
 # ============ 添加定时任务 ============
 # 备份数据库
 (crontab -l ; echo "0 2 * * * ./backup_db.sh") | crontab -
+
+echo "项目初始化完成"
