@@ -34,3 +34,7 @@ yarn install && pm2 start app.js --name "blog_server" --watch
 
 # 导入数据库
 mysql -h "${DATABASE_HOST:-mysql}" -u testuser -p12345678 test < ./db/test.sql && echo "数据库导入成功"
+
+# ============ 添加定时任务 ============
+# 备份数据库
+(crontab -l ; echo "0 2 * * * ./backup_db.sh") | crontab -
