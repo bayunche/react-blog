@@ -32,6 +32,7 @@ yarn install && pm2 start app.js --name "blog_server" --watch
 chmod +x /usr/local/bin/backup_db.sh
 
 
+
 # 导入数据库
 mysql -h "${DATABASE_HOST:-mysql}" -u testuser -p12345678 test < ./db/test.sql && echo "数据库导入成功"
 
