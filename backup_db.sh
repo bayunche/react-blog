@@ -7,13 +7,13 @@ DB_HOST="mysql"  # Docker容器名称
 DB_USER="testuser"
 DB_PASS="12345678" 
 DB_NAME="test"
-BACKUP_DIR="./server/db"
-LATEST_BACKUP="$BACKUP_DIR/test.sql"  # 始终覆盖这个文件
+BACKUP_DIR="/backups"
+LATEST_BACKUP="./server/db/test.sql"  # 始终覆盖这个文件
 DATED_BACKUP="$BACKUP_DIR/blog_$(date +%Y%m%d_%H%M%S).sql"  # 带时间戳的备份
 LOG_FILE="/var/log/blog_backup.log"
 KEEP_DAYS=14  # 保留最近14天备份
 
-# 创建备份目录
+# 在宿主机上创建备份目录(会自动映射到容器内)
 mkdir -p "$BACKUP_DIR"
 
 # 记录日志
