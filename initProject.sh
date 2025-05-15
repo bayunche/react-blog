@@ -37,7 +37,18 @@ chmod +x /usr/local/bin/backup_db.sh
 mysql -h "${DATABASE_HOST:-mysql}" -u testuser -p12345678 test < ./db/test.sql && echo "数据库导入成功"
 
 # ============ 添加定时任务 ============
-# 备份数据库
-(crontab -l ; echo "0 2 * * * ./backup_db.sh") | crontab -
+# 1. 确保备份脚本有执行权限
+chmod +x /usr/local/bin/backup_db.sh
+
+# 2. 创建系统级定时任务
+echo "0 2 * * * root /usr/local/bin/backup_db.sh >/var/log/backup_db.log 2>&1" > /etc/cron.d/blog_backup
+chmod 644 /etc/cron.d/blog_backup
+
+# 3. 启动cron服务
+if [ -f /etc/init.d/cron ]; then
+    service cron start
+elif [ -f /usr/sbin/cron ]; then
+    /usr/sbin/cron
+fi
 
 echo "项目初始化完成"

@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     nginx \
     dos2unix \
     default-mysql-client \
-    crontab \
+    cron \
   && rm -rf /var/lib/apt/lists/*
 
   
