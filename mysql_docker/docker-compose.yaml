@@ -34,7 +34,7 @@ services:
       - '443:443'
       - '6060:6060'
     volumes:
-      - /app/mysql_backups:../backups 
+      - /app/mysql_backups:/root/react-blog
     networks:
       - blog-network
 
