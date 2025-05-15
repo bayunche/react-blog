@@ -23,20 +23,17 @@ log() {
 
 log "开始数据库备份..."
 
-# 执行备份 (同时生成两个文件)
-if docker exec mysql8 mysqldump -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" > "$LATEST_BACKUP" && 
+# 直接使用mysql客户端执行备份（不再通过docker exec）
+if mysqldump -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" > "$LATEST_BACKUP" && 
    cp "$LATEST_BACKUP" "$DATED_BACKUP"; then
     log "备份成功: 已更新$LATEST_BACKUP 并创建$DATED_BACKUP"
     
-    # 压缩带日期的备份
     gzip "$DATED_BACKUP"
     log "带日期备份已压缩: ${DATED_BACKUP}.gz"
     
-    # 清理旧备份 (保留14天)
     find "$BACKUP_DIR" -name "blog_*.sql.gz" -mtime +$KEEP_DAYS -delete
     log "已清理超过${KEEP_DAYS}天的旧备份"
     
-    # 确保test.sql不被压缩
     chmod 644 "$LATEST_BACKUP"
 else
     log "备份失败!"
