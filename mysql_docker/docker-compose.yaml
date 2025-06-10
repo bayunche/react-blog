@@ -17,7 +17,19 @@ services:
       - mysql-data:/var/lib/mysql
     networks:
       - blog-network
-
+  word-split-service:
+    build: ../word-split-service  # 假设 Dockerfile 所在目录
+    container_name: word-split-service
+    ports:
+      - '8000:8000'
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - blog-network
   blog:
     build: ../
     container_name: blog

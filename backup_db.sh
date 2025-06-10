@@ -13,29 +13,36 @@ DATED_BACKUP="$BACKUP_DIR/blog_$(date +%Y%m%d_%H%M%S).sql"  # 带时间戳的备
 LOG_FILE="/var/log/blog_backup.log"
 KEEP_DAYS=14  # 保留最近14天备份
 
-# 在宿主机上创建备份目录(会自动映射到容器内)
 mkdir -p "$BACKUP_DIR"
 
-# 记录日志
 log() {
     echo "[$(date +'%Y-%m-%d %H:%M:%S')] $1" >> "$LOG_FILE"
 }
 
 log "开始数据库备份..."
 
-# 直接使用mysql客户端执行备份（不再通过docker exec）
-if mysqldump -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" > "$LATEST_BACKUP" && 
+# 添加 --no-tablespaces 参数避免权限问题
+if mysqldump -h "$DB_HOST" -u "$DB_USER" -p"$DB_PASS" \
+   --no-tablespaces \
+   "$DB_NAME" > "$LATEST_BACKUP" && 
    cp "$LATEST_BACKUP" "$DATED_BACKUP"; then
-    log "备份成功: 已更新$LATEST_BACKUP 并创建$DATED_BACKUP"
+    log "备份成功"
     
     gzip "$DATED_BACKUP"
-    log "带日期备份已压缩: ${DATED_BACKUP}.gz"
-    
     find "$BACKUP_DIR" -name "blog_*.sql.gz" -mtime +$KEEP_DAYS -delete
-    log "已清理超过${KEEP_DAYS}天的旧备份"
-    
     chmod 644 "$LATEST_BACKUP"
 else
-    log "备份失败!"
-    exit 1
+    log "备份失败! 错误码: $?"
+    log "尝试使用root用户备份..."
+    
+    # 备用方案: 使用root账户
+    if mysqldump -h "$DB_HOST" -u root -p"root_password" \
+       "$DB_NAME" > "$LATEST_BACKUP"; then
+        log "使用root账户备份成功"
+        cp "$LATEST_BACKUP" "$DATED_BACKUP"
+        gzip "$DATED_BACKUP"
+    else
+        log "所有备份尝试均失败"
+        exit 1
+    fi
 fi
