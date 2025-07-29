@@ -39,7 +39,7 @@ export default defineConfig({
         manualChunks: {
           vendor: ['react', 'react-dom'],
           router: ['react-router-dom'],
-          redux: ['@reduxjs/toolkit', 'react-redux'],
+          state: ['zustand'],
           antd: ['antd', '@ant-design/icons'],
           live2d: ['oh-my-live2d'],
           utils: ['axios', 'dayjs', 'marked', 'dompurify'],
@@ -53,8 +53,7 @@ export default defineConfig({
       'react',
       'react-dom',
       'react-router-dom',
-      '@reduxjs/toolkit',
-      'react-redux',
+      'zustand',
       'antd',
       '@ant-design/icons',
     ],
