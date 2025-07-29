@@ -555,50 +555,789 @@ module.exports = {
 };
 ```
 
-## 📚 第四阶段：依赖升级
+## 📚 第四阶段：技术栈现代化升级
 
-### 4.1 核心依赖升级
+### 4.1 Node.js 和 React 生态全面升级
 
-1. **React生态升级**
+#### 4.1.1 环境升级路径
+
+**Node.js 升级 (16.12 → 22.x LTS)**
+```bash
+# 使用 nvm 管理 Node 版本
+nvm install 22
+nvm use 22
+
+# 验证版本
+node --version  # v22.x.x
+npm --version   # 10.x.x
+```
+
+**核心依赖升级策略**
 ```json
 {
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.0",
-    "@reduxjs/toolkit": "^1.9.0",
-    "react-redux": "^8.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0",
+    "@reduxjs/toolkit": "^2.2.0",
+    "react-redux": "^9.1.0",
+    "antd": "^5.20.0"
   }
 }
 ```
 
-2. **安全依赖升级**
-```json
-{
-  "dependencies": {
-    "marked": "^4.2.0",
-    "dompurify": "^2.4.0",
-    "axios": "^1.3.0",
-    "crypto-js": "^4.1.0"
-  }
-}
-```
+#### 4.1.2 构建工具现代化 (Webpack → Vite)
 
-### 4.2 开发工具升级
-
-1. **构建工具现代化**
+**推荐迁移到 Vite 5.x**
 ```json
 {
   "devDependencies": {
-    "@vitejs/plugin-react": "^3.1.0",
-    "vite": "^4.1.0",
-    "eslint": "^8.0.0",
-    "prettier": "^2.8.0",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0"
+    "vite": "^5.4.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "@vitejs/plugin-legacy": "^5.4.0",
+    "vite-plugin-windicss": "^1.9.0",
+    "rollup-plugin-visualizer": "^5.12.0"
   }
 }
 ```
+
+**Vite 配置文件**
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
+import WindiCSS from 'vite-plugin-windicss'
+
+export default defineConfig({
+  plugins: [
+    react(),
+    WindiCSS(),
+  ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      'utils': resolve(__dirname, 'src/utils'),
+    },
+  },
+  server: {
+    port: 3000,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:6060',
+        changeOrigin: true,
+      },
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          antd: ['antd'],
+          live2d: ['oh-my-live2d'],
+        },
+      },
+    },
+  },
+})
+```
+
+### 4.2 React 18 适配要点
+
+#### 4.2.1 根组件渲染方式升级
+```jsx
+// src/index.js - 旧版本
+import ReactDOM from 'react-dom';
+ReactDOM.render(<App />, document.getElementById('root'));
+
+// 新版本
+import { createRoot } from 'react-dom/client';
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App />);
+```
+
+#### 4.2.2 StrictMode 和并发特性
+```jsx
+// src/index.js
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+```
+
+#### 4.2.3 新 Hooks 的使用
+```jsx
+// 使用 useId 生成唯一ID
+import { useId } from 'react';
+
+const CommentForm = () => {
+  const id = useId();
+  return (
+    <form>
+      <label htmlFor={`${id}-email`}>邮箱:</label>
+      <input id={`${id}-email`} type="email" />
+    </form>
+  );
+};
+
+// 使用 useDeferredValue 优化性能
+import { useDeferredValue, useMemo } from 'react';
+
+const SearchResults = ({ query }) => {
+  const deferredQuery = useDeferredValue(query);
+  const results = useMemo(() => 
+    searchArticles(deferredQuery), [deferredQuery]
+  );
+  return <ArticleList articles={results} />;
+};
+```
+
+### 4.3 Ant Design 5.x 升级
+
+#### 4.3.1 主要变更适配
+```jsx
+// 旧版本 Icon 导入方式
+import { Icon } from 'antd';
+<Icon type="github" />
+
+// 新版本
+import { GithubOutlined } from '@ant-design/icons';
+<GithubOutlined />
+```
+
+#### 4.3.2 CSS-in-JS 主题配置
+```jsx
+// src/App.jsx
+import { ConfigProvider, theme } from 'antd';
+
+const App = () => {
+  return (
+    <ConfigProvider
+      theme={{
+        algorithm: theme.defaultAlgorithm,
+        token: {
+          colorPrimary: '#ff69b4', // 萌系粉色主题
+          borderRadius: 16,
+          colorBgContainer: 'rgba(255, 255, 255, 0.8)', // 毛玻璃效果
+        },
+      }}
+    >
+      <YourApp />
+    </ConfigProvider>
+  );
+};
+```
+
+## 🎨 第五阶段：萌系博客 + 苹果毛玻璃UI设计
+
+### 5.1 设计理念
+
+#### 5.1.1 萌系设计元素
+- **色彩方案**: 粉色系 + 薄荷绿 + 天空蓝
+- **圆角设计**: 大圆角按钮和卡片 (border-radius: 16px+)
+- **可爱字体**: 使用圆润字体如 "PingFang SC", "Hiragino Sans GB"
+- **萌系图标**: 替换为可爱风格的SVG图标
+- **动画效果**: 弹性动画、悬浮效果
+
+#### 5.1.2 苹果毛玻璃效果
+- **背景模糊**: backdrop-filter: blur()
+- **半透明层**: rgba() 颜色值
+- **渐变边框**: 微妙的渐变描边
+- **层级阴影**: 多层次的 box-shadow
+
+### 5.2 UI组件系统重设计
+
+#### 5.2.1 毛玻璃组件库
+```jsx
+// src/components/GlassCard/index.jsx
+import React from 'react';
+import './index.less';
+
+const GlassCard = ({ 
+  children, 
+  blur = 20, 
+  opacity = 0.8, 
+  borderRadius = 16,
+  className = '',
+  ...props 
+}) => {
+  const style = {
+    backdropFilter: `blur(${blur}px)`,
+    backgroundColor: `rgba(255, 255, 255, ${opacity})`,
+    borderRadius: `${borderRadius}px`,
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    boxShadow: `
+      0 8px 32px rgba(31, 38, 135, 0.37),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.2)
+    `,
+  };
+
+  return (
+    <div className={`glass-card ${className}`} style={style} {...props}>
+      {children}
+    </div>
+  );
+};
+
+export default GlassCard;
+```
+
+```less
+// src/components/GlassCard/index.less
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 
+      0 16px 48px rgba(31, 38, 135, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+```
+
+#### 5.2.2 萌系按钮组件
+```jsx
+// src/components/CuteButton/index.jsx
+import React from 'react';
+import './index.less';
+
+const CuteButton = ({ 
+  type = 'primary', 
+  size = 'medium',
+  children, 
+  icon,
+  loading = false,
+  ...props 
+}) => {
+  return (
+    <button 
+      className={`cute-button cute-button--${type} cute-button--${size}`}
+      disabled={loading}
+      {...props}
+    >
+      {loading && <span className="cute-button__loading">🌸</span>}
+      {icon && <span className="cute-button__icon">{icon}</span>}
+      <span className="cute-button__text">{children}</span>
+    </button>
+  );
+};
+
+export default CuteButton;
+```
+
+```less
+// src/components/CuteButton/index.less
+.cute-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  font-family: 'PingFang SC', 'Hiragino Sans GB', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    color: white;
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.4);
+
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.6);
+    }
+  }
+
+  &--secondary {
+    background: linear-gradient(135deg, #87ceeb, #00bfff);
+    color: white;
+    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.4);
+
+    &:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(135, 206, 235, 0.6);
+    }
+  }
+
+  &__loading {
+    animation: rotate 1s linear infinite;
+  }
+
+  &__icon {
+    font-size: 1.2em;
+  }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+```
+
+### 5.3 全局主题系统
+
+#### 5.3.1 CSS 变量定义
+```css
+/* src/styles/theme.css */
+:root {
+  /* 萌系色彩 */
+  --color-primary: #ff69b4;
+  --color-primary-light: #ffb6c1;
+  --color-primary-dark: #ff1493;
+  
+  --color-secondary: #87ceeb;
+  --color-secondary-light: #b0e0e6;
+  --color-secondary-dark: #4682b4;
+  
+  --color-accent: #98fb98;
+  --color-accent-light: #f0fff0;
+  --color-accent-dark: #00ff7f;
+
+  /* 毛玻璃效果 */
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --glass-backdrop: blur(20px);
+
+  /* 圆角 */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 50px;
+
+  /* 阴影层级 */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.25);
+
+  /* 动画 */
+  --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-smooth: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* 暗黑模式适配 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(0, 0, 0, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.1);
+  }
+}
+```
+
+#### 5.3.2 WindiCSS 配置
+```javascript
+// windi.config.js
+import { defineConfig } from 'windicss/helpers'
+
+export default defineConfig({
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#fef7ff',
+          100: '#fdeeff',
+          200: '#ffc9e3',
+          300: '#ff9ac7',
+          400: '#ff69b4', // 主色
+          500: '#ff1493',
+          600: '#e6007a',
+          700: '#cc0066',
+          800: '#b30052',
+          900: '#99003d',
+        },
+        glass: {
+          white: 'rgba(255, 255, 255, 0.25)',
+          black: 'rgba(0, 0, 0, 0.25)',
+        }
+      },
+      backdropBlur: {
+        xs: '2px',
+        sm: '4px',
+        md: '12px',
+        lg: '20px',
+        xl: '40px',
+      },
+      borderRadius: {
+        'cute': '16px',
+        'super': '24px',
+        'ultra': '32px',
+      },
+      animation: {
+        'bounce-cute': 'bounce-cute 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+        'float': 'float 3s ease-in-out infinite',
+        'glow': 'glow 2s ease-in-out infinite alternate',
+      },
+      keyframes: {
+        'bounce-cute': {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        'float': {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        'glow': {
+          'from': { boxShadow: '0 0 20px rgba(255, 105, 180, 0.5)' },
+          'to': { boxShadow: '0 0 30px rgba(255, 105, 180, 0.8)' },
+        },
+      },
+    },
+  },
+  plugins: [
+    require('windicss/plugin/aspect-ratio'),
+    require('windicss/plugin/line-clamp'),
+  ],
+})
+```
+
+### 5.4 页面布局重设计
+
+#### 5.4.1 主页毛玻璃布局
+```jsx
+// src/views/web/home/index.jsx
+import React from 'react';
+import GlassCard from '@/components/GlassCard';
+import './index.less';
+
+const HomePage = () => {
+  return (
+    <div className="home-page">
+      <div className="home-background">
+        <div className="gradient-orb orb-1"></div>
+        <div className="gradient-orb orb-2"></div>
+        <div className="gradient-orb orb-3"></div>
+      </div>
+
+      <div className="home-content">
+        <GlassCard className="hero-card">
+          <h1 className="hero-title">
+            欢迎来到萌萌的小世界 ✨
+          </h1>
+          <p className="hero-subtitle">
+            在这里记录美好的技术时光～
+          </p>
+        </GlassCard>
+
+        <div className="content-grid">
+          <GlassCard className="article-section">
+            <h2>最新文章 📝</h2>
+            {/* 文章列表 */}
+          </GlassCard>
+
+          <GlassCard className="sidebar-section">
+            <div className="profile-card">
+              <div className="avatar-container">
+                <img src="/assets/avatar.jpg" alt="avatar" />
+                <div className="avatar-glow"></div>
+              </div>
+              <h3>八云澈</h3>
+              <p>睡了已经肝不动了</p>
+            </div>
+          </GlassCard>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HomePage;
+```
+
+```less
+// src/views/web/home/index.less
+.home-page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.home-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  z-index: -1;
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: float 6s ease-in-out infinite;
+
+  &.orb-1 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #ff69b4, #ff1493);
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  &.orb-2 {
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, #87ceeb, #4682b4);
+    top: 60%;
+    right: 20%;
+    animation-delay: 2s;
+  }
+
+  &.orb-3 {
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, #98fb98, #00ff7f);
+    bottom: 20%;
+    left: 50%;
+    animation-delay: 4s;
+  }
+}
+
+.home-content {
+  position: relative;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-card {
+  text-align: center;
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+
+  .hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff69b4, #87ceeb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0;
+  }
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-card {
+  text-align: center;
+  padding: 2rem;
+
+  .avatar-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 1rem;
+
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .avatar-glow {
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff69b4, #87ceeb, #98fb98);
+      z-index: -1;
+      animation: glow 3s ease-in-out infinite;
+    }
+  }
+
+  h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  p {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: italic;
+  }
+}
+```
+
+### 5.5 Live2D 集成优化
+
+#### 5.5.1 萌系 Live2D 配置
+```javascript
+// src/components/Live2D/config.js
+export const live2dConfig = {
+  model: {
+    scale: 0.8,
+    position: [0, 50],
+    stageStyle: {
+      width: 350,
+      height: 450,
+    },
+  },
+  display: {
+    position: 'right',
+    width: 280,
+    height: 350,
+    hOffset: 0,
+    vOffset: -10,
+  },
+  mobile: {
+    show: true,
+    scale: 0.6,
+    position: 'left',
+  },
+  react: {
+    opacity: 0.9,
+  },
+  dialog: {
+    enable: true,
+    script: {
+      'every idle 10s': '欢迎来到我的萌萌小站～ ✨',
+      'hover body': '嘿嘿，你在看哪里呢？ (๑´ㅂ`๑)',
+      'tap body': '呀！不要乱摸啦～ (///▽///)',
+      'tap face': '脸红红的...不要一直盯着看啦！',
+    },
+  },
+  menus: {
+    disable: false,
+    items: [
+      {
+        id: 'theme',
+        icon: '🌸',
+        title: '切换主题',
+        onClick: () => toggleTheme(),
+      },
+      {
+        id: 'music',
+        icon: '🎵',
+        title: '播放音乐',
+        onClick: () => toggleMusic(),
+      },
+    ],
+  },
+}
+```
+
+### 5.6 响应式设计适配
+
+#### 5.6.1 移动端优化
+```less
+// src/styles/responsive.less
+@media (max-width: 768px) {
+  .glass-card {
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .hero-title {
+    font-size: 2rem !important;
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .gradient-orb {
+    display: none; // 移动端隐藏装饰球
+  }
+}
+
+@media (max-width: 480px) {
+  .home-content {
+    padding: 1rem;
+  }
+
+  .cute-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+```
+
+## 💡 设计亮点总结
+
+### 萌系元素
+- 🌸 粉色渐变主色调
+- 🎀 圆润的UI组件设计
+- ✨ 可爱的动画效果
+- 🦄 渐变光球背景装饰
+- 💫 Live2D角色互动
+
+### 毛玻璃效果
+- 背景模糊处理
+- 多层次透明度
+- 渐变边框设计
+- 悬浮阴影效果
+- 光线反射模拟
+
+这套设计方案将现代化的技术栈与萌系美学完美结合，创造出既实用又充满趣味性的博客体验。
 
 ## 🧪 第五阶段：测试与质量保证
 
