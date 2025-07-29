@@ -6,11 +6,7 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 import { GithubFill } from 'utils/antdIcon'
 // API_BASE_URL
-export const SERVER_URL = 'http://www.hasunemiku.top/blog'
-// export const SERVER_URL = 'http://127.0.0.1'
-// export const API_BASE_URL = SERVER_URL + ':6060'
-export const API_BASE_URL = 'https://www.hasunemiku.top/blog/api'
-// export const API_BASE_URL = 'http://127.0.0.1:6060'
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:6060'
 // project config
 export const HEADER_BLOG_NAME = '您的博客名称' // header title 显示的名字
 
@@ -49,8 +45,8 @@ export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
  * github config
  */
 export const GITHUB = {
-  enable: true, // github 第三方授权开关
-  client_id: 'your_github_client_id', // Setting > Developer setting > OAuth applications => client_id
+  enable: true, // github 第三方授权开关  
+  client_id: process.env.REACT_APP_GITHUB_CLIENT_ID, // Setting > Developer setting > OAuth applications => client_id
   url: 'https://github.com/login/oauth/authorize', // 跳转的登录的地址
 }
 

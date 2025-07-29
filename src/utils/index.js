@@ -1,6 +1,6 @@
 import marked from 'marked'
 import { COLOR_LIST } from '@/utils/config'
-import xss from 'xss'
+import DOMPurify from 'dompurify'
 
 import { clear, get } from '@/utils/storage'
 // import * as React from 'react'
@@ -40,10 +40,9 @@ import { clear, get } from '@/utils/storage'
 //   return (<MarkdownRender source={plainText}/>)
 // }
 
-// 转化md 为html
-export const translateMarkdown2html = plainText => {
+// 转化md 为html（安全版本）
+export const translateMarkdown2html = (plainText, isGuardXss = true) => {
   const marked_render = new marked.Renderer()
-  const isGuardXss = false
   marked_render.old_paragraph = marked_render.paragraph
   // 重写`paragraph()`方法
   marked_render.paragraph = function (text) {
@@ -73,13 +72,13 @@ export const translateMarkdown2html = plainText => {
   }
 
   // 配置marked.js的渲染器为marked_render，使用highlight.js来自动高亮MarkDown中的代码
-  return marked(isGuardXss ? xss(plainText) : plainText, {
+  const html = marked(plainText, {
     renderer: marked_render,
     pedantic: false,
     gfm: true,
     tables: true,
     breaks: false,
-    sanitize: false,
+    sanitize: false, // 关闭marked内置净化，使用DOMPurify
     smartLists: true,
     smartypants: false,
     xhtml: false,
@@ -88,6 +87,18 @@ export const translateMarkdown2html = plainText => {
       return hljs.highlightAuto(code).value
     },
   })
+  
+  // 使用DOMPurify进行安全净化
+  return isGuardXss ? DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: [
+      'p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li', 'a', 'img', 
+      'code', 'pre', 'blockquote', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'span', 'div', 'table', 'tr', 'td', 'th', 'thead', 'tbody'
+    ],
+    ALLOWED_ATTR: ['href', 'src', 'alt', 'class', 'id', 'title', 'target'],
+    FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input'],
+    FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover']
+  }) : html
 }
 
 // 获取 url query 参数
@@ -189,9 +200,13 @@ export function encryption(data) {
   }
   strs.sort() // 数组排序
   strs = strs.join('&') // 数组变字符串
-  const endData = strs + '&sign=' + CryptoJS.MD5(strs + 'ADfj3kcadc2349akvm1CPFFCD84f').toString() // MD5加密
-  const key = CryptoJS.enc.Utf8.parse('0880076B18D7EE81') // 加密秘钥
-  const iv = CryptoJS.enc.Utf8.parse('CB3EC842D7C69578') //  矢量
+  
+  const signKey = process.env.REACT_APP_SIGN_KEY || 'ADfj3kcadc2349akvm1CPFFCD84f'
+  const endData = strs + '&sign=' + CryptoJS.MD5(strs + signKey).toString() // MD5加密
+  
+  const key = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_KEY || '0880076B18D7EE81') // 加密秘钥
+  const iv = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_IV || 'CB3EC842D7C69578') //  矢量
+  
   const encryptResult = CryptoJS.AES.encrypt(endData, key, {
     //  AES加密
     iv: iv,

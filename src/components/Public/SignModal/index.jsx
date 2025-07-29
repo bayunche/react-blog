@@ -13,6 +13,9 @@ import { useUserStore } from '@/stores'
 // api
 import { loginAPI, registerAPI } from '@/api/user'
 
+// utils
+import { validatePassword } from '@/utils/password'
+
 // hooks
 import { useListener } from '@/hooks/useBus'
 
@@ -50,6 +53,16 @@ function SignModal(props) {
     
     try {
       const values = await form.validateFields()
+      
+      // 注册时进行密码强度验证
+      if (type === 'register') {
+        const passwordValidation = validatePassword(values.password)
+        if (!passwordValidation.isValid) {
+          setError(passwordValidation.message)
+          return
+        }
+      }
+      
       setLoading(true)
       
       let res
