@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
-import { connect, useSelector, useDispatch } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-// methods
-import { loginout } from '@/redux/user/actions'
+// stores
+import { useUserStore } from '@/stores'
 
 // components
 import { Button, Dropdown, Menu, Avatar } from 'antd'
@@ -12,11 +11,12 @@ import AppAvatar from '@/components/Avatar'
 // hooks
 import useBus from '@/hooks/useBus'
 
-function UserInfo(props) {
-  const dispatch = useDispatch()
+function UserInfo() {
+  const navigate = useNavigate()
   const bus = useBus()
-  const userInfo = useSelector(state => state.user)
-  const { username, github, role } = userInfo
+  const { username, github, role, logout } = useUserStore()
+  
+  const userInfo = { username, github, role }
 
   const MenuOverLay = (
     <Menu>
@@ -27,11 +27,11 @@ function UserInfo(props) {
       )}
       {role === 1 && (
         <Menu.Item>
-          <span onClick={e => props.history.push('/admin')}>后台管理</span>
+          <span onClick={e => navigate('/admin')}>后台管理</span>
         </Menu.Item>
       )}
       <Menu.Item>
-        <span className='user-logout' onClick={e => dispatch(loginout())}>
+        <span className='user-logout' onClick={e => logout()}>
           退出登录
         </span>
       </Menu.Item>
@@ -65,4 +65,4 @@ function UserInfo(props) {
   )
 }
 
-export default withRouter(UserInfo)
+export default UserInfo

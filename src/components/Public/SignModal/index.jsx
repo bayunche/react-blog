@@ -7,9 +7,11 @@ import { useLocation } from 'react-router-dom'
 import { GITHUB } from '@/config'
 import { save } from '@/utils/storage'
 
-// redux
-import { login, register } from '@/redux/user/actions'
-import { useDispatch } from 'react-redux'
+// stores
+import { useUserStore } from '@/stores'
+
+// api
+import { loginAPI, registerAPI } from '@/api/user'
 
 // hooks
 import { useListener } from '@/hooks/useBus'
@@ -31,25 +33,39 @@ function FormItem(props) {
 }
 
 function SignModal(props) {
-  const dispatch = useDispatch() // dispatch hooks
-  const location = useLocation() // location
+  const location = useLocation()
+  const { loginSuccess, setLoading, setError } = useUserStore()
   const [visible, setVisible] = useState(false)
   const [type, setType] = useState('login')
   const [form] = Form.useForm()
+  
   useListener('openSignModal', type => {
     form.resetFields()
     setType(type)
     setVisible(true)
   })
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const action = type === 'login' ? login : register
-    form.validateFields().then(values => {
-      dispatch(action(values)).then(() => {
-        setVisible(false) // type =  login | register
-      })
-    })
+    
+    try {
+      const values = await form.validateFields()
+      setLoading(true)
+      
+      let res
+      if (type === 'login') {
+        res = await loginAPI(values)
+        loginSuccess(res)
+      } else {
+        res = await registerAPI(values)
+      }
+      
+      setVisible(false)
+    } catch (error) {
+      setError(error.message || '操作失败')
+    } finally {
+      setLoading(false)
+    }
   }
 
   function githubLogin() {
