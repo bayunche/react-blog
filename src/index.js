@@ -1,20 +1,38 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
-import { Provider as BusProvider } from '@/hooks/useBus'
-// redux
+import React, { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
-import store from '@/redux'
+import { BrowserRouter } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/locale/zh_CN'
+import dayjs from 'dayjs'
+import 'dayjs/locale/zh-cn'
 
-// styles
-import '@/assets/icons/iconfont'
+// 样式导入
+import 'virtual:windi.css'
 import '@/styles/index.less'
 
-ReactDOM.render(
-  <BusProvider>
+// 应用组件
+import App from './App'
+import store from './store'
+import { themeConfig } from './config/theme'
+
+// 设置 dayjs 中文
+dayjs.locale('zh-cn')
+
+const container = document.getElementById('root')
+const root = createRoot(container)
+
+root.render(
+  <StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <ConfigProvider 
+          locale={zhCN}
+          theme={themeConfig}
+        >
+          <App />
+        </ConfigProvider>
+      </BrowserRouter>
     </Provider>
-  </BusProvider>,
-  document.getElementById('root')
+  </StrictMode>
 )

@@ -1417,6 +1417,10 @@ describe('用户认证流程', () => {
 4. **开发效率**：现代化工具链提升开发体验
 5. **用户体验**：更快的响应速度和更稳定的功能
 
+## 代码编写要求
+
+需要参考airbnb的react代码规范进行编写：https://aitexiaoy.github.io/Airbnd-rules-zh/react.html。
+需要将代码的写法全部改为现代的写法，比如使用Hooks代替类组件，使用函数式组件代替类组件，使用TypeScript代替JavaScript，使用React Router代替React Router v5，使用React Query代替Redux，使用React Spring代替React Transition Group，使用React Hook Form代替Formik，使用React Testing Library代替Enzyme，使用Cypress代替Jest，使用ESLint和Prettier进行代码格式化和质量检查。
 ## 总结
 
 本重构方案遵循"安全第一、渐进式改进"的原则，确保在不影响业务连续性的前提下，系统性地解决项目中存在的问题。通过分阶段实施，可以有效控制风险，确保重构成功。
