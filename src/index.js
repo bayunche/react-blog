@@ -1,6 +1,5 @@
 import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 import { ConfigProvider } from 'antd'
 import zhCN from 'antd/locale/zh_CN'
@@ -13,7 +12,6 @@ import '@/styles/index.less'
 
 // 应用组件
 import App from './App'
-import store from './store'
 import { themeConfig } from './config/theme'
 
 // 设置 dayjs 中文
@@ -24,15 +22,13 @@ const root = createRoot(container)
 
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <ConfigProvider 
-          locale={zhCN}
-          theme={themeConfig}
-        >
-          <App />
-        </ConfigProvider>
-      </BrowserRouter>
-    </Provider>
+    <BrowserRouter>
+      <ConfigProvider 
+        locale={zhCN}
+        theme={themeConfig}
+      >
+        <App />
+      </ConfigProvider>
+    </BrowserRouter>
   </StrictMode>
 )
