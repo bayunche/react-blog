@@ -51,21 +51,16 @@ const MyInfo = () => {
       <Divider orientation='center'>关于我</Divider>
 
       <ul className='about-list'>
-        <li>姓名：王鉴菁</li>
-        <li>本科： 哈尔滨理工大学（HUBST）信管</li>
+        <li>姓名：请在此处填写您的姓名</li>
+        <li>学历：请在此处填写您的学历信息</li>
         <li>
           联系方式：
-          <QqOutline /> 1035010167
+          <QqOutline /> 请填写您的QQ号
           <Divider type='vertical' />
           <SvgIcon type='iconemail' style={{ marginRight: 5, transform: 'translateY(2px)' }} />
-          <a href='mailto:bayunche@gmail.com'>bayunche@gmail.com</a>
+          <a href='mailto:your-email@example.com'>your-email@example.com</a>
         </li>
-        <li>工作地：深圳</li>
-        {/* <li>
-          友情链接博客地址：
-          <Href href='http://blog.liziyang.co/'>栗子栗子</Href>
-          <Divider type='vertical' />
-        </li> */}
+        <li>工作地：请填写您的工作地点</li>
         <li>
           技能
           <ul>
