@@ -24,7 +24,7 @@ const config = {
     },
     subject: '您的博客 - 您的评论获得新的回复！', // 主题
     text: '您的评论获得新的回复！',
-    WEB_HOST: 'http://your-domain.com' // email callback url
+    WEB_HOST: 'http://www.hasunemiku.top' // email callback url
   },
   TOKEN: {
     secret: 'root', // secret is very important!
@@ -35,7 +35,7 @@ const config = {
     user: 'testuser',
     password: '12345678',
     options: {
-      host: 'localhost', // 连接的 host 地址
+      host: 'mysql', // 连接的 host 地址
       dialect: 'mysql', // 连接到 mysql
       pool: {
         max: 5,
@@ -62,7 +62,7 @@ if (!devMode) {
     user: 'testuser',
     password: '12345678',
     options: {
-      host: 'localhost', // 连接的 host 地址
+      host: 'mysql', // 连接的 host 地址
       dialect: 'mysql', // 连接到 mysql
       pool: {
         max: 5,
@@ -95,7 +95,7 @@ if (!devMode) {
     user: 'your_email@example.com', // generated ethereal user
     pass: 'your_email_authorization_code' // generated ethereal password 授权码 而非 密码
   }
-  config.EMAIL_NOTICE.WEB_HOST = 'https://your-domain.com' // email callback url
+  config.EMAIL_NOTICE.WEB_HOST = 'https://hasunemiku.top' // email callback url
 }
 
 module.exports = config

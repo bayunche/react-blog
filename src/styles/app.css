@@ -1,11 +1,11 @@
 .app-container .beian {
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 49%;
+  width: 150px;
   height: 40px;
   cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/default.cur), auto;
   color: #000;

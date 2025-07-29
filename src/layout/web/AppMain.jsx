@@ -15,7 +15,7 @@ function AppMain(props) {
     return (
       <div className='beian'>
         <a href='https://beian.miit.gov.cn/' target='_blank' rel='noopener noreferrer'>
-          粤ICP备2024248632号
+          粤ICP备2025410754号
         </a>
       </div>
     )
