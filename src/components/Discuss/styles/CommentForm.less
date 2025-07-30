@@ -1,0 +1,105 @@
+.comment-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+
+  &__avatar {
+    flex-shrink: 0;
+    
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__guest-inputs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
+
+  &__guest-input {
+    flex: 1;
+
+    .ant-input {
+      border-radius: 6px;
+    }
+  }
+
+  &__textarea {
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 80px;
+
+    &:focus {
+      border-color: #40a9ff;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__tip {
+    display: flex;
+    align-items: center;
+    color: #8c8c8c;
+    font-size: 12px;
+  }
+
+  &__tip-icon {
+    margin-right: 4px;
+  }
+
+  &__tip-text {
+    line-height: 1;
+  }
+
+  &__submit-btn {
+    border-radius: 6px;
+    font-weight: 500;
+    min-width: 88px;
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 8px;
+
+    &__avatar {
+      align-self: flex-start;
+    }
+
+    &__guest-inputs {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    &__controls {
+      flex-direction: column;
+      gap: 8px;
+      align-items: stretch;
+
+      .comment-form__submit-btn {
+        width: 100%;
+      }
+    }
+  }
+}

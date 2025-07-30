@@ -1,0 +1,89 @@
+// 导入子组件样式
+@import '../components/ArticleFormFields.less';
+@import '../components/TagSelector.less';
+@import '../components/ArticleFormActions.less';
+
+.article-edit {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &--loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+
+    .loading-spinner {
+      font-size: 16px;
+      color: #1890ff;
+    }
+  }
+
+  &__header {
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  &__title {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #262626;
+    line-height: 1.4;
+  }
+
+  &__description {
+    margin: 0;
+    color: #8c8c8c;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  &__content {
+    // 内容区域样式
+  }
+
+  // 响应式设计
+  @media (max-width: 1200px) {
+    margin: 0 16px;
+    padding: 20px;
+  }
+
+  @media (max-width: 768px) {
+    margin: 0 12px;
+    padding: 16px;
+    border-radius: 6px;
+
+    &__header {
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+    }
+
+    &__title {
+      font-size: 20px;
+    }
+
+    &__description {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin: 0 8px;
+    padding: 12px;
+
+    &__header {
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+    }
+
+    &__title {
+      font-size: 18px;
+    }
+  }
+}

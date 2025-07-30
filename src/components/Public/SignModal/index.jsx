@@ -1,155 +1,181 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useCallback } from 'react';
+import { Modal, Alert, Tabs } from 'antd';
+import { useListener } from '@/hooks/useBus';
 
-import { Input, Button, Modal, Form } from 'antd'
-import { GithubOutlined } from '@ant-design/icons'
-import { useLocation } from 'react-router-dom'
+// 自定义Hooks
+import { useAuthForm } from './hooks/useAuthForm';
+import { useGithubAuth } from './hooks/useGithubAuth';
 
-import { GITHUB } from '@/config'
-import { save } from '@/utils/storage'
+// 子组件
+import LoginForm from './components/LoginForm';
+import RegisterForm from './components/RegisterForm';
+import SocialAuth from './components/SocialAuth';
 
-// stores
-import { useUserStore } from '@/stores'
+// 样式
+import './styles/index.less';
 
-// api
-import { loginAPI, registerAPI } from '@/api/user'
+const { TabPane } = Tabs;
 
-// utils
-import { validatePassword } from '@/utils/password'
+/**
+ * 登录注册弹窗组件 - 重构后的版本
+ * 支持账号登录、注册和GitHub第三方登录
+ */
+const SignModal = () => {
+  const [visible, setVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState('login');
+  const [error, setError] = useState('');
 
-// hooks
-import { useListener } from '@/hooks/useBus'
+  // GitHub登录相关
+  const {
+    isGithubAuthAvailable,
+    handleGithubLogin,
+    getGithubButtonConfig
+  } = useGithubAuth();
 
-const FormItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 6 }
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 18 }
-  }
-}
-
-function FormItem(props) {
-  const { children, ...rest } = props
-  return <Form.Item {...FormItemLayout} {...rest}>{children}</Form.Item>
-}
-
-function SignModal(props) {
-  const location = useLocation()
-  const { loginSuccess, setLoading, setError } = useUserStore()
-  const [visible, setVisible] = useState(false)
-  const [type, setType] = useState('login')
-  const [form] = Form.useForm()
-  
-  useListener('openSignModal', type => {
-    form.resetFields()
-    setType(type)
-    setVisible(true)
-  })
-
-  async function handleSubmit(e) {
-    e.preventDefault()
-    
-    try {
-      const values = await form.validateFields()
-      
-      // 注册时进行密码强度验证
+  // 表单相关
+  const {
+    form,
+    submitting,
+    handleSubmit,
+    resetForm,
+    getFormRules,
+    getFormLayout
+  } = useAuthForm({
+    onSuccess: (response, type) => {
+      console.log(`${type} success:`, response);
+      setVisible(false);
       if (type === 'register') {
-        const passwordValidation = validatePassword(values.password)
-        if (!passwordValidation.isValid) {
-          setError(passwordValidation.message)
-          return
-        }
+        // 注册成功后切换到登录页面
+        setActiveTab('login');
+        resetForm();
       }
-      
-      setLoading(true)
-      
-      let res
-      if (type === 'login') {
-        res = await loginAPI(values)
-        loginSuccess(res)
-      } else {
-        res = await registerAPI(values)
-      }
-      
-      setVisible(false)
+    },
+    onClose: () => {
+      setVisible(false);
+    }
+  });
+
+  /**
+   * 监听打开弹窗事件
+   */
+  useListener('openSignModal', (type) => {
+    resetForm();
+    setError('');
+    setActiveTab(type || 'login');
+    setVisible(true);
+  });
+
+  /**
+   * 处理弹窗关闭
+   */
+  const handleClose = useCallback(() => {
+    setVisible(false);
+    setError('');
+    resetForm();
+  }, [resetForm]);
+
+  /**
+   * 处理标签页切换
+   * @param {string} key - 标签页键值
+   */
+  const handleTabChange = useCallback((key) => {
+    setActiveTab(key);
+    setError('');
+    resetForm();
+  }, [resetForm]);
+
+  /**
+   * 处理表单提交
+   */
+  const handleFormSubmit = useCallback(async () => {
+    try {
+      await handleSubmit(activeTab);
     } catch (error) {
-      setError(error.message || '操作失败')
-    } finally {
-      setLoading(false)
+      console.error('Form submit failed:', error);
     }
-  }
+  }, [handleSubmit, activeTab]);
 
-  function githubLogin() {
-    const { pathname, search } = location
-    save('prevRouter', `${pathname}${search}`)
-    window.location.href = `${GITHUB.url}?client_id=${GITHUB.client_id}`
-  }
+  /**
+   * 处理GitHub登录
+   */
+  const handleGithubAuth = useCallback(() => {
+    handleGithubLogin({
+      onBeforeRedirect: () => {
+        setVisible(false);
+      },
+      onError: (error) => {
+        setError(error.message);
+      }
+    });
+  }, [handleGithubLogin]);
 
-  // 确认密码
-  function compareToFirstPassword(rule, value, callback) {
-    if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!')
-    } else {
-      callback()
-    }
-  }
+  // 获取表单配置
+  const formLayout = getFormLayout();
+  const formRules = getFormRules();
+  const githubConfig = getGithubButtonConfig();
 
   return (
     <Modal
-      width={460}
-      title={type}
-      visible={visible}
-      onCancel={e => setVisible(false)}
-      footer={null}>
-      <Form layout='horizontal' form={form}>
-        {type === 'login' ? (
-          <>
-            <FormItem label='用户名' name='account'
-              rules={[{ required: true, message: 'Username is required' }]}>
-              <Input placeholder='请输入用户名' />
-            </FormItem>
-            <FormItem label='密码' name='password'
-              rules={[{ required: true, message: 'Password is required' }]}>
-              <Input placeholder='请输入密码' type='password' />
-            </FormItem>
-          </>
-        )
-          : (
-            <>
-              <FormItem label='用户名' name='username' rules={[{ required: true, message: 'Username is required' }]}>
-                <Input placeholder='请输入用户名' />
-              </FormItem>
-              <FormItem label='密码' name='password' rules={[{ required: true, message: 'Password is required' }]}>
-                <Input placeholder='请输入密码' type='password' />
-              </FormItem>
-              <FormItem label='确认密码' name='confirm' rules={[
-                { required: true, message: 'Password is required' },
-                { validator: compareToFirstPassword }
-              ]}>
-                <Input placeholder='确认密码' type='password' />
-              </FormItem>
-              <FormItem label='邮箱' name='email'
-                rules={[
-                  { type: 'email', message: 'The input is not valid E-mail!' },
-                  { required: true, message: 'Please input your E-mail!' }
-                ]}>
-                <Input placeholder='请输入您的邮箱' />
-              </FormItem>
-            </>
-          )}
-      </Form>
-      <Button type='primary' block onClick={handleSubmit}>
-        {type}
-      </Button>
-      {GITHUB.enable && (
-        <Button block icon={<GithubOutlined />} onClick={githubLogin} style={{ marginTop: 10 }}>
-          github login
-        </Button>
-      )}
-    </Modal>
-  )
-}
+      title={null}
+      open={visible}
+      onCancel={handleClose}
+      footer={null}
+      width={480}
+      centered
+      className="sign-modal"
+      destroyOnClose
+    >
+      <div className="sign-modal__content">
+        {/* 错误提示 */}
+        {error && (
+          <Alert
+            message="操作失败"
+            description={error}
+            type="error"
+            showIcon
+            closable
+            onClose={() => setError('')}
+            className="error-alert"
+          />
+        )}
 
-export default SignModal
+        {/* 标签页切换 */}
+        <Tabs
+          activeKey={activeTab}
+          onChange={handleTabChange}
+          centered
+          className="auth-tabs"
+        >
+          <TabPane tab="登录" key="login">
+            <LoginForm
+              form={form}
+              formLayout={formLayout}
+              formRules={formRules.login}
+              submitting={submitting}
+              onSubmit={handleFormSubmit}
+            />
+          </TabPane>
+          
+          <TabPane tab="注册" key="register">
+            <RegisterForm
+              form={form}
+              formLayout={formLayout}
+              formRules={formRules.register}
+              submitting={submitting}
+              onSubmit={handleFormSubmit}
+            />
+          </TabPane>
+        </Tabs>
+
+        {/* 第三方登录 */}
+        <SocialAuth
+          available={githubConfig.available}
+          loading={submitting}
+          onGithubLogin={handleGithubAuth}
+        />
+      </div>
+    </Modal>
+  );
+};
+
+export default SignModal;

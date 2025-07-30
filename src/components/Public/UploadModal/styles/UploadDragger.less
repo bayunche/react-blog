@@ -1,0 +1,99 @@
+.upload-dragger {
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #40a9ff;
+    background: #f0f8ff;
+
+    .ant-upload-drag-icon {
+      .anticon {
+        color: #40a9ff;
+      }
+    }
+
+    .ant-upload-text {
+      color: #40a9ff;
+    }
+  }
+
+  .ant-upload-drag-icon {
+    margin-bottom: 16px;
+
+    .anticon {
+      font-size: 48px;
+      color: #bfbfbf;
+      transition: color 0.3s ease;
+    }
+  }
+
+  .ant-upload-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+  }
+
+  .ant-upload-hint {
+    color: #999;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  // 拖拽状态
+  &.ant-upload-drag-hover {
+    border-color: #1890ff;
+    background: #e6f7ff;
+
+    .ant-upload-drag-icon .anticon {
+      color: #1890ff;
+    }
+
+    .ant-upload-text {
+      color: #1890ff;
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    .ant-upload-drag-icon {
+      margin-bottom: 12px;
+
+      .anticon {
+        font-size: 40px;
+      }
+    }
+
+    .ant-upload-text {
+      font-size: 15px;
+    }
+
+    .ant-upload-hint {
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px 16px;
+
+    .ant-upload-drag-icon {
+      margin-bottom: 10px;
+
+      .anticon {
+        font-size: 36px;
+      }
+    }
+
+    .ant-upload-text {
+      font-size: 14px;
+    }
+
+    .ant-upload-hint {
+      font-size: 12px;
+    }
+  }
+}

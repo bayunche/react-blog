@@ -1,150 +1,92 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Modal, Upload, notification, Tag, message, Table } from 'antd'
+import React from 'react';
+import { Modal } from 'antd';
 
-import { API_BASE_URL } from '@/config'
-import { getToken, debounce } from '@/utils'
-import axios from '@/utils/axios'
+// 自定义Hooks
+import { useUploadModal } from './hooks/useUploadModal';
+import { useUploadFile } from './hooks/useUploadFile';
+import { useUploadSubmit } from './hooks/useUploadSubmit';
 
-// hooks
-import { useListener } from '@/hooks/useBus'
-import useBoolean from '@/hooks/useBoolean'
-import { InboxOutlined } from '@ant-design/icons'
+// 子组件
+import UploadDragger from './components/UploadDragger';
+import UploadTable from './components/UploadTable';
+import UploadSummary from './components/UploadSummary';
 
-function UploadModal(props) {
-  const dispatch = useDispatch() // dispatch hooks
-  const authorId = useSelector(state => state.user.userId)
-  const timer = useRef(null)
+// 样式
+import './styles/index.less';
 
-  const confirmLoading = useBoolean(false)
-  const { value: visible, setTrue, setFalse } = useBoolean(false)
-  const [fileList, setFileList] = useState([])
-  const [parsedList, setParsedList] = useState([])
+/**
+ * 文章上传弹窗组件 - 重构后的版本
+ * 支持拖拽上传Markdown文件，批量导入文章
+ */
+const UploadModal = () => {
+  // 文件上传管理
+  const {
+    fileList,
+    parsedList,
+    getParsedFile,
+    removeFile,
+    resetFiles,
+    getUploadConfig,
+    getUploadList
+  } = useUploadFile();
 
-  const columns = [
-    {
-      dataIndex: 'name',
-      title: '文件名'
-    },
-    {
-      dataIndex: 'title',
-      title: '标题',
-      render: (text, record) => getParsed(record.name).title
-    },
-    {
-      dataIndex: 'exist',
-      title: '动作',
-      render: (text, record) => {
-        if (record.status === 'error') return <Tag color='red'>上传失败</Tag>
-        return getParsed(record.name).exist ? <Tag color='gold'>更新</Tag> : <Tag color='green'>插入</Tag>
-      }
-    },
-    {
-      dataIndex: 'uid',
-      title: '操作',
-      render: (uid, record) => {
-        return (
-          <a className='delete-text'
-            onClick={e => {
-              const index = fileList.findIndex(file => file.uid === uid)
-              fileList.splice(index, 1)
-              setFileList([...fileList])
-            }}>删除</a>
-        )
-      }
-    }
-  ]
+  // 提交管理
+  const {
+    confirmLoading,
+    handleSubmit,
+    getSubmitButtonProps
+  } = useUploadSubmit();
 
-  useListener('openUploadModal', () => {
-    setFileList([])
-    setTrue()
-  })
+  // 弹窗管理
+  const {
+    visible,
+    closeModal,
+    getModalConfig
+  } = useUploadModal({
+    onOpen: resetFiles,
+    onClose: resetFiles
+  });
 
-  function getParsed(fileName) {
-    return parsedList.find(d => d.fileName === fileName) || {}
-  }
+  /**
+   * 处理确认提交
+   */
+  const handleConfirm = async () => {
+    const uploadList = getUploadList();
+    await handleSubmit(uploadList, closeModal);
+  };
 
-  function handleFileChange({ file, fileList }) {
-    if (file.status === 'done') {
-      clearTimeout(timer.current)
-      timer.current = setTimeout(() => {
-        const fileNameList = fileList.map(item => item.name)
-        axios.post('/article/checkExist', { fileNameList }).then(list => {
-          setParsedList(list)
-        })
-      }, 1000)
-    }
-    setFileList(fileList)
-  }
-
-  function handleSubmit(e) {
-    const uploadList = fileList.reduce((list, file) => {
-      if (file.status === 'done') {
-        const result = parsedList.find(d => file.name === d.fileName)
-        list.push(result)
-      }
-      return list
-    }, [])
-    confirmLoading.setTrue()
-    axios.post('/article/upload/confirm', { authorId, uploadList }).then(response => {
-      confirmLoading.setFalse()
-      setFalse()
-      notification.success({
-        message: 'upload article success',
-        description: `插入文章数： ${response.insertList.length} 更新文章数： ${response.updateList.length}`
-      })
-    }).catch(error => {
-      console.log('error: ', error)
-      confirmLoading.setFalse()
-    })
-  }
+  // 获取上传配置
+  const uploadConfig = getUploadConfig();
+  const modalConfig = getModalConfig();
+  const submitButtonProps = getSubmitButtonProps(fileList.length);
 
   return (
     <Modal
-      width={760}
-      visible={visible}
-      title='导入文章'
-      onOk={handleSubmit}
-      onCancel={setFalse}
-      maskClosable={false}
-      okButtonProps={{
-        loading: confirmLoading.value,
-        disabled: fileList.length === 0
-      }}
-      destroyOnClose>
-      <Upload.Dragger
-        name='file'
-        multiple
-        showUploadList={false}
-        action={`${API_BASE_URL}/article/upload`}
-        onChange={handleFileChange}
-        headers={{ Authorization: getToken() }}
-        accept='text/markdown'>
-        <p className='ant-upload-drag-icon'>
-          <InboxOutlined />
-        </p>
-        <p className='ant-upload-text'>Click or drag file to this area to upload</p>
-        <p className='ant-upload-hint'>
-          Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-        </p>
-      </Upload.Dragger>
+      {...modalConfig}
+      onOk={handleConfirm}
+      okButtonProps={submitButtonProps}
+      okText="确认导入"
+      cancelText="取消"
+    >
+      {/* 文件拖拽上传区域 */}
+      <UploadDragger uploadConfig={uploadConfig} />
 
-      {
-        fileList.length > 0 && (
-          <Table
-            // showHeader={false}
-            dataSource={fileList}
-            columns={columns}
-            rowKey='uid'
-            pagination={false}
-            size='small'
-            style={{ marginTop: 15 }}
-          />
-        )
-      }
+      {/* 文件统计摘要 */}
+      <UploadSummary 
+        fileList={fileList}
+        getParsedFile={getParsedFile}
+      />
 
+      {/* 文件列表表格 */}
+      {fileList.length > 0 && (
+        <UploadTable
+          fileList={fileList}
+          getParsedFile={getParsedFile}
+          onRemoveFile={removeFile}
+        />
+      )}
     </Modal>
-  )
-}
+  );
+};
 
-export default UploadModal
+export default UploadModal;

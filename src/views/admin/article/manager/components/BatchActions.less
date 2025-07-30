@@ -1,0 +1,122 @@
+.batch-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #fff;
+  border-top: 1px solid #f0f0f0;
+  border-radius: 0 0 8px 8px;
+
+  &__toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .toggle-label {
+      font-weight: 500;
+      color: #262626;
+      font-size: 14px;
+    }
+  }
+
+  &__operations {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    justify-content: flex-end;
+
+    .selection-info {
+      .selection-text {
+        color: #595959;
+        font-size: 13px;
+        margin-right: 8px;
+      }
+
+      .ant-badge {
+        .ant-badge-count {
+          font-size: 12px;
+          height: 18px;
+          line-height: 18px;
+          min-width: 18px;
+          padding: 0 6px;
+        }
+      }
+    }
+  }
+
+  // 批量操作按钮样式
+  .ant-btn {
+    &.ant-btn-sm {
+      font-size: 12px;
+      height: 28px;
+      padding: 0 12px;
+    }
+
+    &.ant-btn-primary {
+      &.ant-btn-dangerous {
+        background: #ff4d4f;
+        border-color: #ff4d4f;
+
+        &:hover {
+          background: #ff7875;
+          border-color: #ff7875;
+        }
+
+        &:disabled {
+          background: #ffccc7;
+          border-color: #ffccc7;
+        }
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 16px;
+
+    &__toggle {
+      width: 100%;
+      justify-content: center;
+    }
+
+    &__operations {
+      width: 100%;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+
+      .selection-info {
+        order: -1;
+      }
+
+      .ant-space {
+        flex-wrap: wrap;
+        justify-content: center;
+
+        .ant-space-item {
+          .ant-btn {
+            font-size: 11px;
+            padding: 0 8px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__operations {
+      .ant-space {
+        .ant-space-item {
+          width: 100%;
+          
+          .ant-btn {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
