@@ -1,0 +1,343 @@
+// 懒加载组件样式
+.lazy-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 20px;
+
+  // 默认加载器
+  &:not(.minimal):not(.skeleton):not(.card-skeleton):not(.table-skeleton):not(.error) {
+    .ant-spin {
+      .ant-spin-dot {
+        font-size: 20px;
+        
+        .anticon {
+          color: #ff69b4;
+        }
+      }
+      
+      .ant-spin-text {
+        color: #666;
+        margin-top: 8px;
+        font-size: 14px;
+      }
+    }
+  }
+
+  // 极简加载器
+  &.minimal {
+    min-height: 60px;
+    padding: 10px;
+
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #ff69b4;
+      border-radius: 50%;
+      animation: lazy-spin 1s linear infinite;
+    }
+  }
+
+  // 骨架屏
+  &.skeleton {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+
+    .skeleton-row {
+      margin-bottom: 12px;
+
+      .skeleton-line {
+        height: 16px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        border-radius: 4px;
+        animation: lazy-shimmer 1.5s infinite;
+      }
+    }
+  }
+
+  // 卡片骨架屏
+  &.card-skeleton {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+
+    .skeleton-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .skeleton-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: lazy-shimmer 1.5s infinite;
+        margin-right: 12px;
+      }
+
+      .skeleton-title {
+        height: 16px;
+        width: 120px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        border-radius: 4px;
+        animation: lazy-shimmer 1.5s infinite;
+      }
+    }
+
+    .skeleton-content {
+      .skeleton-line {
+        height: 14px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        animation: lazy-shimmer 1.5s infinite;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  // 表格骨架屏
+  &.table-skeleton {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+
+    .skeleton-table-header {
+      display: flex;
+      background: #fafafa;
+      border-bottom: 1px solid #f0f0f0;
+
+      .skeleton-table-cell {
+        flex: 1;
+        height: 40px;
+        padding: 8px 12px;
+        
+        &.header {
+          background: linear-gradient(90deg, #f5f5f5 25%, #e8e8e8 50%, #f5f5f5 75%);
+          background-size: 200% 100%;
+          animation: lazy-shimmer 1.5s infinite;
+          border-radius: 4px;
+          margin: 4px;
+        }
+      }
+    }
+
+    .skeleton-table-row {
+      display: flex;
+      border-bottom: 1px solid #f0f0f0;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .skeleton-table-cell {
+        flex: 1;
+        height: 48px;
+        padding: 8px 12px;
+        background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+        background-size: 200% 100%;
+        animation: lazy-shimmer 1.5s infinite;
+        border-radius: 4px;
+        margin: 4px;
+      }
+    }
+  }
+
+  // 错误状态
+  &.error {
+    flex-direction: column;
+    min-height: 120px;
+
+    .error-content {
+      text-align: center;
+      color: #666;
+
+      .error-icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+
+      .error-title {
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 4px;
+        color: #333;
+      }
+
+      .error-message {
+        font-size: 12px;
+        color: #999;
+        margin-bottom: 12px;
+      }
+
+      .error-retry {
+        padding: 6px 16px;
+        background: #ff69b4;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: #ff1493;
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}
+
+// 图片懒加载
+.lazy-image {
+  position: relative;
+  overflow: hidden;
+
+  .lazy-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    background: #f8f9fa;
+
+    .lazy-image-spinner {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #ff69b4;
+      border-radius: 50%;
+      animation: lazy-spin 1s linear infinite;
+    }
+  }
+
+  .lazy-image-content {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+
+  .lazy-image-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100px;
+    background: #f8f9fa;
+    color: #666;
+
+    .error-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+      opacity: 0.5;
+    }
+
+    .error-text {
+      font-size: 14px;
+    }
+  }
+}
+
+// Live2D 加载器
+.live2d-loader {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 105, 180, 0.2);
+    border-top: 3px solid #ff69b4;
+    border-radius: 50%;
+    animation: lazy-spin 1s linear infinite;
+  }
+}
+
+// 动画定义
+@keyframes lazy-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes lazy-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .lazy-loader {
+    min-height: 80px;
+    padding: 16px;
+
+    &.minimal {
+      min-height: 40px;
+      padding: 8px;
+
+      .spinner {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    &.card-skeleton {
+      padding: 12px;
+
+      .skeleton-header {
+        .skeleton-avatar {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+  }
+
+  .live2d-loader {
+    width: 150px;
+    height: 150px;
+    bottom: 10px;
+    right: 10px;
+
+    .spinner {
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .lazy-loader {
+    min-height: 60px;
+    padding: 12px;
+
+    &.skeleton,
+    &.card-skeleton,
+    &.table-skeleton {
+      padding: 8px;
+    }
+  }
+}
