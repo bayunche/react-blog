@@ -1,167 +1,210 @@
-import React, { Component, useState, useEffect } from 'react'
-import { connect, useSelector } from 'react-redux'
-import './index.less'
+import React from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import { BackTop, message } from 'antd';
+import useBreadcrumb from '@/hooks/useBreadcrumb';
+import { useArticleData } from './hooks/useArticleData';
+import { useArticleSubmit } from './hooks/useArticleSubmit';
+import ArticleFormFields from './components/ArticleFormFields';
+import ArticleFormActions from './components/ArticleFormActions';
+import './styles/index.less';
 
-import axios from '@/utils/axios'
-import { Button, Input, Modal, BackTop, message, Switch} from 'antd'
-import MdEditor from '@/components/MdEditor'
-import List from './Tag'
-import useBreadcrumb from '@/hooks/useBreadcrumb'
-import { CheckCircleOutline, CheckCircleFill } from 'utils/antdIcon'
-function Edit(props) {
-  const store = useSelector(state => ({
-    tagList: state.article.tagList,
-    categoryList: state.article.categoryList,
-    authorId: state.user.userId
-  }))
-  const [realId, setRealId] = useState(0)
-  const [content, setContent] = useState('')
-  const [title, setTitle] = useState('')
-  const [type, setType] = useState(true)
-  const [top, setTop] = useState(false)
-  const [tagList, setTagList] = useState([])
-  const [categoryList, setCategoryList] = useState([])
-  const [tagSelectedList, setTagSelectedList] = useState([])
-  const [cateSelectedList, setCateSelectedList] = useState([])
-  const editId = props.match.params.id
+/**
+ * 文章编辑页面组件 - 重构后的版本
+ * 支持新增和编辑文章功能
+ */
+const ArticleEdit = () => {
+  const { id: editId } = useParams();
+  const history = useHistory();
 
-  useBreadcrumb([{ link: '/admin/article/manager', name: '文章管理' }, editId ? '编辑文章' : '新增文章'])
+  // 设置面包屑导航
+  useBreadcrumb([
+    { link: '/admin/article/manager', name: '文章管理' }, 
+    editId ? '编辑文章' : '新增文章'
+  ]);
 
-  useEffect(() => {
-    // did mounted
-    if (editId) {
-      fetchArticle(editId)
-    } else {
+  // 使用文章数据管理Hook
+  const {
+    loading,
+    error,
+    title,
+    content,
+    type,
+    top,
+    tagList,
+    categoryList,
+    tagSelectedList,
+    cateSelectedList,
+    realId,
+    isEdit,
+    formTitle,
+    setTitle,
+    setContent,
+    setType,
+    setTop,
+    setTagSelectedList,
+    setCateSelectedList,
+    setError,
+    validateForm,
+    getFormData,
+    getUpdateData,
+    resetForm
+  } = useArticleData(editId);
+
+  // 使用文章提交Hook
+  const {
+    submitting,
+    createArticle,
+    updateArticle,
+    saveDraft,
+    previewArticle
+  } = useArticleSubmit({
+    onSuccess: (response, action) => {
+      if (action === 'created' || action === 'updated') {
+        // 可以选择跳转到文章管理页或保持在当前页
+        // history.push('/admin/article/manager');
+      } else if (action === 'continue') {
+        // 用户选择继续编辑，清空表单
+        resetForm();
+      }
+    },
+    onError: (error) => {
+      console.error('Article operation failed:', error);
     }
-  }, [props.match.params])
+  });
 
-  useEffect(() => {
-    // mounted
-    if (!editId) {
-      const tags = store.tagList.map(d => d.name).slice(0, 10)
-      const cates = store.categoryList.map(d => d.name).slice(0, 10)
-      setTagList(tags)
-      setCategoryList(cates)
-      tags[0] && setTagSelectedList([tags[0]])
-      cates[0] && setCateSelectedList([cates[0]])
+  /**
+   * 处理表单保存
+   */
+  const handleSave = async () => {
+    // 清除之前的错误
+    setError(null);
+
+    // 表单验证
+    if (!validateForm()) {
+      return;
     }
-  }, [store.tagList, store.categoryList])
 
-  function fetchArticle(id) {
-    axios.get(`/article/share/${id}?type=0`).then(res => {
-      setRealId(res.id)
-      setTitle(res.title)
-      setContent(res.content)
-      setType(res.type)
-      setTop(res.top)
-      const tags = res.tags.map(d => d.name)
-      const categories = res.categories.map(d => d.name)
-      setTagList(tags)
-      setCategoryList(categories)
-      setTagSelectedList(tags)
-      setCateSelectedList(categories)
-    })
-  }
+    try {
+      if (isEdit) {
+        // 更新现有文章
+        const updateData = getUpdateData();
+        await updateArticle(realId, updateData);
+      } else {
+        // 创建新文章
+        const formData = getFormData();
+        await createArticle(formData, history);
+      }
+    } catch (error) {
+      // 错误已在Hook中处理
+    }
+  };
 
-  function add() {
-    if (!title) return message.warning('标题不能为空！')
-    axios
-      .post('/article', {
-        title,
-        content,
-        tagList: tagSelectedList,
-        categoryList: cateSelectedList,
-        authorId: store.authorId,
-        type: type,
-        top: top
-      })
-      .then(res => {
-        Modal.confirm({
-          title: '文章创建成功！是否立即查看？',
-          onOk: () => props.history.push(`/article/${res.id}`)
-        })
-      })
-  }
+  /**
+   * 处理保存草稿
+   */
+  const handleSaveDraft = async () => {
+    // 清除之前的错误
+    setError(null);
 
-  function update() {
-    axios
-      .put(`/article/${realId}`, {
-        title,
-        content,
-        tags: tagSelectedList,
-        categories: cateSelectedList,
-        type: type,
-        top: top
-      })
-      .then(res => {
-        message.success('更新成功')
-      })
+    // 基本验证（草稿的验证要求较低）
+    if (!title.trim()) {
+      setError('标题不能为空');
+      return;
+    }
+
+    try {
+      const formData = getFormData();
+      await saveDraft(formData);
+      
+      // 保存草稿后可以选择清空表单
+      resetForm();
+    } catch (error) {
+      // 错误已在Hook中处理
+    }
+  };
+
+  /**
+   * 处理预览
+   */
+  const handlePreview = () => {
+    if (!title.trim() || !content.trim()) {
+      message.warning('请先填写标题和内容');
+      return;
+    }
+
+    const formData = getFormData();
+    previewArticle(formData);
+  };
+
+  /**
+   * 处理重置表单
+   */
+  const handleReset = () => {
+    resetForm();
+    message.success('表单已重置');
+  };
+
+  /**
+   * 检查是否可以提交
+   */
+  const canSubmit = title.trim() && content.trim() && !loading;
+
+  if (loading && isEdit) {
+    return (
+      <div className="article-edit article-edit--loading">
+        <div className="loading-spinner">加载中...</div>
+      </div>
+    );
   }
 
   return (
-    <div className='admin-edit-article'>
-      <ul className='form-list'>
-        <li>
-          <span className='label'>标题：</span>
-          <span style={{ flex: 1 }}>
-            <Input
-              placeholder='请输入文章标题'
-              className='title-input'
-              name='title'
-              value={title}
-              onChange={e => setTitle(e.target.value)}
-            />
-          </span>
-        </li>
-        <li>
-          <span className='label'>标签：</span>
-          <span>
-            <List
-              list={tagList}
-              setList={setTagList}
-              selectedList={tagSelectedList}
-              setSelectedList={setTagSelectedList}
-            />
-          </span>
-        </li>
-        <li>
-          <span className='label'>分类：</span>
-          <span>
-            <List
-              list={categoryList}
-              setList={setCategoryList}
-              selectedList={cateSelectedList}
-              setSelectedList={setCateSelectedList}
-            />
-          </span>
-        </li>
+    <div className="article-edit">
+      <div className="article-edit__header">
+        <h2 className="article-edit__title">{formTitle}</h2>
+        <p className="article-edit__description">
+          {isEdit 
+            ? '编辑您的文章内容，修改后点击更新即可保存更改。' 
+            : '创建一篇新文章，填写完整信息后可选择发布或保存为草稿。'
+          }
+        </p>
+      </div>
 
-        <li style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'center'}}>
-          <span className='label'>私密：</span>
-          <Switch checkedChildren='公开' unCheckedChildren='私密' checked={type} onChange={setType} />
-        </li>
-        <li style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', alignItems: 'center'}}>
-          <span className='label'>置顶：</span>
-          <Switch checkedChildren='置顶' unCheckedChildren='普通' checked={top} onChange={setTop} />
-        </li>
-      </ul>
-      <MdEditor value={content} onChange={setContent} />
-      <Button
-        type='primary'
-        shape='circle'
-        size='large'
-        disabled={!title}
-        className='action-icon'
-        title={editId ? '更新' : '新增'}
-        icon={editId ? <CheckCircleFill /> : <CheckCircleOutline />}
-        onClick={() => {
-          editId ? update() : add()
-        }}
-      />
+      <div className="article-edit__content">
+        {/* 表单字段 */}
+        <ArticleFormFields
+          title={title}
+          content={content}
+          type={type}
+          top={top}
+          tagList={tagList}
+          categoryList={categoryList}
+          tagSelectedList={tagSelectedList}
+          cateSelectedList={cateSelectedList}
+          error={error}
+          onTitleChange={setTitle}
+          onContentChange={setContent}
+          onTypeChange={setType}
+          onTopChange={setTop}
+          onTagChange={setTagSelectedList}
+          onCategoryChange={setCateSelectedList}
+        />
 
-      <BackTop target={() => document.querySelector('.admin-content-wrap')} />
+        {/* 操作按钮 */}
+        <ArticleFormActions
+          isEdit={isEdit}
+          submitting={submitting}
+          canSubmit={canSubmit}
+          onSave={handleSave}
+          onSaveDraft={handleSaveDraft}
+          onPreview={handlePreview}
+          onReset={handleReset}
+        />
+      </div>
+
+      {/* 回到顶部按钮 */}
+      <BackTop />
     </div>
-  )
-}
+  );
+};
 
-export default Edit
+export default ArticleEdit;

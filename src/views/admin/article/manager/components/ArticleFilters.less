@@ -1,0 +1,98 @@
+.article-filters {
+  margin-bottom: 24px;
+
+  &__form {
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e8e8e8;
+
+    .search-form {
+      .ant-form-item {
+        margin-bottom: 16px;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .ant-form-item-label {
+        font-weight: 500;
+        color: #262626;
+      }
+    }
+  }
+
+  &__summary {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background: #e6f7ff;
+    border-radius: 6px;
+    border: 1px solid #91d5ff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    .summary-label {
+      font-weight: 500;
+      color: #0050b3;
+      font-size: 13px;
+    }
+
+    .clear-filters-btn {
+      margin-left: auto;
+      color: #1890ff;
+      font-size: 12px;
+      
+      &:hover {
+        color: #40a9ff;
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 1200px) {
+    &__form {
+      .search-form {
+        .ant-form-item {
+          margin-right: 8px;
+          margin-bottom: 12px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__form {
+      padding: 16px;
+      
+      .search-form {
+        .ant-form-item {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 12px;
+          
+          .ant-input,
+          .ant-select {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+
+    &__summary {
+      padding: 10px 12px;
+      
+      .summary-label {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+      
+      .clear-filters-btn {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  }
+}

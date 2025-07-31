@@ -1,13 +1,13 @@
 const devMode = process.env.NODE_ENV === 'development'
 const config = {
   PORT: 6060, // 启动端口
-  ADMIN_GITHUB_LOGIN_NAME: '1035010167@qq.com', // 博主的 github 登录的账户名 user
+  ADMIN_GITHUB_LOGIN_NAME: 'your_github_username', // 博主的 github 登录的账户名 user
   GITHUB: {
-    client_id: '87a4f88b943adaafd44a',
-    client_secret: '5339d20f5b1488aeeb8d853a004cb749153790af',
+    client_id: 'your_github_client_id',
+    client_secret: 'your_github_client_secret',
     access_token_url: 'https://github.com/login/oauth/authorize',
     fetch_user_url: 'https://api.github.com/user', // 用于 oauth2
-    fetch_user: 'https://api.github.com/user' // fetch user url https://api.github.com/users/gershonv
+    fetch_user: 'https://api.github.com/user' // fetch user url
   },
   EMAIL_NOTICE: {
     // 邮件通知服务
@@ -18,11 +18,11 @@ const config = {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: '1035010167@qq.com', // generated ethereal user
-        pass: 'f2bbfe7cf1bcb8253a65c06701fbbbbf8c910be44ecc1a430497d4879db0d71d' // generated ethereal password 授权码 而非 密码
+        user: 'your_email@example.com', // generated ethereal user
+        pass: 'your_email_authorization_code' // generated ethereal password 授权码 而非 密码
       }
     },
-    subject: 'bayunche的博客 - 您的评论获得新的回复！', // 主题
+    subject: '您的博客 - 您的评论获得新的回复！', // 主题
     text: '您的评论获得新的回复！',
     WEB_HOST: 'http://www.hasunemiku.top' // email callback url
   },
@@ -79,8 +79,8 @@ if (!devMode) {
   }
 
   // 配置 github 授权
-  config.GITHUB.client_id = 'Ov23liUWC0ufLK84Cl0D'
-  config.GITHUB.client_secret = '5339d20f5b1488aeeb8d853a004cb749153790af'
+  config.GITHUB.client_id = 'your_github_client_id'
+  config.GITHUB.client_secret = 'your_github_client_secret'
 
   // ==== 配置 token 密钥
   config.TOKEN = {
@@ -92,8 +92,8 @@ if (!devMode) {
 
   // config.EMAIL_NOTICE.enable = true
   config.EMAIL_NOTICE.transporterConfig.auth = {
-    user: '1035010167@qq.com', // generated ethereal user
-    pass: 'f2bbfe7cf1bcb8253a65c06701fbbbbf8c910be44ecc1a430497d4879db0d71d' // generated ethereal password 授权码 而非 密码
+    user: 'your_email@example.com', // generated ethereal user
+    pass: 'your_email_authorization_code' // generated ethereal password 授权码 而非 密码
   }
   config.EMAIL_NOTICE.WEB_HOST = 'https://hasunemiku.top' // email callback url
 }

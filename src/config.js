@@ -6,13 +6,9 @@ import Href from '@/components/Href'
 import MyInfo from '@/views/web/about/MyInfo'
 import { GithubFill } from 'utils/antdIcon'
 // API_BASE_URL
-export const SERVER_URL = 'http://www.hasunemiku.top/blog'
-// export const SERVER_URL = 'http://127.0.0.1'
-// export const API_BASE_URL = SERVER_URL + ':6060'
-export const API_BASE_URL = 'https://www.hasunemiku.top/blog/api'
-// export const API_BASE_URL = 'http://127.0.0.1:6060'
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:6060'
 // project config
-export const HEADER_BLOG_NAME = '八云澈的小站' // header title 显示的名字
+export const HEADER_BLOG_NAME = '您的博客名称' // header title 显示的名字
 
 // === sidebar
 export const SIDEBAR = {
@@ -22,7 +18,7 @@ export const SIDEBAR = {
   // 个人主页
   homepages: {
     github: {
-      link: 'https://github.com/bayunche',
+      link: 'https://github.com/your-username',
       icon: <GithubFill className='homepage-icon' />,
     },
     // juejin: {
@@ -49,8 +45,8 @@ export const DISCUSS_AVATAR = SIDEBAR.avatar // 评论框博主头像
  * github config
  */
 export const GITHUB = {
-  enable: true, // github 第三方授权开关
-  client_id: 'Ov23liUWC0ufLK84Cl0D', // Setting > Developer setting > OAuth applications => client_id
+  enable: true, // github 第三方授权开关  
+  client_id: process.env.REACT_APP_GITHUB_CLIENT_ID, // Setting > Developer setting > OAuth applications => client_id
   url: 'https://github.com/login/oauth/authorize', // 跳转的登录的地址
 }
 
@@ -66,9 +62,8 @@ export const ANNOUNCEMENT = {
   enable: false, // 是否开启
   content: (
     <>
-      个人笔记网站
-      练手项目请访问
-      <Href href='https://github.com/bayunche'>bayunche's github</Href>
+      欢迎访问我的博客
+      <Href href='https://github.com/your-username'>我的 GitHub</Href>
     </>
   ),
 }

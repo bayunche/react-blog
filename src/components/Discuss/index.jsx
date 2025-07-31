@@ -1,232 +1,122 @@
-import React, { Component, Fragment, useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import './index.less'
-import { useSelector, useDispatch } from 'react-redux'
-import { login, register } from '@/redux/user/actions'
-import { DISCUSS_AVATAR } from '@/config'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Divider } from 'antd';
+import { calcCommentsCount } from '@/utils';
+import { useComments } from './hooks/useComments';
+import UserAuth from './UserAuth';
+import CommentForm from './CommentForm';
+import CommentList from './CommentList';
+import './styles/index.less';
 
-// methods
-import axios from '@/utils/axios'
-import { calcCommentsCount } from '@/utils'
-import { loginout } from '@/redux/user/actions'
-import useAjaxLoading from '@/hooks/useAjaxLoading'
-import { save, get, remove } from '@/utils/storage'
-// components
-import { Comment, Avatar, Button, Divider, Input, Menu, Dropdown, message, Modal, Form } from 'antd'
-import List from './list' // 评论列表
-import AppAvatar from '@/components/Avatar'
-import { DownOutlined, InfoCircleOutlined, GithubOutlined } from '@ant-design/icons'
-import useBus from '@/hooks/useBus'
+/**
+ * 讨论组件 - 重构后的主容器组件
+ * @param {object} props - 组件属性
+ * @param {Array} props.commentList - 评论列表数据
+ * @param {number} props.articleId - 文章ID
+ * @param {Function} props.setCommentList - 设置评论列表的回调函数
+ * @returns {JSX.Element} 讨论组件
+ */
+const Discuss = ({ 
+  commentList = [], 
+  articleId = -1, 
+  setCommentList 
+}) => {
+  const {
+    comments,
+    loading,
+    error,
+    addComment,
+    updateComments,
+    clearError
+  } = useComments(articleId);
 
-const { TextArea } = Input
+  // 使用传入的commentList作为数据源，如果有的话
+  const displayComments = commentList.length > 0 ? commentList : comments;
 
-const Editor = ({
-  username,
-  onChange,
-  userNameChange,
-  emailChange,
-  onSubmit,
-  submitting,
-  name,
-  mail,
-  value,
-  articleId,
-  err,
-}) => (
-  <div>
-    {username === '' ? (
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'left' }}>
-        <Form.Item>
-          <Input placeholder='用户名' onChange={userNameChange} value={name} />
-        </Form.Item>
-        <Form.Item>
-          <Input status={err} rows={1} placeholder='qq邮箱' onChange={emailChange} value={mail} />
-        </Form.Item>
-      </div>
-    ) : (
-      <div />
-    )}
-    <Form.Item>
-      <TextArea rows={4} placeholder='说点什么...' onChange={onChange} value={value} />
-    </Form.Item>
-    <Form.Item>
-      <div className='controls'>
-        <InfoCircleOutlined className='controls-tip-icon' />
-        <span className='controls-tip'>支持 Markdown 语法</span>
-        <Button className='disscus-btn' htmlType='submit' loading={submitting} onClick={onSubmit} type='primary'>
-          {articleId !== -1 ? '添加评论' : '留言'}
-        </Button>
-      </div>
-    </Form.Item>
-  </div>
-)
-function Discuss(props) {
-  const dispatch = useDispatch()
-  const bus = useBus()
-  let userInfo = useSelector(state => state.user)
-  const { username, role } = userInfo
-
-  const { commentList, articleId } = props
-  const [value, setValue] = useState('')
-  const [userName, setUserName] = useState('')
-  const [email, setEmail] = useState('')
-  const [loginUser, setLoginUser] = useState(username)
-  const [submitting, withLoading] = useAjaxLoading()
-  const [emailErr, setEmailErr] = useState(false)
-  const renderDropdownMenu = () => {
-    return username ? (
-      <Menu onClick={handleMenuClick}>
-        <Menu.Item key='loginout'>注销</Menu.Item>
-      </Menu>
-    ) : (
-      <Menu onClick={handleMenuClick}>
-        <Menu.Item key='login'>登录</Menu.Item>
-        <Menu.Item key='register'>注册</Menu.Item>
-      </Menu>
-    )
-  }
-
-  function handleMenuClick(e) {
-    switch (e.key) {
-      case 'login':
-        bus.emit('openSignModal', 'login')
-
-        break
-
-      case 'register':
-        bus.emit('openSignModal', 'register')
-
-        break
-
-      case 'loginout':
-        dispatch(loginout())
-        break
-
-      default:
-        break
-    }
-  }
-
-  function checkEmailAvailable(emailString) {
-    const regExp = new RegExp(/[1-9][0-9]{4,}@qq\.com/)
-    if (!regExp.test(emailString)) {
-      // message.error('邮箱不合法')
-      return false
-    } else {
-      // message.success('邮箱满足条件')
-      return true
-    }
-  }
-
-  function handleSubmit() {
-    if (!value) return
-
-    if (!userInfo.username) {
-      if (userInfo == null || userInfo.username === '') {
-        const values = { username: userName, password: 'root', email: email }
-        const loginValues = { account: userName, password: 'root' }
-        const registerAction = register
-        const loginAction = login
-        if (!checkEmailAvailable(email)) {
-          return message.error('邮箱不合法')
-        }
-        axios.get(`/user/find/${userName}`).then(res => {
-          if (res.id === undefined) {
-            dispatch(registerAction(values)).then(res => {
-              dispatch(loginAction(loginValues)).then(res => {
-                if (res) {
-                  userInfo = get('userInfo')
-                  setLoginUser(userInfo.username)
-                  withLoading(
-                    axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfo.userId })
-                  ).then(res => {
-                    setValue('')
-                    props.setCommentList(res.rows)
-                  })
-                }
-              })
-            })
-          } else {
-            dispatch(loginAction(loginValues)).then(res => {
-              if (res) {
-                const userInfoNew = get('userInfo')
-                withLoading(
-                  axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfoNew.userId })
-                ).then(res => {
-                  setValue('')
-                  props.setCommentList(res.rows)
-                })
-              }
-            })
-          }
-        })
+  /**
+   * 处理评论提交
+   * @param {object} commentData - 评论数据
+   * @returns {Promise} 提交结果
+   */
+  const handleCommentSubmit = async (commentData) => {
+    try {
+      const result = await addComment(commentData);
+      
+      // 如果有外部的setCommentList回调，也要调用它来保持同步
+      if (setCommentList && result.rows) {
+        setCommentList(result.rows);
       }
-    } else {
-      withLoading(axios.post('/discuss', { articleId: props.articleId, content: value, userId: userInfo.userId })).then(
-        res => {
-          setValue('')
-          props.setCommentList(res.rows)
-        }
-      )
+      
+      return result;
+    } catch (error) {
+      console.error('Submit comment failed:', error);
+      throw error;
     }
-  }
+  };
+
+  /**
+   * 处理回复评论
+   * @param {object} comment - 被回复的评论
+   */
+  const handleReply = (comment) => {
+    // 这里可以实现回复功能，比如打开回复表单或者@用户
+    console.log('Reply to comment:', comment);
+    // TODO: 实现回复功能
+  };
+
+  /**
+   * 渲染讨论标题
+   */
+  const renderHeader = () => {
+    const commentsCount = calcCommentsCount(displayComments);
+    const headerText = articleId !== -1 ? '条评论' : '条留言';
+
+    return (
+      <div className="discuss__header">
+        <span className="discuss__count">{commentsCount}</span>
+        {headerText}
+        <div className="discuss__user">
+          <UserAuth />
+        </div>
+        <Divider className="discuss__divider" />
+      </div>
+    );
+  };
 
   return (
-    <div id='discuss'>
-      <div className='discuss-header'>
-        <span className='discuss-count'>{calcCommentsCount(commentList)}</span>
-        {articleId !== -1 ? '条评论' : '条留言'}
-        <span className='discuss-user'>
-          <Dropdown overlay={renderDropdownMenu()} trigger={['click', 'hover']}>
-            <span>
-              {username || '未登录用户'} <DownOutlined />
-            </span>
-          </Dropdown>
-        </span>
-        <Divider className='hr' />
+    <div id="discuss" className="discuss">
+      {renderHeader()}
+      
+      <div className="discuss__form">
+        <CommentForm
+          articleId={articleId}
+          onSubmit={handleCommentSubmit}
+        />
       </div>
 
-      <Comment
-        avatar={
-          username ? (
-            userInfo.email !== undefined && userInfo.email !== null ? (
-              <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + userInfo.email.split('@')[0] + '&s=100'} alt='头像' />
-            ) : (
-              <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
-            )
-          ) : userName ? (
-            <img src={'http://q1.qlogo.cn/g?b=qq&nk=' + email.split('@')[0] + '&s=100'} alt='头像' />
-          ) : (
-            <GithubOutlined theme='filled' style={{ fontSize: 40, margin: '5px 5px 0 0' }} />
-          )
-        }
-        content={
-          <Editor
-            username={username}
-            onChange={e => setValue(e.target.value)}
-            userNameChange={e => setUserName(e.target.value)}
-            emailChange={e => {
-              setEmail(e.target.value)
-              checkEmailAvailable(e.target.value) ? setEmailErr(false) : setEmailErr(true)
-            }}
-            onSubmit={handleSubmit}
-            submitting={submitting}
-            name={userName}
-            mail={email}
-            value={value}
-            articleId={articleId}
-            err={emailErr}
-          />
-        }
-      />
-
-      <List commentList={commentList} articleId={articleId} setCommentList={props.setCommentList} />
+      <div className="discuss__list">
+        <CommentList
+          comments={displayComments}
+          loading={loading}
+          error={error}
+          onReply={handleReply}
+          articleId={articleId}
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
 Discuss.propTypes = {
-  commentList: PropTypes.array.isRequired,
-}
+  commentList: PropTypes.array,
+  articleId: PropTypes.number,
+  setCommentList: PropTypes.func
+};
 
-export default Discuss
+Discuss.defaultProps = {
+  commentList: [],
+  articleId: -1,
+  setCommentList: null
+};
+
+export default Discuss;

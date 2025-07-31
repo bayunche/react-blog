@@ -1,0 +1,57 @@
+// 导入子组件样式
+@import './UserAuth.less';
+@import './CommentForm.less';
+@import './CommentItem.less';
+@import './CommentList.less';
+
+.discuss {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    color: #595959;
+    font-size: 14px;
+  }
+
+  &__count {
+    font-weight: 600;
+    color: #262626;
+    font-size: 16px;
+  }
+
+  &__user {
+    margin-left: auto;
+  }
+
+  &__divider {
+    margin: 16px 0 0 0;
+    width: 100%;
+  }
+
+  &__form {
+    margin-bottom: 24px;
+  }
+
+  &__list {
+    // 列表样式由 CommentList 组件处理
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+
+      .discuss__user {
+        margin-left: 0;
+        align-self: flex-end;
+      }
+    }
+
+    &__form {
+      margin-bottom: 20px;
+    }
+  }
+}

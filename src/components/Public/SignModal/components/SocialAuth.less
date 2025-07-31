@@ -1,0 +1,78 @@
+.social-auth {
+  margin-top: 20px;
+
+  .divider {
+    margin: 16px 0;
+    color: #8c8c8c;
+    font-size: 14px;
+
+    .divider-text {
+      padding: 0 16px;
+      background: #fff;
+    }
+
+    .ant-divider-inner-text {
+      color: #8c8c8c;
+    }
+  }
+
+  &__content {
+    .github-btn {
+      height: 44px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      background: #24292e;
+      border-color: #24292e;
+      color: #fff;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #2f363d;
+        border-color: #2f363d;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(36, 41, 46, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+
+      &:focus {
+        background: #24292e;
+        border-color: #24292e;
+      }
+
+      .anticon {
+        font-size: 18px;
+      }
+    }
+  }
+
+  &__tips {
+    text-align: center;
+    margin: 12px 0 0 0;
+    color: #8c8c8c;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  // 响应式设计
+  @media (max-width: 480px) {
+    &__content {
+      .github-btn {
+        height: 40px;
+        font-size: 14px;
+
+        .anticon {
+          font-size: 16px;
+        }
+      }
+    }
+
+    &__tips {
+      font-size: 11px;
+      margin-top: 10px;
+    }
+  }
+}

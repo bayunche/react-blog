@@ -1,0 +1,152 @@
+// 导入子组件样式
+@import '../components/ArticleTable.less';
+@import '../components/ArticleFilters.less';
+@import '../components/BatchActions.less';
+
+.article-manager {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+  &__header {
+    padding: 24px 24px 16px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+
+    .page-title {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .page-description {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+  }
+
+  &__content {
+    padding: 24px;
+  }
+
+  // 全局表格样式增强
+  .ant-table {
+    .ant-table-container {
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .ant-table-thead > tr > th {
+      background: #fafafa;
+      font-weight: 600;
+      color: #262626;
+      border-bottom: 2px solid #f0f0f0;
+      
+      &:first-child {
+        border-top-left-radius: 8px;
+      }
+      
+      &:last-child {
+        border-top-right-radius: 8px;
+      }
+    }
+
+    .ant-table-tbody > tr {
+      transition: all 0.2s ease;
+      
+      &:hover > td {
+        background: #f5f5f5;
+      }
+      
+      &.ant-table-row-selected > td {
+        background: #e6f7ff;
+      }
+      
+      &:last-child > td {
+        border-bottom: none;
+      }
+    }
+  }
+
+  // 分页器样式
+  .ant-pagination {
+    margin-top: 16px;
+    text-align: center;
+    
+    .ant-pagination-total-text {
+      color: #595959;
+      font-size: 13px;
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 1200px) {
+    &__content {
+      padding: 20px;
+    }
+    
+    &__header {
+      padding: 20px 20px 12px 20px;
+      
+      .page-title {
+        font-size: 22px;
+      }
+      
+      .page-description {
+        font-size: 13px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    border-radius: 6px;
+    margin: 0 12px;
+    
+    &__content {
+      padding: 16px;
+    }
+    
+    &__header {
+      padding: 16px 16px 12px 16px;
+      
+      .page-title {
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+      
+      .page-description {
+        font-size: 12px;
+      }
+    }
+
+    // 移动端表格优化
+    .ant-table {
+      .ant-table-content {
+        overflow-x: auto;
+      }
+      
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        padding: 8px 4px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin: 0 8px;
+    
+    &__content {
+      padding: 12px;
+    }
+    
+    &__header {
+      padding: 12px 12px 8px 12px;
+    }
+  }
+}

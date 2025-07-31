@@ -1,0 +1,176 @@
+.comment-item {
+  &__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__username {
+    font-weight: 500;
+    color: #262626;
+  }
+
+  &__admin-badge {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-weight: 500;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__content {
+    color: #262626;
+    line-height: 1.6;
+    word-break: break-word;
+
+    // Markdown 样式
+    p {
+      margin: 0 0 8px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    code {
+      background: #f6f8fa;
+      border: 1px solid #e1e4e8;
+      border-radius: 3px;
+      padding: 2px 4px;
+      font-size: 0.9em;
+      color: #e83e8c;
+    }
+
+    pre {
+      background: #f6f8fa;
+      border: 1px solid #e1e4e8;
+      border-radius: 6px;
+      padding: 12px;
+      overflow-x: auto;
+      margin: 8px 0;
+
+      code {
+        background: none;
+        border: none;
+        padding: 0;
+        color: #24292e;
+      }
+    }
+
+    blockquote {
+      border-left: 4px solid #dfe2e5;
+      padding-left: 16px;
+      margin: 8px 0;
+      color: #6a737d;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    a {
+      color: #0366d6;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin: 8px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin: 8px 0;
+    }
+  }
+
+  &__time {
+    color: #8c8c8c;
+    font-size: 12px;
+    cursor: default;
+  }
+
+  &__reply-btn {
+    color: #8c8c8c;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #1890ff;
+    }
+  }
+
+  // 子评论样式
+  &--child {
+    .ant-comment-inner {
+      padding: 12px 0;
+    }
+
+    .comment-item__avatar {
+      width: 32px;
+      height: 32px;
+    }
+
+    .comment-item__username {
+      font-size: 13px;
+    }
+
+    .comment-item__content {
+      font-size: 13px;
+    }
+  }
+
+  // Ant Design Comment 组件样式覆盖
+  .ant-comment-content-detail {
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .ant-comment-actions {
+    margin-top: 8px;
+
+    li {
+      display: inline-block;
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    .comment-item__content {
+      font-size: 14px;
+    }
+
+    &--child {
+      .comment-item__content {
+        font-size: 13px;
+      }
+    }
+  }
+}

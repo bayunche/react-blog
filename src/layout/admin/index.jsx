@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '@/styles/admin.less'
 
-import { useHistory, useLocation, useRouteMatch } from 'react-router-dom'
+import { useLocation, Outlet } from 'react-router-dom'
 
 import { Layout } from 'antd'
 import AdminSideBar from './sidebar'
@@ -32,7 +32,9 @@ const AdminLayout = props => {
         </Sider>
         <Layout className='admin-content-wrap'>
           <Breadcrumb />
-          <Content className='admin-content'>{props.children}</Content>
+          <Content className='admin-content'>
+            <Outlet />
+          </Content>
         </Layout>
       </Layout>
     </Layout>

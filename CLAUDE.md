@@ -2,153 +2,170 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 项目概述
+## 项目架构
 
-这是一个基于React + Koa.js的全栈博客系统，集成了Live2D看板娘、音乐播放器等功能。项目采用前后端分离架构。
+这是一个基于 React + Koa 的全栈博客系统，采用前后端分离架构：
+
+### 前端架构 (React)
+- **框架**: React 16.9 + Redux + React Router
+- **UI 库**: Ant Design 4.x
+- **构建工具**: Webpack 4.x (自定义配置)
+- **样式**: Less + CSS Modules
+- **特色功能**: Live2D 人物、音乐播放器、Markdown 编辑器、代码高亮
+
+### 后端架构 (Koa)
+- **框架**: Koa 2.x + Koa Router
+- **数据库**: MySQL + Sequelize ORM
+- **认证**: JWT + GitHub OAuth
+- **实时通信**: Socket.io
+- **邮件服务**: Nodemailer
+
+### 目录结构
+```
+src/
+├── components/     # 公共组件
+├── views/         # 页面组件
+│   ├── web/       # 前台页面 (博客主页、文章、分类等)
+│   └── admin/     # 后台管理页面
+├── layout/        # 布局组件
+├── routes/        # 路由配置
+├── redux/         # 状态管理
+├── hooks/         # 自定义Hooks
+├── utils/         # 工具函数
+└── config.js      # 前端配置文件
+
+server/
+├── controllers/   # 控制器
+├── models/       # 数据模型
+├── router/       # 路由配置
+├── middlewares/  # 中间件
+├── utils/        # 工具函数
+└── config/       # 后端配置
+```
 
 ## 常用开发命令
 
-### 前端 (React)
+### 前端开发
 ```bash
-# 开发环境启动
-yarn dev
-# 或
-npm run start
+# 安装依赖
+yarn install
 
-# 生产构建
-yarn build
+# 启动开发服务器 (默认端口 3000)
+yarn start
 # 或
-npm run build
+yarn dev
+
+# 构建生产版本
+yarn build
 
 # 运行测试
 yarn test
-# 或
-npm run test
 
-# 构建DLL文件(优化构建速度)
+# 构建 DLL 文件 (优化开发体验)
 yarn dll
-# 或
-npm run dll
 ```
 
-### 后端 (Koa.js)
+### 后端开发
 ```bash
+# 进入服务器目录
 cd server
 
-# 开发环境启动(需要先安装依赖)
+# 安装依赖
 npm install
+
+# 启动开发服务器 (默认端口 6060)
 npm run dev
 
-# 生产环境启动
-node app.js
-
-# 或使用forever管理进程
+# 生产环境启动 (需要 forever)
 forever start app.js
 ```
 
-### 数据库 (MySQL)
+### 生产环境部署
 ```bash
-# 启动MySQL容器
-cd mysql_docker
-docker-compose up -d
+# 前端构建并启动 (端口 80)
+cd src
+yarn build
+nohup serve -s build -l 80 &
 
-# 数据库备份
-./backup_db.sh
+# 后端启动
+cd server
+forever start app.js
 ```
 
-### Word拆分微服务 (Python FastAPI)
-```bash
-cd word-split-service
-pip install -r requirements.txt
-python main.py  # 启动在8000端口
-```
+## 关键配置文件
 
-## 项目架构
+### 前端配置 (`src/config.js`)
+- `API_BASE_URL`: 后端 API 地址
+- `HEADER_BLOG_NAME`: 博客标题
+- `SIDEBAR`: 侧边栏配置 (头像、个人信息、友链)
+- `GITHUB`: GitHub OAuth 配置
+- `ABOUT`: 关于页面配置
+- `ANNOUNCEMENT`: 公告配置
 
-### 前端架构 (src/)
-- **React 16.9** + **Redux** + **React Router** 单页应用
-- **Ant Design 4.x** UI框架
-- **Less** 样式预处理器
-- **Live2D** 看板娘集成 (multiple models in Resources/)
-- **Markdown编辑器** 支持文章编写和导入
-- **音乐播放器** 集成aplayer
-- **响应式设计** 支持移动端
+### 后端配置 (`server/config/index.js`)
+- `PORT`: 服务器端口
+- `DATABASE`: 数据库连接配置
+- `GITHUB`: GitHub OAuth 密钥
+- `EMAIL_NOTICE`: 邮件通知配置
+- `TOKEN`: JWT 配置
 
-### 后端架构 (server/)
-- **Koa.js 2.x** Web框架
-- **Sequelize ORM** + **MySQL** 数据库
-- **JWT** 用户认证
-- **GitHub OAuth** 第三方登录
-- **Nodemailer** 邮件通知功能
-- **Socket.IO** 实时通信
+## 路由结构
 
-### 数据库模型
-- **User**: 用户管理
-- **Article**: 文章管理
-- **Comment/Reply**: 评论回复系统
-- **Tag/Category**: 标签分类
-- **Fragment**: 片段管理
+### Web 路由 (用户前台)
+- `/home` - 首页
+- `/article/:id` - 文章详情
+- `/article/share/:uuid` - 分享文章
+- `/archives` - 归档页面
+- `/categories` - 分类页面
+- `/tags/:name` - 标签页面
+- `/about` - 关于页面
+- `/fragment` - 碎片页面
 
-### 部署架构
-- **Nginx** 反向代理和静态文件服务
-- **Docker** 容器化部署
-- **SSL/TLS** HTTPS支持
-- **Word拆分微服务** FastAPI独立服务
+### Admin 路由 (管理后台)
+- `/admin` - 管理首页
+- `/admin/article/manager` - 文章管理
+- `/admin/article/add` - 添加文章
+- `/admin/article/edit/:id` - 编辑文章
+- `/admin/fragment/manager` - 碎片管理
+- `/admin/user` - 用户管理
+- `/admin/monitor` - 监控面板
 
-## 重要配置文件
+## 数据模型关系
 
-### 前端配置
-- `src/config.js` - 前端个性化配置(API地址、侧边栏信息、GitHub配置等)
-- `config/webpack.config.js` - Webpack构建配置
-- `public/index.html` - HTML模板
-
-### 后端配置
-- `server/config/index.js` - 后端配置(数据库、邮件、GitHub OAuth等)
-- `server/models/` - 数据库模型定义
-- `server/router/` - API路由定义
-
-### 部署配置
-- `nginx.conf` - Nginx配置
-- `Dockerfile` - Docker构建配置
-- `mysql_docker/docker-compose.yaml` - MySQL容器配置
-
-## Live2D模型
-
-项目包含多个Live2D模型:
-- **Haru/Hiyori/Mark/Natori/Rice** - Live2D 3.x模型
-- **Aqua** - 高质量看板娘模型
-- **Miku** - 初音未来模型
-- **bilibili-22** - B站看板娘
-
-模型文件位置: `Resources/` 和 `public/Resources/`
+- **User**: 用户表，支持 GitHub 登录
+- **Article**: 文章表，支持 Markdown，关联 Category 和 Tag
+- **Category**: 分类表
+- **Tag**: 标签表
+- **Comment**: 评论表，支持嵌套回复
+- **Fragment**: 碎片/说说功能
 
 ## 开发注意事项
 
-### 安全配置
-- 生产环境必须修改 `server/config/index.js` 中的敏感信息
-- GitHub OAuth需要配置正确的client_id和client_secret
-- 数据库密码和JWT密钥需要使用强密码
-- 邮件服务需要配置正确的SMTP信息
+### 权限控制
+- 管理后台需要用户 role = 1 (在 `App.jsx` 中检查)
+- GitHub 登录用户名需要在 `server/config/index.js` 中的 `ADMIN_GITHUB_LOGIN_NAME` 配置
+
+### 样式开发
+- 使用 Less 作为 CSS 预处理器
+- 全局样式在 `src/styles/` 目录
+- 组件样式使用同名 `.less` 文件
+
+### API 开发
+- 后端 API 遵循 RESTful 规范
+- 使用 Joi 进行参数验证
+- 统一的错误处理和响应格式
+
+### Live2D 功能
+- 使用 `oh-my-live2d` 库
+- 模型文件在 `public/Resources/` 和 `Resources/` 目录
+- 支持多个角色模型切换
 
 ### 构建优化
-- 使用DLL预构建优化开发体验: `npm run dll`
-- 生产构建会自动进行代码分割和压缩
-- Live2D模型文件较大，注意CDN配置
+- 使用 DLL 插件预构建第三方库
+- 支持代码分割和懒加载
+- 生产环境启用压缩和优化
 
-### 数据库管理
-- 初始化数据通过 `server/initData.js`
-- 数据库备份脚本: `backup_db.sh`
-- 表结构自动同步，但生产环境建议手动管理
+### 代码规范
+- 使用 ESLint 和 Prettier 进行代码检查和格式化
+- 参考airbnb的代码规范：https://aitexiaoy.github.io/Airbnd-rules-zh/react.html
 
-### API接口
-- 前端API基础地址配置在 `src/config.js` 的 `API_BASE_URL`
-- 后端服务默认运行在6060端口
-- Word拆分服务运行在8000端口
-
-## 常见问题
-
-1. **端口冲突**: 检查80、6060、3306、8000端口占用
-2. **Live2D不显示**: 检查模型文件路径和权限
-3. **GitHub登录失败**: 检查OAuth配置和网络连接
-4. **邮件通知失败**: 检查SMTP配置和授权码
-5. **数据库连接失败**: 检查MySQL服务状态和连接参数

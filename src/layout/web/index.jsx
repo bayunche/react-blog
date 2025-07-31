@@ -8,7 +8,7 @@ import SideBar from './sidebar'
 import AppMain from './AppMain'
 import ReactCanvasNest from 'react-canvas-nest'
 import Player from 'components/musicPlayer/Player'
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min'
+import { useLocation, Outlet } from 'react-router-dom'
 // 响应式
 const siderLayout = { xxl: 4, xl: 5, lg: 5, sm: 0, xs: 0 }
 const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
@@ -78,7 +78,7 @@ const WebLayout = props => {
           <SideBar />
         </Col>
         <Col {...contentLayout}>
-          <AppMain {...props} />
+          <Outlet />
         </Col>
       </Row>
       <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />

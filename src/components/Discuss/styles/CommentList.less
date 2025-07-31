@@ -1,0 +1,46 @@
+.comment-list {
+  &__loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+  }
+
+  &__error {
+    margin: 16px 0;
+  }
+
+  &__empty {
+    margin: 40px 0;
+    color: #8c8c8c;
+
+    .ant-empty-description {
+      color: #bfbfbf;
+    }
+  }
+
+  &__items {
+    .comment-list__item {
+      border-bottom: 1px solid #f0f0f0;
+      padding: 16px 0;
+
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    &__items {
+      .comment-list__item {
+        padding: 12px 0;
+      }
+    }
+  }
+}

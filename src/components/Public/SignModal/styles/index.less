@@ -1,0 +1,136 @@
+// 导入子组件样式
+@import '../components/LoginForm.less';
+@import '../components/RegisterForm.less';
+@import '../components/SocialAuth.less';
+
+.sign-modal {
+  .ant-modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  }
+
+  .ant-modal-header {
+    display: none;
+  }
+
+  .ant-modal-body {
+    padding: 32px;
+  }
+
+  &__content {
+    .error-alert {
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+
+    .auth-tabs {
+      .ant-tabs-nav {
+        margin-bottom: 24px;
+
+        .ant-tabs-nav-wrap {
+          .ant-tabs-nav-list {
+            .ant-tabs-tab {
+              font-size: 16px;
+              font-weight: 500;
+              padding: 12px 24px;
+              border-radius: 8px 8px 0 0;
+              transition: all 0.3s ease;
+
+              &:hover {
+                color: #40a9ff;
+              }
+
+              &.ant-tabs-tab-active {
+                color: #1890ff;
+                font-weight: 600;
+
+                .ant-tabs-tab-btn {
+                  color: #1890ff;
+                }
+              }
+            }
+          }
+        }
+
+        .ant-tabs-ink-bar {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          height: 3px;
+          border-radius: 2px;
+        }
+      }
+
+      .ant-tabs-content-holder {
+        .ant-tabs-content {
+          .ant-tabs-tabpane {
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 540px) {
+    width: 90% !important;
+    max-width: 420px;
+
+    .ant-modal-body {
+      padding: 24px 20px;
+    }
+
+    &__content {
+      .auth-tabs {
+        .ant-tabs-nav {
+          margin-bottom: 20px;
+
+          .ant-tabs-nav-wrap {
+            .ant-tabs-nav-list {
+              .ant-tabs-tab {
+                font-size: 15px;
+                padding: 10px 20px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 420px) {
+    width: 95% !important;
+
+    .ant-modal-body {
+      padding: 20px 16px;
+    }
+
+    &__content {
+      .auth-tabs {
+        .ant-tabs-nav {
+          margin-bottom: 16px;
+
+          .ant-tabs-nav-wrap {
+            .ant-tabs-nav-list {
+              .ant-tabs-tab {
+                font-size: 14px;
+                padding: 8px 16px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// 全局覆盖Modal样式，确保在移动端正确显示
+@media (max-width: 540px) {
+  .ant-modal-wrap {
+    padding: 20px 0;
+  }
+
+  .ant-modal {
+    margin: 0 auto;
+    padding-bottom: 0;
+  }
+}
