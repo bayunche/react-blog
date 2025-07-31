@@ -16,7 +16,13 @@
       "Bash(find:*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:xlog.app)",
-      "WebFetch(domain:raw.githubusercontent.com)"
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(yarn list:*)",
+      "Bash(timeout 10s yarn dev)",
+      "Bash(timeout 8s yarn dev)",
+      "Bash(move srcindex.js srcindex.jsx)",
+      "Bash(mv:*)",
+      "Bash(timeout 5s yarn dev)"
     ],
     "deny": []
   }

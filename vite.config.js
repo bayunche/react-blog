@@ -6,6 +6,8 @@ import WindiCSS from 'vite-plugin-windicss'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
+import autoprefixer from 'autoprefixer'
+import cssnano from 'cssnano'
 
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -13,6 +15,10 @@ export default defineConfig(({ command, mode }) => {
   const isProd = command === 'build'
 
   return {
+    // 设置正确的入口文件
+    root: process.cwd(),
+    publicDir: 'public',
+    
     plugins: [
       react({
         // React优化配置
@@ -54,6 +60,8 @@ export default defineConfig(({ command, mode }) => {
 
       // HTML模板优化
       createHtmlPlugin({
+        minify: isProd,
+        template: 'public/index.html',
         inject: {
           data: {
             title: env.VITE_APP_TITLE || '八云澈的博客',
@@ -61,7 +69,6 @@ export default defineConfig(({ command, mode }) => {
             keywords: env.VITE_APP_KEYWORDS || 'React,Blog,Technology',
           },
         },
-        minify: isProd,
       }),
 
       // CommonJS支持
@@ -248,8 +255,8 @@ export default defineConfig(({ command, mode }) => {
       },
       postcss: {
         plugins: [
-          require('autoprefixer'),
-          isProd && require('cssnano')({
+          autoprefixer(),
+          isProd && cssnano({
             preset: ['default', {
               discardComments: { removeAll: true },
               normalizeWhitespace: false,
