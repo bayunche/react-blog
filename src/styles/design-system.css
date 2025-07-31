@@ -1,0 +1,319 @@
+/* 萌系博客设计系统 - CSS变量和基础样式 */
+
+/* =========================
+   CSS 变量系统 
+========================= */
+:root {
+  /* 萌系主色调 - 粉色系 */
+  --moe-primary: #ff69b4;
+  --moe-primary-light: #ffb3d9;
+  --moe-primary-dark: #cc4a8c;
+  --moe-primary-alpha: rgba(255, 105, 180, 0.1);
+  
+  /* 辅助色 */
+  --moe-secondary: #87ceeb;
+  --moe-accent: #ffd700;
+  --moe-success: #98fb98;
+  --moe-warning: #ffa500;
+  --moe-error: #ff6b6b;
+  
+  /* 中性色 - 亮色主题 */
+  --moe-bg-primary: #ffffff;
+  --moe-bg-secondary: #f8f9fa;
+  --moe-bg-tertiary: #e9ecef;
+  --moe-text-primary: #2d3748;
+  --moe-text-secondary: #718096;
+  --moe-text-muted: #a0aec0;
+  
+  /* 毛玻璃效果 */
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-bg-dark: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  --glass-shadow-hover: 0 12px 40px 0 rgba(31, 38, 135, 0.5);
+  
+  /* 渐变 */
+  --moe-gradient-primary: linear-gradient(135deg, var(--moe-primary), var(--moe-primary-light));
+  --moe-gradient-secondary: linear-gradient(135deg, var(--moe-secondary), var(--moe-accent));
+  --moe-gradient-rainbow: linear-gradient(135deg, #ff69b4, #87ceeb, #ffd700, #98fb98);
+  
+  /* 阴影 */
+  --moe-shadow-sm: 0 1px 3px rgba(255, 105, 180, 0.12), 0 1px 2px rgba(255, 105, 180, 0.24);
+  --moe-shadow-md: 0 4px 6px rgba(255, 105, 180, 0.12), 0 2px 4px rgba(255, 105, 180, 0.08);
+  --moe-shadow-lg: 0 10px 15px rgba(255, 105, 180, 0.1), 0 4px 6px rgba(255, 105, 180, 0.05);
+  --moe-shadow-glow: 0 0 20px rgba(255, 105, 180, 0.3);
+  
+  /* 动画缓动 */
+  --ease-out-cubic: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out-cubic: cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* 间距系统 */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+}
+
+/* 暗色主题 */
+[data-theme="dark"] {
+  --moe-bg-primary: #1a202c;
+  --moe-bg-secondary: #2d3748;
+  --moe-bg-tertiary: #4a5568;
+  --moe-text-primary: #f7fafc;
+  --moe-text-secondary: #e2e8f0;
+  --moe-text-muted: #cbd5e0;
+  
+  --glass-bg: rgba(45, 55, 72, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  --glass-shadow-hover: 0 12px 40px 0 rgba(0, 0, 0, 0.7);
+}
+
+/* =========================
+   毛玻璃效果组件
+========================= */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s var(--ease-out-cubic);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow-hover);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.glass-card-dark {
+  background: var(--glass-bg-dark);
+}
+
+/* =========================
+   萌系按钮系统
+========================= */
+.moe-button {
+  background: var(--moe-gradient-primary);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 12px 24px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out-cubic);
+  box-shadow: var(--moe-shadow-md);
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.moe-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.moe-button:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--moe-shadow-lg);
+}
+
+.moe-button:hover::before {
+  left: 100%;
+}
+
+.moe-button:active {
+  transform: translateY(0) scale(1);
+}
+
+.moe-button-secondary {
+  background: var(--moe-gradient-secondary);
+}
+
+.moe-button-outline {
+  background: transparent;
+  border: 2px solid var(--moe-primary);
+  color: var(--moe-primary);
+  box-shadow: none;
+}
+
+.moe-button-outline:hover {
+  background: var(--moe-primary);
+  color: white;
+}
+
+/* =========================
+   渐变文字效果
+========================= */
+.gradient-text {
+  background: var(--moe-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.gradient-text-rainbow {
+  background: var(--moe-gradient-rainbow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 100%;
+  animation: rainbow-flow 3s ease-in-out infinite;
+}
+
+/* =========================
+   动画关键帧
+========================= */
+@keyframes rainbow-flow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: var(--moe-shadow-glow); }
+  50% { box-shadow: 0 0 30px rgba(255, 105, 180, 0.6); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200px 0; }
+  100% { background-position: calc(200px + 100%) 0; }
+}
+
+@keyframes slide-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* =========================
+   工具类
+========================= */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-slide-in-up {
+  animation: slide-in-up 0.6s var(--ease-out-cubic);
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s var(--ease-out-cubic);
+}
+
+.text-shadow-glow {
+  text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.backdrop-blur-lg {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* =========================
+   响应式工具
+========================= */
+@media (max-width: 768px) {
+  .glass-card {
+    border-radius: var(--radius-md);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  
+  .moe-button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* =========================
+   主题切换动画
+========================= */
+* {
+  transition: background-color 0.3s var(--ease-out-cubic), 
+              color 0.3s var(--ease-out-cubic),
+              border-color 0.3s var(--ease-out-cubic);
+}
+
+/* =========================
+   滚动条美化
+========================= */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--moe-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--moe-gradient-primary);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--moe-primary-dark);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--moe-primary) var(--moe-bg-secondary);
+}

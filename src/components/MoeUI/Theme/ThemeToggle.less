@@ -1,0 +1,354 @@
+// 主题切换组件样式
+.theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  
+  // 尺寸变体
+  &--small {
+    font-size: 12px;
+    
+    .theme-toggle__icon {
+      font-size: 14px;
+    }
+  }
+  
+  &--medium {
+    font-size: 14px;
+    
+    .theme-toggle__icon {
+      font-size: 16px;
+    }
+  }
+  
+  &--large {
+    font-size: 16px;
+    
+    .theme-toggle__icon {
+      font-size: 18px;
+    }
+  }
+  
+  // 按钮变体
+  &--button {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out-cubic);
+    overflow: hidden;
+    
+    &:hover {
+      background: rgba(255, 105, 180, 0.1);
+      border-color: var(--moe-primary);
+      transform: translateY(-1px);
+      box-shadow: var(--moe-shadow-md);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  // 开关变体
+  &--switch {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    
+    .theme-toggle__label {
+      font-size: 12px;
+      color: var(--moe-text-secondary);
+      font-weight: 500;
+    }
+  }
+  
+  // 下拉菜单变体
+  &--dropdown {
+    position: relative;
+  }
+  
+  // 图标样式
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s var(--ease-out-cubic);
+    
+    .theme-toggle--transitioning & {
+      animation: theme-icon-spin 0.5s ease-in-out;
+    }
+  }
+  
+  &__label {
+    font-weight: 500;
+    color: var(--moe-text-primary);
+    white-space: nowrap;
+  }
+  
+  // 波纹效果
+  &__ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 105, 180, 0.3) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  &--button:active &__ripple {
+    width: 100px;
+    height: 100px;
+  }
+  
+  // 开关样式
+  &__switch {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+    
+    &:focus-visible {
+      .theme-toggle__switch-track {
+        outline: 2px solid var(--moe-primary);
+        outline-offset: 2px;
+      }
+    }
+  }
+  
+  &__switch-track {
+    width: 48px;
+    height: 24px;
+    background: var(--moe-bg-tertiary);
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.3s var(--ease-out-cubic);
+    border: 2px solid transparent;
+    
+    [data-theme="dark"] & {
+      background: var(--moe-gradient-primary);
+      border-color: var(--moe-primary);
+    }
+  }
+  
+  &__switch-thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s var(--ease-bounce);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    
+    [data-theme="dark"] & {
+      transform: translateX(24px);
+      background: var(--moe-bg-primary);
+    }
+  }
+  
+  &__switch-icon {
+    font-size: 10px;
+    color: var(--moe-primary);
+  }
+  
+  // 下拉菜单触发器
+  &__trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: all 0.3s var(--ease-out-cubic);
+    color: var(--moe-text-primary);
+    
+    &:hover {
+      background: rgba(255, 105, 180, 0.1);
+      border-color: var(--moe-primary);
+      transform: translateY(-1px);
+      box-shadow: var(--moe-shadow-md);
+    }
+  }
+  
+  &__arrow {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid currentColor;
+    transition: transform 0.2s ease;
+    
+    .theme-toggle--dropdown-open & {
+      transform: rotate(180deg);
+    }
+  }
+  
+  // 背景遮罩
+  &__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+  }
+  
+  // 下拉菜单
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 200px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+    z-index: 1000;
+    overflow: hidden;
+    animation: theme-dropdown-enter 0.2s var(--ease-out-cubic);
+  }
+  
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: 100%;
+    padding: 12px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--moe-text-primary);
+    text-align: left;
+    
+    &:hover {
+      background: rgba(255, 105, 180, 0.1);
+    }
+    
+    &--active {
+      background: rgba(255, 105, 180, 0.15);
+      color: var(--moe-primary);
+    }
+  }
+  
+  &__option-icon {
+    font-size: 16px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  &__option-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  &__option-label {
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  &__option-description {
+    font-size: 12px;
+    color: var(--moe-text-secondary);
+  }
+  
+  &__option-check {
+    color: var(--moe-primary);
+    font-weight: bold;
+  }
+}
+
+// 动画效果
+@keyframes theme-icon-spin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes theme-dropdown-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .theme-toggle {
+    &__dropdown {
+      right: -8px;
+      left: -8px;
+      min-width: auto;
+    }
+    
+    &__option {
+      padding: 16px;
+    }
+  }
+}
+
+// 无障碍支持
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle {
+    &__icon,
+    &__switch-thumb,
+    &__ripple {
+      transition: none;
+      animation: none;
+    }
+    
+    &__dropdown {
+      animation: none;
+    }
+  }
+}
+
+// 高对比度模式
+@media (prefers-contrast: high) {
+  .theme-toggle {
+    &--button,
+    &__trigger {
+      border-width: 2px;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: var(--moe-bg-primary);
+    }
+    
+    &__dropdown {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: var(--moe-bg-primary);
+      border-width: 2px;
+    }
+    
+    &__switch-track {
+      border-width: 2px;
+    }
+  }
+}
