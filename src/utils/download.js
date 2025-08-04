@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '@/config'
+import { API_BASE_URL } from '@/config.jsx'
 import { getToken } from '@/utils'
 
 export default function download(router) {

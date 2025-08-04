@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useUserStore } from '@/stores';
 import { notification } from 'antd';
 import axios from '@/utils/axios';
 import useBoolean from '@/hooks/useBoolean';
@@ -9,7 +9,7 @@ import useBoolean from '@/hooks/useBoolean';
  * @returns {Object} 提交相关状态和方法
  */
 export const useUploadSubmit = () => {
-  const authorId = useSelector(state => state.user.userId);
+  const authorId = useUserStore(state => state.user?.userId);
   const confirmLoading = useBoolean(false);
 
   /**

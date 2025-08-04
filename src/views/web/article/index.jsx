@@ -78,7 +78,7 @@ function Article(props) {
   const articleId = parseInt(props.match.params.id)
   const isFoldNavigation = useMediaQuery({ query: '(max-width: 1300px)' })
   return (
-    <Spin tip='Loading...' spinning={loading}>
+    <Spin spinning={loading}>
       <article className='app-article' style={{ paddingRight: isFoldNavigation ? 0 : 275 }}>
         <div className='post-header'>
           <h1 className='post-title'>{title}</h1>

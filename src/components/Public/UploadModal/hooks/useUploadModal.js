@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import useBoolean from '@/hooks/useBoolean';
-import { useListener } from '@/hooks/useBus';
+import { useListener } from '@/hooks/useBus.jsx';
 
 /**
  * 上传弹窗管理Hook
@@ -44,7 +44,7 @@ export const useUploadModal = ({ onOpen, onClose } = {}) => {
     title: '导入文章',
     onCancel: closeModal,
     maskClosable: false,
-    destroyOnClose: true,
+    destroyOnHidden: true,
     centered: true,
     className: 'upload-modal'
   }), [visible, closeModal]);

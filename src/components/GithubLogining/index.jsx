@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-
-// ..
 import { Spin } from 'antd'
 import { decodeQuery } from '@/utils'
-import { login } from '@/redux/user/actions'
+import { useUserStore } from '@/stores'
 import { get, remove } from '@/utils/storage'
 
 function AppLoading(props) {
-  const dispatch = useDispatch() // dispatch hooks
+  const loginAsync = useUserStore(state => state.loginAsync)
 
   const [loading, setLoading] = useState('')
 
@@ -29,7 +26,7 @@ function AppLoading(props) {
     if (params.code) {
       // github callback code
       setLoading(true)
-      dispatch(login({ code: params.code }))
+      loginAsync({ code: params.code })
         .then(() => {
           jumpToBefore()
           if (componentWillUnmount) return

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { BackTop, message } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
+import { FloatButton, message } from 'antd';
 import useBreadcrumb from '@/hooks/useBreadcrumb';
 import { useArticleData } from './hooks/useArticleData';
 import { useArticleSubmit } from './hooks/useArticleSubmit';
@@ -14,7 +14,7 @@ import './styles/index.less';
  */
 const ArticleEdit = () => {
   const { id: editId } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // 设置面包屑导航
   useBreadcrumb([
@@ -202,7 +202,7 @@ const ArticleEdit = () => {
       </div>
 
       {/* 回到顶部按钮 */}
-      <BackTop />
+      <FloatButton.BackTop />
     </div>
   );
 };

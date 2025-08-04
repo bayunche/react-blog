@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert } from 'antd'
-import { ANNOUNCEMENT } from '@/config'
+import { ANNOUNCEMENT } from '@/config.jsx'
 import { useMediaQuery } from 'react-responsive'
 
 function AppMain(props) {

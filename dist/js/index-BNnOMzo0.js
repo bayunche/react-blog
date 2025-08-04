@@ -1,0 +1,1 @@
+import{j as t,b2 as e,B as s}from"./react-vendor-DCjvIuTI.js";function r(r){return t.jsx(e,{status:"404",title:"404",subTitle:"Sorry, the page you visited does not exist.",extra:t.jsx(s,{type:"primary",onClick:()=>{r.history.push("/home")},children:"Back Home"})})}export{r as default};

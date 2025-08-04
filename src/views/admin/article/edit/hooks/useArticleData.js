@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useArticleStore, useUserStore } from '@/stores';
 import axios from '@/utils/axios';
 
 /**
@@ -8,11 +8,11 @@ import axios from '@/utils/axios';
  * @returns {object} 文章数据相关的状态和方法
  */
 export const useArticleData = (editId) => {
-  const store = useSelector(state => ({
-    tagList: state.article.tagList,
-    categoryList: state.article.categoryList,
-    authorId: state.user.userId
-  }));
+  const storeTagList = useArticleStore(state => state.tagList);
+  const storeCategoryList = useArticleStore(state => state.categoryList);
+  const authorId = useUserStore(state => state.userId);
+  
+  const store = { tagList: storeTagList, categoryList: storeCategoryList, authorId };
 
   const [realId, setRealId] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -66,8 +66,8 @@ export const useArticleData = (editId) => {
    * 初始化新文章的标签和分类
    */
   const initializeNewArticle = () => {
-    const tags = store.tagList.map(d => d.name).slice(0, 10);
-    const cates = store.categoryList.map(d => d.name).slice(0, 10);
+    const tags = storeTagList.map(d => d.name).slice(0, 10);
+    const cates = storeCategoryList.map(d => d.name).slice(0, 10);
     
     setTagList(tags);
     setCategoryList(cates);
@@ -152,10 +152,10 @@ export const useArticleData = (editId) => {
   }, [editId]);
 
   useEffect(() => {
-    if (!editId && store.tagList.length > 0 && store.categoryList.length > 0) {
+    if (!editId && storeTagList.length > 0 && storeCategoryList.length > 0) {
       initializeNewArticle();
     }
-  }, [editId, store.tagList, store.categoryList]);
+  }, [editId, storeTagList, storeCategoryList]);
 
   return {
     // 状态

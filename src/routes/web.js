@@ -1,4 +1,4 @@
-import { GITHUB } from '@/config'
+import { GITHUB } from '@/config.jsx'
 import Layout from '@/layout/web'
 import lazy from '@/components/Lazy'
 

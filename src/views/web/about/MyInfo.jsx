@@ -4,7 +4,7 @@ import React from 'react'
 import { Divider, Rate, Avatar } from 'antd'
 import Href from '@/components/Href'
 import SvgIcon from '@/components/SvgIcon'
-import { QqOutline } from 'utils/antdIcon'
+import { QqOutline } from '@/utils/antdIcon'
 
 const skills = [
   {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useStoreInit } from '@/hooks/useStoreInit'
 import AppRouter from '@/router'
+import { Provider as BusProvider } from '@/hooks/useBus'
 
 // components
 import PublicComponent from '@/components/Public'
@@ -19,10 +20,10 @@ const App = () => {
   }, [])
 
   return (
-    <>
+    <BusProvider>
       <AppRouter />
       <PublicComponent />
-    </>
+    </BusProvider>
   )
 }
 

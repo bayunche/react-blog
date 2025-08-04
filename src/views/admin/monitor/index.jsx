@@ -1,6 +1,6 @@
 import React, { useState, useEffect, Component } from 'react'
 import { io } from 'socket.io-client'
-import { SERVER_URL, API_BASE_URL } from '@/config'
+import { SERVER_URL, API_BASE_URL } from '@/config.jsx'
 import { Gauge, Area } from '@ant-design/charts'
 import axios from '@/utils/axios'
 import DemoLiquid from './DemoLiquid'

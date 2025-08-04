@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useUserStore } from '@/stores'
 
 import axios from '@/utils/axios'
 import { translateMarkdown2html } from '@/utils'
 import dayjs from '@/utils/dayjs'
 import AppAvatar from '@/components/Avatar'
-import { Comment, Button, Tooltip, Input, Popconfirm, message } from 'antd'
+import { Button, Tooltip, Input, Popconfirm, message } from 'antd'
+import { Comment } from '@ant-design/compatible'
 import { DeleteOutlined, GithubOutlined } from '@ant-design/icons'
 
 const { TextArea } = Input
@@ -113,7 +114,7 @@ function CommentItem(props) {
 }
 
 const CommentList = props => {
-  const userInfo = useSelector(state => state.user)
+  const userInfo = useUserStore()
   const { commentList, articleId } = props
   const [replyTarget, setReplyTarget] = useState({ commentId: 0, replyId: 0 })
 

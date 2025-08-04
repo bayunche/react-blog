@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Comment } from 'antd';
+import { Comment } from '@ant-design/compatible';
 import dayjs from 'dayjs';
 import AppAvatar from '@/components/Avatar';
 import { translateMarkdown } from '@/utils';

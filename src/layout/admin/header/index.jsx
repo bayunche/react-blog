@@ -1,44 +1,33 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-
-import { loginout } from '@/redux/user/actions'
+import { useNavigate } from 'react-router-dom'
+import { useUserStore } from '@/stores'
 
 import { Button, Dropdown, Menu, Avatar } from 'antd'
 import logo from '@/assets/images/avatar.jpg'
 import { DownOutlined } from '@ant-design/icons'
 
 function AdminHeader(props) {
-  const dispatch = useDispatch()
-  const history = useHistory()
+  const navigate = useNavigate()
+  const userInfo = useUserStore(state => state.user)
+  const logout = useUserStore(state => state.logout)
 
-  const userInfo = useSelector(state => state.user)
-
-  const menu = (
-    <Menu className='menu'>
-      <Menu.Item>
-        <span onClick={e => history.push('/home')}>
-          返回主页
-        </span>
-      </Menu.Item>
-      <Menu.Item>
-        <span
-          onClick={e => {
-            dispatch(loginout())
-            history.push('/')
-          }}>
-          退出登录
-        </span>
-      </Menu.Item>
-    </Menu>
-  )
+  const menuItems = [
+    {
+      key: 'home',
+      label: <span onClick={e => navigate('/home')}>返回主页</span>
+    },
+    {
+      key: 'logout',
+      label: <span onClick={e => { logout(); navigate('/'); }}>退出登录</span>
+    }
+  ]
 
   return (
     <>
       <div>
         {/* <img src={logo} alt='pvmed' /> */}
         <span className='header-title' onClick={e => history.push('/home')}>React-Blog Manager</span>
-        <Dropdown overlay={menu} className='header-dropdown'>
+        <Dropdown menu={{ items: menuItems }} className='header-dropdown'>
           <a className='ant-dropdown-link'>
             {userInfo.username} <DownOutlined />
           </a>

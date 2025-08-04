@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Breadcrumb } from 'antd'
 
-import { useListener } from '@/hooks/useBus'
+import { useListener } from '@/hooks/useBus.jsx'
 
 /**
  * 面包屑
 */
 function PvBreadcurmb(props) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const [list, setList] = useState([])
   const breadcrumbList = list.length > 0 ? [{ link: '/admin', name: '首页' }].concat(list) : []
 
@@ -18,7 +18,7 @@ function PvBreadcurmb(props) {
   function handleClick(e, goBack = false) {
     if (goBack) {
       e.preventDefault()
-      history.go(-1)
+      navigate(-1)
     }
   }
 

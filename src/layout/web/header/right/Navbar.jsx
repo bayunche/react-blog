@@ -9,17 +9,23 @@ import navList from './navList'
 function NavBar(props) {
   const location = useLocation()
   const { mode = 'horizontal' } = props
+  const menuItems = navList.map(nav => ({
+    key: nav.link,
+    label: (
+      <Link to={nav.link}>
+        {nav.icon}
+        <span className='nav-text'>{nav.title}</span>
+      </Link>
+    )
+  }))
+
   return (
-    <Menu mode={mode} selectedKeys={[location.pathname]} className='header-nav'>
-      {navList.map(nav => (
-        <Menu.Item key={nav.link}>
-          <Link to={nav.link}>
-            {nav.icon}
-            <span className='nav-text'>{nav.title}</span>
-          </Link>
-        </Menu.Item>
-      ))}
-    </Menu>
+    <Menu 
+      mode={mode} 
+      selectedKeys={[location.pathname]} 
+      className='header-nav'
+      items={menuItems}
+    />
   )
 }
 

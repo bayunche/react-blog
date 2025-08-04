@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import axios from '@/utils/axios'
 
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { decodeQuery } from '@/utils'
 import useMount from './useMount'
 
@@ -23,7 +23,7 @@ export default function useFetchList({
   const [pagination, setPagination] = useState({ current: 1, pageSize: 10, total: 0 })
 
   const location = useLocation()
-  const history = useHistory()
+  const navigate = useNavigate()
 
   useMount(() => {
     if (fetchDependence.length === 0) {
@@ -82,7 +82,7 @@ export default function useFetchList({
         ? location.search.replace(/(page=)(\d+)/, `$1${page}`).replace(/(pageSize=)(\d+)/, `pageSize=${pageSize}`)
         : `?page=${page}&pageSize=${pageSize}`
       const jumpUrl = location.pathname + search
-      history.push(jumpUrl)
+      navigate(jumpUrl)
     },
     [queryParams, location.pathname]
   )

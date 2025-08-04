@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { SIDEBAR } from '@/config'
+import { SIDEBAR } from '@/config.jsx'
 import axios from '@/utils/axios'
-import { useSelector } from 'react-redux'
-import Player from 'components/musicPlayer/Player'
+import { useArticleStore } from '@/stores'
+import Player from '@/components/musicPlayer/Player'
 
 // components
 import { Link } from 'react-router-dom'
@@ -10,12 +10,12 @@ import Href from '@/components/Href'
 import { Divider, Tag } from 'antd'
 
 import { Alert } from 'antd'
-import { ANNOUNCEMENT } from '@/config'
+import { ANNOUNCEMENT } from '@/config.jsx'
 
 import useFetchList from '@/hooks/useFetchList'
 
 function SideBar(props) {
-  const tagList = useSelector(state => state.article.tagList || [])
+  const tagList = useArticleStore(state => state.tagList || [])
 
   const { dataList: articleList } = useFetchList({
     withLoading: false,

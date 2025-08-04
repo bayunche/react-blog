@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './index.less'
 // config
-import { DISCUSS_AVATAR } from '@/config'
+import { DISCUSS_AVATAR } from '@/config.jsx'
 
 // components
 import Href from '@/components/Href'

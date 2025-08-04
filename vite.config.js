@@ -230,6 +230,12 @@ export default defineConfig(({ command, mode }) => {
       exclude: [
         'oh-my-live2d', // Live2D按需加载
       ],
+      esbuildOptions: {
+        // 让.js文件也能处理JSX语法
+        loader: {
+          '.js': 'jsx',
+        },
+      },
     },
 
     // 环境变量配置
@@ -251,6 +257,11 @@ export default defineConfig(({ command, mode }) => {
             '@border-radius-base': '8px',
             '@font-size-base': '14px',
           },
+        },
+        scss: {
+          // 使用现代Sass API
+          api: 'modern-compiler',
+          silenceDeprecations: ['legacy-js-api'],
         },
       },
       postcss: {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { EditOutline, FolderOutline, HomeOutline, StarOutline, SwitcherOutline, FolderOpenOutline, UserOutline, MonitorOutline } from 'utils/antdIcon'
+import { EditOutline, FolderOutline, HomeOutline, StarOutline, SwitcherOutline, FolderOpenOutline, UserOutline, MonitorOutline } from '@/utils/antdIcon'
 
 const menu = [
   {

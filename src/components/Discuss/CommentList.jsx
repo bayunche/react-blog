@@ -29,7 +29,9 @@ const CommentList = memo(({
     return (
       <div className={`comment-list ${className}`}>
         <div className="comment-list__loading">
-          <Spin size="large" tip="加载评论中..." />
+          <Spin size="large" tip="加载评论中...">
+            <div style={{ minHeight: '100px' }} />
+          </Spin>
         </div>
       </div>
     );

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Input, Row } from 'antd'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import useMount from '@/hooks/useMount'
 import { decodeQuery } from '@/utils'
 import { SearchOutlined } from '@ant-design/icons'
 
 function SearchButton(props) {
-  const history = useHistory()
+  const navigate = useNavigate()
   const location = useLocation()
   const [keyword, setKeyword] = useState('')
 
@@ -16,7 +16,7 @@ function SearchButton(props) {
   })
 
   const handleSubmit = () => {
-    if (keyword) history.push(`/home?page=1&keyword=${keyword}`)
+    if (keyword) navigate(`/home?page=1&keyword=${keyword}`)
   }
 
   const handleChange = e => {

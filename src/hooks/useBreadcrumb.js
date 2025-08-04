@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import useBus from '@/hooks/useBus'
+import useBus from '@/hooks/useBus.jsx'
 
 export default function useBreadcrumb(list = []) {
   const bus = useBus()

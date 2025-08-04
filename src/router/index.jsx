@@ -45,7 +45,9 @@ const NotFoundPage = React.lazy(() => import('@/components/404'))
 // 加载组件
 const LoadingComponent = () => (
   <div className="flex items-center justify-center min-h-screen">
-    <Spin size="large" tip="加载中..." />
+    <Spin size="large" tip="加载中...">
+      <div style={{ minHeight: '200px' }} />
+    </Spin>
   </div>
 )
 

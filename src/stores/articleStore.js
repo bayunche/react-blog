@@ -1,7 +1,8 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { genertorColor } from '@/utils';
+import axios from '@/utils/axios';
 
 /**
  * 文章状态管理
@@ -374,10 +375,46 @@ export const useArticleStore = create(
         state.batchOperationLoading = false;
         state.error = null;
       }),
+
+      /**
+       * 获取标签列表
+       */
+      fetchTagList: async () => {
+        try {
+          set((state) => { state.loading = true; });
+          const response = await axios.get('/tag');
+          const { setTagList } = get();
+          setTagList(response.data || []);
+        } catch (error) {
+          console.error('获取标签列表失败:', error);
+          set((state) => { 
+            state.error = '获取标签列表失败'; 
+            state.loading = false;
+          });
+        }
+      },
+
+      /**
+       * 获取分类列表
+       */
+      fetchCategoryList: async () => {
+        try {
+          set((state) => { state.loading = true; });
+          const response = await axios.get('/category');
+          const { setCategoryList } = get();
+          setCategoryList(response.data || []);
+        } catch (error) {
+          console.error('获取分类列表失败:', error);
+          set((state) => { 
+            state.error = '获取分类列表失败'; 
+            state.loading = false;
+          });
+        }
+      },
     })),
     {
       name: 'article-storage',
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         // 只持久化分类、标签和筛选偏好
         categoryList: state.categoryList,

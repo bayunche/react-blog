@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
-import { Menu, Icon } from 'antd'
+import { NavLink } from 'react-router-dom'
+import { Menu } from 'antd'
 import menu from './menu'
 const SubMenu = Menu.SubMenu
 
@@ -68,4 +68,4 @@ function AdminSidebar(props) {
   )
 }
 
-export default withRouter(AdminSidebar)
+export default AdminSidebar

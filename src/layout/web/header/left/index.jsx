@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { Dropdown, Menu, Input, message, Icon } from 'antd'
+import { Dropdown, Menu, Input, message } from 'antd'
 import { Link } from 'react-router-dom'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 // import config
-import { HEADER_BLOG_NAME } from '@/config'
+import { HEADER_BLOG_NAME } from '@/config.jsx'
 import navList from '../right/navList'
 
 // icon
@@ -13,7 +13,7 @@ import { MenuOutlined, SearchOutlined } from '@ant-design/icons'
 
 const HeaderLeft = props => {
   const [keyword, setKeyword] = useState('')
-  const history = useHistory()
+  const navigate = useNavigate()
 
   function handleChange(e) {
     e.preventDefault()
@@ -25,7 +25,7 @@ const HeaderLeft = props => {
   }
 
   function onSubmit() {
-    history.push(`/home?page=1&keyword=${keyword}`)
+    navigate(`/home?page=1&keyword=${keyword}`)
     setKeyword('')
   }
 
@@ -33,29 +33,33 @@ const HeaderLeft = props => {
     e.stopPropagation()
   }
 
-  const menu = (
-    <Menu className='header-nav'>
-      {navList.map(nav => (
-        <Menu.Item key={nav.link}>
-          <Link to={nav.link}>
-            {nav.icon}
-            <span className='nav-text'>{nav.title}</span>
-          </Link>
-        </Menu.Item>
-      ))}
-      <Menu.Item key={'search'}>
-        <SearchOutlined />
-        <Input
-          className='search-input'
-          onClick={clickSearch}
-          value={keyword}
-          onChange={handleChange}
-          onPressEnter={onPressEnter}
-          onBlur={onSubmit}
-        />
-      </Menu.Item>
-    </Menu>
-  )
+  const menuItems = [
+    ...navList.map(nav => ({
+      key: nav.link,
+      label: (
+        <Link to={nav.link}>
+          {nav.icon}
+          <span className='nav-text'>{nav.title}</span>
+        </Link>
+      )
+    })),
+    {
+      key: 'search',
+      label: (
+        <>
+          <SearchOutlined />
+          <Input
+            className='search-input'
+            onClick={clickSearch}
+            value={keyword}
+            onChange={handleChange}
+            onPressEnter={onPressEnter}
+            onBlur={onSubmit}
+          />
+        </>
+      )
+    }
+  ]
 
   return (
     <div className='header-left'>
@@ -64,7 +68,7 @@ const HeaderLeft = props => {
       <Dropdown
         overlayClassName='header-dropdown'
         trigger={['click']}
-        overlay={menu}
+        menu={{ items: menuItems }}
         getPopupContainer={() => document.querySelector('.app-header .header-left')}>
         <MenuOutlined className='header-dropdown-icon' />
       </Dropdown>

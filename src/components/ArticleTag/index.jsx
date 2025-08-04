@@ -1,8 +1,8 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
-import { withRouter, Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { useArticleStore } from '@/stores'
 import { Tag, Divider } from 'antd'
 import SvgIcon from '@/components/SvgIcon'
 import { FolderOutlined } from '@ant-design/icons'
@@ -13,7 +13,7 @@ function getColor(name, colorList) {
 }
 
 const ArticleTag = props => {
-  const tagColorList = useSelector(state => state.article.tagList) // 相当于 connect(state => state.article.tagList)(ArticleTag)
+  const tagColorList = useArticleStore(state => state.tagList)
   const { tagList, categoryList } = props
 
   return (
@@ -49,4 +49,4 @@ ArticleTag.propTypes = {
   categoryList: PropTypes.array.isRequired
 }
 
-export default withRouter(ArticleTag)
+export default ArticleTag

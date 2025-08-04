@@ -1,7 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useArticleStore } from '@/stores';
 import { notification } from 'antd';
-import { SERVER_URL } from '@/config';
+import { SERVER_URL } from '@/config.jsx';
 import useBreadcrumb from '@/hooks/useBreadcrumb';
 import download from '@/utils/download';
 
@@ -26,11 +26,9 @@ const ArticleManager = () => {
   // 设置面包屑导航
   useBreadcrumb(['文章管理']);
 
-  // 获取Redux状态
-  const { tagList, categoryList } = useSelector(state => ({
-    tagList: state.article.tagList,
-    categoryList: state.article.categoryList
-  }));
+  // 获取Zustand状态
+  const tagList = useArticleStore(state => state.tagList);
+  const categoryList = useArticleStore(state => state.categoryList);
 
   // 搜索过滤逻辑
   const {

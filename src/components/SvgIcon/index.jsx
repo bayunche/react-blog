@@ -2,21 +2,18 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 // iconfont svg
-const SvgIcon = props => {
+const SvgIcon = ({ type, className = '', style }) => {
   return (
-    <svg className={`svg-icon ${props.className}`} aria-hidden='true' style={props.style}>
-      <use xlinkHref={`#${props.type}`} />
+    <svg className={`svg-icon ${className}`} aria-hidden='true' style={style}>
+      <use xlinkHref={`#${type}`} />
     </svg>
   )
 }
 
 SvgIcon.propTypes = {
   type: PropTypes.string.isRequired,
-  className: PropTypes.string
-}
-
-SvgIcon.defaultProps = {
-  className: ''
+  className: PropTypes.string,
+  style: PropTypes.object
 }
 
 export default SvgIcon

@@ -8,32 +8,43 @@
   transition: background-color 0.3s var(--ease-out-cubic);
   
   .beian {
-    position: absolute;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 40px;
-    cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/default.cur), auto;
-    color: var(--moe-text-secondary);
-    font-size: 14px;
-    font-weight: 400;
+    padding: 8px 20px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 500;
     line-height: 20px;
     z-index: 999;
     background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid var(--glass-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s var(--ease-out-cubic);
+    
+    &:hover {
+      background: rgba(255, 105, 180, 0.1);
+      transform: translateX(-50%) translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
     
     a {
-      cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
-      color: var(--moe-primary);
-      transition: color 0.2s ease;
+      cursor: pointer;
+      color: var(--primary-color);
+      transition: color 0.3s ease;
+      text-decoration: none;
+      font-weight: 600;
       
       &:hover {
-        color: var(--moe-primary-dark);
+        color: var(--primary-dark);
       }
     }
   }
@@ -142,103 +153,107 @@
     }
   }
 
-  .app-sidebar {
-    border-right: 1px solid #ebedf0;
-    height: calc(100vh - 64px - 40px - 66px);
-    text-align: center;
-    color: rgba(0, 0, 0, 0.65);
-    overflow-y: auto;
-    .sider-avatar {
-      width: 132px;
-      height: 132px;
-      border-radius: 50%;
-    }
-    .title {
-      font-size: 1.5em;
-      font-weight: 700;
-      margin-top: 10px;
-    }
-    .sub-title {
-      font-size: 13px;
-      margin-top: 5px;
-      margin-bottom: 5px;
-      color: rgba(0, 0, 0, 0.65);
-    }
+  // 侧边栏样式已移除，改为顶部卡片布局
 
-    .home-pages {
-      padding: 0;
-      width: 214px;
-      line-height: 24px;
+  .app-wrapper {
+    background: transparent;
+    padding: 0;
+    position: relative;
+    margin: 0 40px 80px 40px; // 左右留边距，底部留空间给备案
+    
+    .app-main-container {
+      max-width: 1200px;
       margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      .homepage-icon {
-        width: 16px;
-        height: 16px;
-        font-size: 16px;
-      }
-      li {
-        padding: 0 8px;
-        cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
-
-        a {
-          vertical-align: top;
-          padding-left: 5px;
-          color: inherit;
+      
+      .app-main {
+        min-height: calc(100vh - 64px - 280px); // 减去header、topcard和底部空间
+        overflow: visible;
+        -webkit-overflow-scrolling: touch;
+        box-sizing: border-box;
+        background: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-lg);
+        padding: 32px;
+        margin-top: 20px;
+        position: relative;
+        transition: all 0.3s var(--ease-out-cubic);
+        
+        // 添加装饰性顶部边框
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: var(--gradient-rainbow);
+          border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+          z-index: 1;
         }
-      }
-      li:hover {
-        border-radius: 4px;
-        background: rgba(255, 255, 255, 0.95);
-      }
-    }
-
-    .article-list {
-      text-align: left;
-      li {
-        padding: 0 20px;
-        a {
-          display: block;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          font-size: 14px;
-          line-height: 32px;
-          color: #8590a6;
-          cursor: url(https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.2/Resources/pointer.cur), auto;
-        }
+        
         &:hover {
-          background: rgba(255, 255, 255, 0.95);
-          a {
-            color: #40a9ff;
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg), 0 0 40px rgba(255, 105, 180, 0.15);
+        }
+        
+        // 优化内容区内部元素的样式
+        .ant-divider {
+          border-color: var(--glass-border);
+          margin: 24px 0;
+          
+          &.ant-divider-with-text {
+            .ant-divider-inner-text {
+              background: var(--gradient-primary);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+              font-weight: 600;
+              font-size: 16px;
+            }
+          }
+        }
+        
+        // 优化表格样式
+        .ant-table {
+          background: transparent;
+          
+          .ant-table-thead > tr > th {
+            background: rgba(255, 105, 180, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            color: var(--text-primary);
+          }
+          
+          .ant-table-tbody > tr > td {
+            border-bottom: 1px solid var(--glass-border);
+            background: transparent;
+          }
+          
+          .ant-table-tbody > tr:hover > td {
+            background: rgba(255, 105, 180, 0.05);
+          }
+        }
+        
+        // 优化按钮样式
+        .ant-btn {
+          border-radius: var(--radius-sm);
+          transition: all 0.3s var(--ease-out-cubic);
+          
+          &.ant-btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            box-shadow: var(--shadow-sm);
+            
+            &:hover {
+              background: var(--gradient-secondary);
+              transform: translateY(-1px);
+              box-shadow: var(--shadow-md);
+            }
           }
         }
       }
-    }
-
-    .tag-list {
-      overflow: hidden;
-      .ant-tag {
-        margin-bottom: 6px;
-      }
-      a {
-        color: inherit;
-      }
-    }
-  }
-
-  .app-wrapper {
-    background: rgba(255, 255, 255, 0.95);
-    padding: 40px 0 0;
-    position: relative;
-    .app-main {
-      height: calc(100vh - 64px - 40px);
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-      box-sizing: border-box;
-      // padding: 0 20px;
-      padding-left: 20px;
-      padding-right: 10px;
     }
   }
 
@@ -303,9 +318,50 @@
   }
 }
 
-@media screen and (max-width: 1300px) {
-  .app-container .app-wrapper .app-main {
-    padding: 0 20px;
+@media screen and (max-width: 1200px) {
+  .app-container .app-wrapper {
+    margin: 0 20px 80px 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .app-container .app-wrapper {
+    margin: 0 16px 60px 16px;
+    
+    .app-main-container .app-main {
+      min-height: calc(100vh - 64px - 240px);
+      padding: 20px;
+      margin-top: 16px;
+      border-radius: var(--radius-lg);
+    }
+  }
+  
+  .app-container .beian {
+    bottom: 16px;
+    padding: 6px 16px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .app-container .app-wrapper {
+    margin: 0 8px 50px 8px;
+    
+    .app-main-container .app-main {
+      padding: 16px;
+      border-radius: var(--radius-md);
+    }
+  }
+  
+  .app-container .beian {
+    bottom: 12px;
+    padding: 5px 12px;
+    font-size: 11px;
+    left: 8px;
+    right: 8px;
+    transform: none;
+    max-width: calc(100vw - 16px);
+    text-align: center;
   }
 }
 

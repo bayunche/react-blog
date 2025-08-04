@@ -3,6 +3,8 @@
  * 提供状态操作的辅助函数和类型定义
  */
 
+import { createJSONStorage } from 'zustand/middleware';
+
 /**
  * 创建选择器工厂函数
  * 用于优化状态选择性能
@@ -147,7 +149,7 @@ export const createPersistConfig = (name, options = {}) => {
   
   return {
     name,
-    getStorage: () => localStorage,
+    storage: createJSONStorage(() => localStorage),
     version,
     migrate,
     partialize: (state) => {
@@ -180,7 +182,7 @@ export const createPersistConfig = (name, options = {}) => {
  * 状态调试工具
  */
 export const createDevtools = (name) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     return {
       name,
       trace: true,

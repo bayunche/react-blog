@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import './index.less'
-import { useSelector } from 'react-redux'
+import { useArticleStore } from '@/stores'
 import { Badge, Tag } from 'antd'
 import { Link } from 'react-router-dom'
 
 function Categories(props) {
-  const categoryList = useSelector(state => state.article.categoryList)
+  const categoryList = useArticleStore(state => state.categoryList)
 
   return (
     <div className='app-categories'>

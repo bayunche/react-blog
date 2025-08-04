@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js'
 
-const key = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_KEY || '1234567890000000') // 16位
-const iv = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_IV || '1234567890000000')
+const key = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_ENCRYPTION_KEY || '1234567890000000') // 16位
+const iv = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_ENCRYPTION_IV || '1234567890000000')
 
 export default {
   // aes加密

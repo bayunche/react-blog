@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Pagination } from 'antd'
 import { useMediaQuery } from 'react-responsive'
 
-function WebPagination({ total, current, onChange, pageSize, style = {} }) {
+function WebPagination({ total, current, onChange, pageSize = 10, style = {} }) {
   const isLessThan736 = useMediaQuery({
     query: '(max-width: 736px)'
   })
@@ -25,11 +25,8 @@ WebPagination.propTypes = {
   total: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   current: PropTypes.number.isRequired,
-  pageSize: PropTypes.number
-}
-
-WebPagination.defaultProps = {
-  pageSize: 10
+  pageSize: PropTypes.number,
+  style: PropTypes.object
 }
 
 export default WebPagination

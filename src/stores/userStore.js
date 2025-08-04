@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist, subscribeWithSelector } from 'zustand/middleware';
+import { persist, subscribeWithSelector, createJSONStorage } from 'zustand/middleware';
 import { save, get, remove } from '@/utils/storage';
 
 /**
@@ -253,6 +253,38 @@ export const useUserStore = create(
         },
 
         /**
+         * 异步登录方法
+         */
+        loginAsync: async (params) => {
+          const { setLoading, setError, loginSuccess, clearError } = get();
+          
+          try {
+            setLoading(true);
+            clearError();
+            
+            // 导入依赖
+            const axios = (await import('@/utils/axios')).default;
+            const { message } = await import('antd');
+            const PSW = (await import('@/utils/password')).default;
+            
+            // 加密密码（如果有）
+            if (params.password !== undefined) {
+              params.password = PSW.encrypt(params.password);
+            }
+            
+            const res = await axios.post('/login', params);
+            
+            loginSuccess(res);
+            message.success(`登录成功, 欢迎您 ${res.username}`);
+            
+            return res;
+          } catch (error) {
+            setError(error);
+            throw error;
+          }
+        },
+
+        /**
          * 重置用户状态
          */
         reset: () => {
@@ -275,7 +307,7 @@ export const useUserStore = create(
       }),
       {
         name: 'user-storage',
-        getStorage: () => localStorage,
+        storage: createJSONStorage(() => localStorage),
         partialize: (state) => ({
           username: state.username,
           userId: state.userId,

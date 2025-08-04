@@ -35,7 +35,7 @@ function Archives(props) {
   list.map((d, i) => (MsgSort(d)))
   return (
     <div className='app-archives'>
-      <Spin tip='Loading...' spinning={loading} delay={500}>
+      <Spin spinning={loading} delay={500}>
         <Timeline>
           {list.map((d, i) => (
             <Fragment key={i}>

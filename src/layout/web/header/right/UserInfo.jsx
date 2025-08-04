@@ -9,7 +9,7 @@ import { Button, Dropdown, Menu, Avatar } from 'antd'
 import AppAvatar from '@/components/Avatar'
 
 // hooks
-import useBus from '@/hooks/useBus'
+import useBus from '@/hooks/useBus.jsx'
 
 function UserInfo() {
   const navigate = useNavigate()
@@ -18,29 +18,26 @@ function UserInfo() {
   
   const userInfo = { username, github, role }
 
-  const MenuOverLay = (
-    <Menu>
-      {role === 1 && (
-        <Menu.Item>
-          <span onClick={e => bus.emit('openUploadModal')}>导入文章</span>
-        </Menu.Item>
-      )}
-      {role === 1 && (
-        <Menu.Item>
-          <span onClick={e => navigate('/admin')}>后台管理</span>
-        </Menu.Item>
-      )}
-      <Menu.Item>
-        <span className='user-logout' onClick={e => logout()}>
-          退出登录
-        </span>
-      </Menu.Item>
-    </Menu>
-  )
+  const menuItems = [
+    ...(role === 1 ? [
+      {
+        key: 'upload',
+        label: <span onClick={e => bus.emit('openUploadModal')}>导入文章</span>
+      },
+      {
+        key: 'admin',
+        label: <span onClick={e => navigate('/admin')}>后台管理</span>
+      }
+    ] : []),
+    {
+      key: 'logout',
+      label: <span className='user-logout' onClick={e => logout()}>退出登录</span>
+    }
+  ]
   return (
     <div className='header-userInfo'>
       {username ? (
-        <Dropdown placement='bottomCenter' overlay={MenuOverLay} trigger={['click', 'hover']}>
+        <Dropdown placement='bottomCenter' menu={{ items: menuItems }} trigger={['click', 'hover']}>
           <div style={{ height: 55 }}>
             <AppAvatar userInfo={userInfo} popoverVisible={false} />
           </div>

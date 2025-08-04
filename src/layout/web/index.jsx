@@ -1,88 +1,30 @@
 import React from 'react'
 import '@/styles/app.less'
-import { Layout, Row, Col, BackTop } from 'antd'
-// import ReactLive2d from 'react-live2d'
-import { loadOml2d } from 'oh-my-live2d'
+import { Layout, FloatButton } from 'antd'
 import Header from './header'
-import SideBar from './sidebar'
-import AppMain from './AppMain'
-import ReactCanvasNest from 'react-canvas-nest'
-import Player from 'components/musicPlayer/Player'
-import { useLocation, Outlet } from 'react-router-dom'
-// 响应式
-const siderLayout = { xxl: 4, xl: 5, lg: 5, sm: 0, xs: 0 }
-const contentLayout = { xxl: 20, xl: 19, lg: 19, sm: 24, xs: 24 }
+import TopCard from '@/components/TopCard'
+import BackgroundAnimation from '@/components/BackgroundAnimation'
+import Player from '@/components/musicPlayer/Player'
+import ModernLive2D from '@/components/ModernLive2D'
+import { Outlet } from 'react-router-dom'
 
-const Live2d = () => {
-  const [canRender, setCanRender] = React.useState(false)
-  const reg = /home/
-  const url = useLocation().pathname
-  React.useEffect(() => {
-    // console.log(url)
-    // 判断是否为首页
-    console.log(reg.test(url))
-
-    if (reg.test(url)) {
-      setCanRender(true)
-      const oml2d = loadOml2d({
-        dockedPosition: 'right',
-        models: [
-          {
-            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/bilibili-22/index.json',
-            position: [30, 100],
-            scale: 0.2,
-            stageStyle: {
-              height: 400,
-              width: 300,
-            },
-          },
-          {
-            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/kobayaxi/model.json',
-            position: [10, 110],
-            scale: 0.2,
-            stageStyle: {
-              height: 400,
-              width: 300,
-            },
-          },
-          {
-            path: 'https://cdn.jsdelivr.net/gh/bayunche/react-blog@release-v0.0.6/Resources/aqua/1014100aqua.model3.json',
-            position: [10, 110],
-            scale: 0.1,
-            stageStyle: {
-              height: 400,
-              width: 300,
-            },
-          },
-        ],
-      })
-    } else {
-      setCanRender(false)
-    }
-
-    if (document.getElementById('oml2d-stage') && canRender) {
-      document.getElementById('oml2d-stage').remove()
-    }
-  }, [url])
-  // 引入live2d模型
-
-  return canRender && <></>
-}
 const WebLayout = props => {
   return (
     <Layout className='app-container'>
-      <ReactCanvasNest className='canvasNest' config={{ pointColor: '255,255,255' }} style={{ zIndex: 1 }} />
+      {/* 现代背景动画 - 包含粒子效果和背景图片轮播 */}
+      <BackgroundAnimation />
       <Header />
-      <Row className='app-wrapper'>
-        <Col {...siderLayout}>
-          <SideBar />
-        </Col>
-        <Col {...contentLayout}>
+      {/* 顶部卡片区域 */}
+      <TopCard />
+      {/* 主内容区域 - 移除侧边栏，内容占满宽度 */}
+      <div className='app-wrapper'>
+        <div className='app-main-container'>
           <Outlet />
-        </Col>
-      </Row>
-      <BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
-      <Live2d></Live2d>
+        </div>
+      </div>
+      <FloatButton.BackTop style={{ zIndex: 100000 }} target={() => document.querySelector('.app-main')} />
+      {/* 新的现代化Live2D组件 */}
+      <ModernLive2D />
       <Player />
     </Layout>
   )

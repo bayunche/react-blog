@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { message } from 'antd';
-import { API_BASE_URL } from '@/config';
+import { API_BASE_URL } from '@/config.jsx';
 import { getToken } from '@/utils';
 import axios from '@/utils/axios';
 

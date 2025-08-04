@@ -1,6 +1,7 @@
-import marked from 'marked'
+import { marked } from 'marked'
 import { COLOR_LIST } from '@/utils/config'
 import DOMPurify from 'dompurify'
+import CryptoJS from 'crypto-js'
 
 import { clear, get } from '@/utils/storage'
 // import * as React from 'react'
@@ -35,10 +36,6 @@ import { clear, get } from '@/utils/storage'
 // }
 
 // // 转化 md 语法为 React Node
-
-// export const translateMarkdown = (plainText, isGuardXss = false) => {
-//   return (<MarkdownRender source={plainText}/>)
-// }
 
 // 转化md 为html（安全版本）
 export const translateMarkdown2html = (plainText, isGuardXss = true) => {
@@ -100,6 +97,9 @@ export const translateMarkdown2html = (plainText, isGuardXss = true) => {
     FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover']
   }) : html
 }
+
+// 转化 md 语法为 React Node (兼容性别名)
+export const translateMarkdown = translateMarkdown2html
 
 // 获取 url query 参数
 export const decodeQuery = url => {
@@ -201,11 +201,11 @@ export function encryption(data) {
   strs.sort() // 数组排序
   strs = strs.join('&') // 数组变字符串
   
-  const signKey = process.env.REACT_APP_SIGN_KEY || 'ADfj3kcadc2349akvm1CPFFCD84f'
+  const signKey = import.meta.env.VITE_SIGN_KEY || 'ADfj3kcadc2349akvm1CPFFCD84f'
   const endData = strs + '&sign=' + CryptoJS.MD5(strs + signKey).toString() // MD5加密
   
-  const key = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_KEY || '0880076B18D7EE81') // 加密秘钥
-  const iv = CryptoJS.enc.Utf8.parse(process.env.REACT_APP_ENCRYPTION_IV || 'CB3EC842D7C69578') //  矢量
+  const key = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_ENCRYPTION_KEY || '0880076B18D7EE81') // 加密秘钥
+  const iv = CryptoJS.enc.Utf8.parse(import.meta.env.VITE_ENCRYPTION_IV || 'CB3EC842D7C69578') //  矢量
   
   const encryptResult = CryptoJS.AES.encrypt(endData, key, {
     //  AES加密

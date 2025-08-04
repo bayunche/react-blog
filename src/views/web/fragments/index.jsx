@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './index.less'
-import { Comment, Tooltip, List, Card, Avatar } from 'antd'
+import { Tooltip, List, Card, Avatar } from 'antd'
+import { Comment } from '@ant-design/compatible'
 import axios from '@/utils/axios'
 import useAjaxLoading from '@/hooks/useAjaxLoading'
 import dayjs from '@/utils/dayjs'

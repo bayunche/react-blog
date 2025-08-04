@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { message } from 'antd';
-import { GITHUB } from '@/config';
+import { GITHUB } from '@/config.jsx';
 import { save } from '@/utils/storage';
 
 /**

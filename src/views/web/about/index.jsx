@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react'
 import './index.less'
 import { Avatar } from 'antd'
 
-import { SIDEBAR, ABOUT } from '@/config'
+import { SIDEBAR, ABOUT } from '@/config.jsx'
 
 import axios from '@/utils/axios'
 import Discuss from '@/components/Discuss'

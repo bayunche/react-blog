@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
 /**
  * 应用全局状态管理
@@ -116,7 +116,7 @@ export const useAppStore = create(
     }),
     {
       name: 'app-storage',
-      getStorage: () => localStorage,
+      storage: createJSONStorage(() => localStorage),
       partialize: (state) => ({
         sidebarCollapsed: state.sidebarCollapsed,
         settings: state.settings,

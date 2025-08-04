@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import './index.less'
+import { useLocation } from 'react-router-dom'
 
 import { decodeQuery, translateMarkdown2html } from '@/utils'
 import { HOME_PAGESIZE } from '@/utils/config'
@@ -15,10 +16,11 @@ import WebPagination from '@/components/Pagination'
 import useFetchList from '@/hooks/useFetchList'
 import ContributionChart from './Contribution'
 const Home = props => {
+  const location = useLocation()
   const { loading, pagination, dataList } = useFetchList({
     requestUrl: '/article/list',
     queryParams: { pageSize: HOME_PAGESIZE, type: true },
-    fetchDependence: [props.location.search]
+    fetchDependence: [location.search]
   })
 
   const list = useMemo(() => {
@@ -29,10 +31,10 @@ const Home = props => {
     })
   }, [dataList])
 
-  const { keyword } = decodeQuery(props.location.search)
+  const { keyword } = decodeQuery(location.search)
 
   return (
-    <Spin tip='Loading...' spinning={loading}>
+    <Spin spinning={loading}>
       <div className='app-home'>
         {/* list  */}
         <ArticleList list={list} />

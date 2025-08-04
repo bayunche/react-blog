@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react'
 import './index.less'
+import { useLocation } from 'react-router-dom'
 
 import axios from '@/utils/axios'
 import { TAG_PAGESIZE } from '@/utils/config'
@@ -35,17 +36,18 @@ function TimeLineList({ list, name, type }) {
 
 // 根据 tag / category 获取文章列表
 function List(props) {
-  const type = props.location.pathname.includes('categories') ? 'category' : 'tag'
+  const location = useLocation()
+  const type = location.pathname.includes('categories') ? 'category' : 'tag'
   const name = props.match.params.name
 
   const { loading, pagination, dataList } = useFetchList({
     requestUrl: '/article/list',
     queryParams: { [type]: name, pageSize: TAG_PAGESIZE, type: true },
-    fetchDependence: [props.location.search, props.location.pathname]
+    fetchDependence: [location.search, location.pathname]
   })
 
   return (
-    <Spin tip='Loading...' spinning={loading} delay={500}>
+    <Spin spinning={loading} delay={500}>
       <div className='app-tags'>
         <TimeLineList list={dataList} name={name} type={type} />
         <Pagination

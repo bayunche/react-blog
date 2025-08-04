@@ -1,3 +1,6 @@
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
 @import url('https://fonts.googleapis.com/css?family=Arima+Madurai:300');
 $bg-color: #333;
 $bl-color: #22BAD9;
@@ -55,47 +58,47 @@ $durDoneGap: 1.00; // time between strings
 // initializing some variables and functions ✊🏼
 $charCount: 0; $durTotal: 0;
 @each $string in $strings {
-	$charCount: $charCount + str-length($string);
+	$charCount: $charCount + string.length($string);
 	$durTotal: $durTotal
-		+ (str-length($string) * ($durCharFwd + $durCharBwd))
+		+ (string.length($string) * ($durCharFwd + $durCharBwd))
 		+ $durFullGap + $durDoneGap;
 }
 @function percent($string, $letter, $modifier) {
 	$stringsPast: $string - 1; $time: 0;
 	@while $stringsPast > 0 {
 		$time: $time
-			+ (($durCharFwd + $durCharBwd) * (str-length(nth($strings, $stringsPast))))
+			+ (($durCharFwd + $durCharBwd) * (string.length(list.nth($strings, $stringsPast))))
 			+ $durFullGap + $durDoneGap;
 		$stringsPast: $stringsPast - 1;
 	}
-	@if $letter <= str-length(nth($strings, $string)) {
+	@if $letter <= string.length(list.nth($strings, $string)) {
 		$time: $time
 			+ ($durCharFwd * ($letter - 1));
 	} @else {
 		$time: $time
-			+ ($durCharFwd * str-length(nth($strings, $string)))
+			+ ($durCharFwd * string.length(list.nth($strings, $string)))
 			+ $durFullGap
-			+ ($durCharBwd * ($letter - str-length(nth($strings, $string))));
+			+ ($durCharBwd * ($letter - string.length(list.nth($strings, $string))));
 	}
-	@return ($time / $durTotal * 100 + $modifier) + "%";
+	@return (math.div($time, $durTotal) * 100 + $modifier) + "%";
 }
 $currentPercentage: 0;
 // now THIS is where the magic happens... ✨
 @keyframes typed {
-	@for $i from 1 through length($strings) {
+	@for $i from 1 through list.length($strings) {
 		// @for $j from 1 through (str-length(nth($strings, $i)) * 2 - 1) {
-		@for $j from 1 through (str-length(nth($strings, $i)) * 2) {
+		@for $j from 1 through (string.length(list.nth($strings, $i)) * 2) {
 			/* string #{$i}, char #{$j} */
-			@if $j < str-length(nth($strings, $i)) * 2 { // not last character deleted
+			@if $j < string.length(list.nth($strings, $i)) * 2 { // not last character deleted
 				#{percent($i, $j, 0)}, #{percent($i, $j+1, -0.001)} {
-					@if $j <= str-length(nth($strings, $i)) {
-						content: quote(#{str_slice(nth($strings, $i), 1, $j)});
+					@if $j <= string.length(list.nth($strings, $i)) {
+						content: string.quote(#{string.slice(list.nth($strings, $i), 1, $j)});
 					} @else {
-						content: quote(#{str_slice(nth($strings, $i), 1, str-length(nth($strings, $i)) - ($j - str-length(nth($strings, $i))))});
+						content: string.quote(#{string.slice(list.nth($strings, $i), 1, string.length(list.nth($strings, $i)) - ($j - string.length(list.nth($strings, $i))))});
 					}
 				}
 			} @else {
-				@if $i < length($strings) { // not last string
+				@if $i < list.length($strings) { // not last string
 					#{percent($i, $j, 0)}, #{percent($i+1, 1, -0.001)} {
 						content: "​"; // zero-width space to retain element height
 					}
@@ -133,7 +136,6 @@ div {
 		content: "​"; // zero-width space to retain element height
 		position: relative;
 		top: -13px;
-		@media (max-width: 575px) { top: -33px; }
 		display: inline-block;
 		padding-right: 3px;
 		padding-right: calc(3px + 0.1vw);
@@ -142,12 +144,10 @@ div {
 		text-shadow: 0 0 5px rgba(51, 255, 51, 0.75);
 		white-space: nowrap;
 		animation: typed #{$durTotal + "s"} linear 1s infinite, beam-blink 1s infinite;
+		@media (max-width: 575px) { top: -33px; }
 	}
 	&::before { // just generating some useful stats here 👋🏼
-		// content: "#{length($strings)} strings / #{$charCount} chars / #{$durTotal}s duration";
-		@media (max-width: 575px) {
-			content: "#{length($strings)} strings \A #{$charCount} chars \A #{$durTotal}s duration";
-		}
+		// content: "#{list.length($strings)} strings / #{$charCount} chars / #{$durTotal}s duration";
 		display: block;
 		position: absolute;
 		bottom: 0;
@@ -159,6 +159,9 @@ div {
 		font-size: 18px;
 		letter-spacing: 0.7px;
 		white-space: pre-wrap;
+		@media (max-width: 575px) {
+			content: "#{list.length($strings)} strings \A #{$charCount} chars \A #{$durTotal}s duration";
+		}
 	}
 }
 // body[onload] {

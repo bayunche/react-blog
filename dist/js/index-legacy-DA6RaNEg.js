@@ -1,0 +1,1 @@
+System.register(["./react-vendor-legacy-L1Y0DLuJ.js"],function(e,t){"use strict";var r,s,i;return{setters:[e=>{r=e.j,s=e.b2,i=e.B}],execute:function(){e("default",function(e){return r.jsx(s,{status:"404",title:"404",subTitle:"Sorry, the page you visited does not exist.",extra:r.jsx(i,{type:"primary",onClick:()=>{e.history.push("/home")},children:"Back Home"})})})}}});

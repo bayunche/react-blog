@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { calcCommentsCount } from '@/utils'
 
 // components
@@ -8,11 +8,11 @@ import SvgIcon from '@/components/SvgIcon'
 import ArticleTag from '@/components/ArticleTag'
 
 const ArticleList = props => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { list } = props
 
   function jumpTo(id) {
-    history.push(`/article/${id}`)
+    navigate(`/article/${id}`)
   }
 
   return (

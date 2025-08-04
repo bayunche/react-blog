@@ -1,8 +1,8 @@
-import { Button, Input, Modal, BackTop, message, Switch, Icon } from 'antd'
+import { Button, Input, Modal, FloatButton, message, Switch } from 'antd'
 import MdEditor from '@/components/MdEditor'
 import React, { Component, useState, useEffect } from 'react'
 import axios from '@/utils/axios'
-import { PlusCircleFill, PlusCircleOutline } from 'utils/antdIcon'
+import { PlusCircleFill, PlusCircleOutline } from '@/utils/antdIcon'
 function FragmentEdit(props) {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('panyunyi')
@@ -54,7 +54,7 @@ function FragmentEdit(props) {
           editId ? update() : add()
         }}
       />
-      <BackTop target={() => document.querySelector('.admin-content-wrap')} />
+      <FloatButton.BackTop target={() => document.querySelector('.admin-content-wrap')} />
     </div>
   )
 }

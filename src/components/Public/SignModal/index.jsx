@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { Modal, Alert, Tabs } from 'antd';
-import { useListener } from '@/hooks/useBus';
+import { useListener } from '@/hooks/useBus.jsx';
 
 // 自定义Hooks
 import { useAuthForm } from './hooks/useAuthForm';
@@ -123,7 +123,7 @@ const SignModal = () => {
       width={480}
       centered
       className="sign-modal"
-      destroyOnClose
+      destroyOnHidden
     >
       <div className="sign-modal__content">
         {/* 错误提示 */}

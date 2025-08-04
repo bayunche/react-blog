@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useArticleStore } from '@/stores'
 
 // hooks
 import useMount from '@/hooks/useMount'
-
-// actions
-import { getTagList, getCategoryList } from '@/redux/article/actions'
 
 // components
 import SignModal from '@/components/Public/SignModal'
@@ -15,11 +12,12 @@ import UploadModal from '@/components/Public/UploadModal'
  * @component Public 公共组件，挂在在 APP.jsx 中，用于存放初始化的组件/方法 或者公用的 modal 等
  */
 function PublicComponent(props) {
-  const dispatch = useDispatch() // dispatch hooks
+  const fetchTagList = useArticleStore(state => state.fetchTagList)
+  const fetchCategoryList = useArticleStore(state => state.fetchCategoryList)
 
   useMount(() => {
-    dispatch(getTagList())
-    dispatch(getCategoryList())
+    fetchTagList()
+    fetchCategoryList()
   })
 
   return (
